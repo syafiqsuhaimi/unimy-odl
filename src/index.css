@@ -1,5 +1,573 @@
 body {
-  margin: 0;
-  padding: 0;
   font-family: sans-serif;
 }
+
+/*Form wrapper*/
+
+.App {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Container {
+ height: 90%;
+ width: 70%;
+ border-radius: 0.2rem;
+ overflow: hidden;
+ background-color: #F7E8EC;
+ display: grid;
+ grid-template-columns: 2fr 1fr;
+ grid-template-areas: "header header"
+                      "form form"
+                      "footer footer"
+}
+
+/* Header */
+
+.App-header {
+  grid-area: header;
+  background-color: #D10E48;
+  height: 44px;
+  display: flex;
+  justify-content: space-between;
+  padding: 3px;
+  color: white;
+}
+
+.App-logo {
+  /* animation: App-logo-spin infinite 20s linear; */
+  height: 44px;
+  padding-left: 5px;
+  align-self: center;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.Header-end {
+  width: 44px;
+}
+
+.App-title {
+  align-self: center;
+  text-justify: center;
+  font-size: 1.4em;
+  -webkit-margin-before: 0em;
+  -webkit-margin-after: 0em;
+}
+
+/* Footer Style */
+
+.App-footer {
+  grid-area: footer;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn_primary {
+  width: 150px;
+  height: 27px;
+  margin: 10px;
+  color: #fff;
+  background-color: #D10E48;
+  border-color: #D10E48;
+  padding-bottom: 1px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  border-radius: .7rem;
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  border: 1px solid #D10E48;;
+}
+
+.btn_secondary {
+  width: 150px;
+  height: 27px;
+  margin: 10px;
+  color: #fff;
+  background-color: #F7E8EC;
+  color: grey;
+  padding-bottom: 1px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  border-radius: .7rem;
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  border: 1px solid #D10E48;;
+}
+
+::-webkit-scrollbar { 
+  display: none; 
+}
+
+/* Form body */
+
+.App-body {
+  grid-area: form;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-template-areas: "detail progressbar";
+  overflow: auto;
+  height: 470px;
+}
+
+.App-content {
+  grid-area: detail;
+  width: 60%;
+  height: 400px;
+  padding-left: 20px;
+  padding-right: 20px;
+  /*float: left;*/
+}
+
+.personalFormStyle {
+  grid-area: detail;
+  width: 90%;
+  padding-left: 20px;
+  padding-right: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "name name"
+                      "ic ic"
+                      "nat nat"
+                      "dob gender"
+                      "address address"
+                      "postcode state"
+                      "phone phone"
+                      "email email"
+                      "work work";
+  margin-left: 6%;
+  margin-top: 3%;
+}
+/*
+.workingFormStyle {
+  grid-area: job;
+  width: 90%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:  "tax tax"
+                        "epf epf"
+                        "occu occu"
+                        "gross nett"
+                        "depend depend";
+  padding-left: 20px;
+  padding-right: 20px;
+}
+*/
+.kinFormStyle {
+  grid-area: detail;
+  width: 90%;
+  padding-left: 20px;
+  padding-right: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "name name"
+                      "relation relation"
+                      "nat nat"
+                      "ic ic"
+                      "address address"
+                      "postcode state"
+                      "phone phone"
+                      "email email"
+                      "work work";
+  margin-left: 6%;
+  margin-top: 3%;
+}
+
+.name {
+  grid-area: name;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5%;
+}
+
+.ic {
+  grid-area: ic;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5%;
+}
+
+.relation {
+  grid-area: relation;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5%;
+}
+
+.nationality {
+  grid-area: nat;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5%;
+}
+
+.dob {
+  grid-area: dob;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin-bottom: 5%;
+}
+
+.gender {
+  grid-area: gender;
+  display: flex;
+  flex-direction: column;
+  width: 84%;
+  margin-bottom: 5%;
+}
+
+.address {
+  grid-area: address;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5%;
+}
+
+.postcode {
+  grid-area: postcode;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin-bottom: 5%;
+}
+
+.state {
+  grid-area: state;
+  display: flex;
+  flex-direction: column;
+  width: 93%;
+  margin-bottom: 5%;
+}
+
+.phone {
+  grid-area: phone;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5%;
+}
+
+.email {
+  grid-area: email;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5%;
+}
+
+.work {
+  grid-area: work;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5%;
+}
+
+.tax {
+  grid-area: work;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5%;
+}
+
+.epf {
+  grid-area: work;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5%;
+}
+
+.occupation {
+  grid-area: work;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5%;
+}
+
+.gross {
+  grid-area: work;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5%;
+  width: 80%;
+}
+
+.nett {
+  grid-area: work;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5%;
+  width: 84%;
+}
+
+.depend {
+  grid-area: work;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5%;
+}
+
+.Form{
+  margin-top: 0px;
+}
+
+.Form-row-col {
+  height: 40px;
+  width: 99%;
+  margin: 2px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.Form-row {
+  grid-area: inrow;
+  height: 40px;
+  width: 99%;
+  margin: 2px;
+}
+
+.Form-col {
+  grid-area: incol;
+  height: 38px;
+  width: 50%;
+}
+
+.Form-label{
+  margin-block-end: 10px;
+  font-size: 0.8rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  text-align: left;
+}
+
+.Form-input{
+  width: 90%;
+  margin-block-end: 10px;
+  padding: .05rem .1rem;
+  padding-top: 0.05rem;
+  padding-right: 0.25rem;
+  padding-bottom: 0.05rem;
+  padding-left: 0.25rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .15rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  transition: border-color, box-shadow;
+  transition-duration: 0.15s, 0.15s;
+  transition-timing-function: ease-in-out, ease-in-out;
+  transition-delay: initial, initial;
+}
+
+.Button-row-col{
+  height: 20px;
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.Form-button{
+  width: 40%;
+  height: 27px; 
+  font-size: 0.8rem;
+  border: 1px solid #ced4da;
+  border-radius: .15rem;
+  margin-top: 2px;
+  margin-block-end: 10px;
+  background-color: white;
+  color: black;
+}
+
+.Invalid-feedback {
+  height: 93px;
+  width: 70%;
+}
+
+.Upload-row {
+  height: 200px;
+  width: 100%;
+  margin: 10px;
+}
+
+.Upload-label{
+  margin-block-end: 10px;
+  font-size: 0.8rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  text-align: left;
+}
+
+.Drag-drop{
+          width: 100%;
+          height: 100px;
+          margin-block-end: 10px;
+          padding: .05rem .1rem;
+          padding-top: 0.05rem;
+          padding-right: 0.25rem;
+          padding-bottom: 0.05rem;
+          padding-left: 0.25rem;
+          font-size: 0.8rem;
+          line-height: 1.5;
+          color: #495057;
+          background-color: #fff;
+          background-clip: padding-box;
+          border: 1px dashed #ced4da;
+          border-radius: .15rem;
+}
+
+/* Progress Section */
+
+.App-progress-bar {
+  grid-area: progressbar;
+  height: 100%;
+  width: 100%;
+ /* float: right;*/
+  background-color: #F0BDCC;
+}
+
+.Section{
+  width: 100%;
+  height: 80px;
+  display: flex;
+  flex-direction: column; 
+  justify-content: center;
+  margin-top: 10%;
+}
+
+.Section-title{
+ width: 80%;
+ font-size: 0.8rem; 
+ color: black;
+ margin-top: 0;
+ margin-bottom: 2px;
+ margin-right: 6px;
+ align-self: center;
+}
+
+.Section-description{
+  width: 80%;
+  font-size: 0.8rem; 
+  color: grey;
+  margin-top: 0;
+  margin-bottom: 2px;
+  margin-right: 6px;
+  align-self: center;
+ }
+
+ @media all and (max-width: 768px) {
+  .Container {
+    height: 100%;
+    width: 100%;
+    border-radius: 0.2rem;
+    overflow: hidden;
+    background-color: #F7E8EC;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas: "header header"
+                         "form form"
+                         "footer footer"
+   }
+
+  .App-body {
+    grid-area: form;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas: "progressbar"
+                          "detail";
+    overflow: auto;
+    height: 570px;
+  }
+
+  .personalFormStyle {
+    grid-area: detail;
+    width: 90%;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas: "name"
+                        "ic"
+                        "nat"
+                        "dob"
+                        "gender"
+                        "address"
+                        "postcode"
+                        "state"
+                        "phone"
+                        "email"
+                        "work";
+    margin-left: 6%;
+    margin-top: 3%;
+  }
+
+  .kinFormStyle {
+    grid-area: detail;
+    width: 90%;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas: "name"
+                        "relation"
+                        "nat"
+                        "ic"
+                        "address"
+                        "postcode"
+                        "state"
+                        "phone"
+                        "email"
+                        "work";
+    margin-left: 6%;
+    margin-top: 3%;
+  }
+
+  .dob {
+    grid-area: dob;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 5%;
+  }
+
+  .gender {
+    grid-area: gender;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 5%;
+  }
+
+  .postcode {
+    grid-area: postcode;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 5%;
+  }
+
+  .state {
+    grid-area: state;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 5%;
+  }
+
+ }

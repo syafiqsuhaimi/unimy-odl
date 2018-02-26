@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import FileDragAndDrop from 'react-file-drag-and-drop';
-import '../personalInfo/PersonalInfo.css';
-import './Upload.css';
 
 class Upload extends Component {
     constructor(props) {

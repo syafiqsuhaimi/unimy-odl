@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import '../personalInfo/PersonalInfo.css';
 import Working from '../common/Working';
 
 class KinInfo extends Component {
@@ -30,10 +29,8 @@ class KinInfo extends Component {
 
         return (
             <div className="App-body">
-            <div className="App-content">
-                <form className="Form">
-
-                <div className="Form-row">
+                <form className="kinFormStyle">
+                <div className="name">
                     <label className="Form-label">Kin Full Name (As per IC)</label>
                     <input className="Form-input" type="text" id="kin_name" placeholder=""/>
                     {/* <div className="Invalid-feedback">
@@ -41,7 +38,7 @@ class KinInfo extends Component {
                     </div> */}
                 </div>
 
-                <div className="Form-row">
+                <div className="relation">
                     <label className="Form-label">Relationship with Applicant</label>
                     <input className="Form-input" type="text" id="kin_relationship" placeholder=""/>
                     {/* <div className="Invalid-feedback">
@@ -49,7 +46,7 @@ class KinInfo extends Component {
                     </div> */}
                 </div>
 
-                <div className="Form-row">
+                <div className="nationality">
                     <label className="Form-label">Nationality</label>
                     <input className="Form-input" type="text" id="kin_nationality" placeholder=""/>
                     {/* <div className="Invalid-feedback">
@@ -57,7 +54,7 @@ class KinInfo extends Component {
                     </div> */}
                 </div>
 
-                <div className="Form-row">
+                <div className="ic">
                     <label className="Form-label">IC Number</label>
                     <input className="Form-input" type="number" id="kin_ic_number" placeholder=""/>
                     {/* <div className="Invalid-feedback">
@@ -65,7 +62,7 @@ class KinInfo extends Component {
                     </div> */}
                 </div>
 
-                <div className="Form-row">
+                <div className="address">
                     <label className="Form-label">Permanent Address</label>
                     <input className="Form-input" type="text" id="address" placeholder=""/>
                     {/* <div className="Invalid-feedback">
@@ -73,17 +70,16 @@ class KinInfo extends Component {
                     </div> */}
                 </div>
 
-                <div className="Form-row-col">
-                    <div className="Form-col">
+                <div className="postcode">
                     <label className="Form-label">Postcode</label>
-                    <input className="Form-input" type="number" style={{width: 105}} id="postcode" placeholder="" required/>
+                    <input className="Form-input" type="number" id="postcode" placeholder="" required/>
                     {/* <div className="Invalid-feedback">
                         Valid first name is required.
                     </div> */}
-                    </div>
-                    <div className="Form-col">
+                </div>
+                <div className="state">
                     <label className="Form-label">State</label>
-                    <select className="Form-input" style={{width: 115, height: 15.59}} id="state" required>
+                    <select className="Form-input" style={{ height: 27 }} id="state" required>
                         <option value="">Choose...</option>
                         <option>WP Kuala Lumpur</option>
                         <option>WP Putrajaya</option>
@@ -105,10 +101,8 @@ class KinInfo extends Component {
                     {/* <div className="Invalid-feedback">
                         Valid last name is required.
                     </div> */}
-                    </div>
                 </div>
-
-                <div className="Form-row">
+                <div className="phone">
                     <label className="Form-label">Phone Number</label>
                     <input className="Form-input" type="number" id="phone_number" placeholder=""/>
                     {/* <div className="Invalid-feedback">
@@ -116,7 +110,7 @@ class KinInfo extends Component {
                     </div> */}
                 </div>
 
-                <div className="Form-row">
+                <div className="email">
                     <label className="Form-label">Email Address</label>
                     <input className="Form-input" type="email" id="email" placeholder="you@example.com"/>
                     {/* <div className="Invalid-feedback">
@@ -124,19 +118,15 @@ class KinInfo extends Component {
                     </div> */}
                 </div>
 
-                <div className="Form-row">
+                <div className="work">
                     <label className="Form-label">Currently working?</label>
                     <div className="Button-row-col">
                         <button onClick={this.handleWorkedClick} className="Form-button">Yes</button>
                         <button onClick={this.handleNotWorkedClick} className="Form-button">No</button>
                     </div>
                 </div>
-
-                </form>
-
                 {workingForm}
-                
-            </div>
+                </form>
             <div className="App-progress-bar">
                 <div className="Section">
                     <h5 className="Section-title">
