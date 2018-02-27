@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Working extends Component {       
+class Working extends Component {      
     render() {
         return (
         <form className="workingFormStyle">

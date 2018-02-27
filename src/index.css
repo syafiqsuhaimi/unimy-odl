@@ -121,7 +121,7 @@ body {
   grid-template-columns: 3fr 1fr;
   grid-template-areas: "detail progressbar";
   overflow: auto;
-  height: 470px;
+  height: 450px;
 }
 
 .App-content {
