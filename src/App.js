@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import logo from './logo_unimy.jpg';
-import './App.css';
 import PersonalInfo from './components/personalInfo/PersonalInfo';
 import KinInfo from './components/kinInfo/KinInfo';
 import Upload from './components/uploadDocument/Upload';
@@ -38,7 +37,7 @@ class App extends Component {
       index = 2
       Form = <Upload />; 
       Footer = <footer className="App-footer">
-                  <button onClick={this.moveSectionClick.bind(this,index+1)} className="btn_primary" style={{width:120}}>Submit your application</button>
+                  <button onClick={this.moveSectionClick.bind(this,index+1)} className="btn_primary" style={{ width: 250 }}>Submit your application</button>
                </footer>; 
     }
 
