@@ -1,19 +1,16 @@
 {
-  "name": "unimy-odl",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "bootstrap": "^4.0.0",
-    "react": "^16.2.0",
-    "react-bootstrap": "^0.32.1",
-    "react-dom": "^16.2.0",
-    "react-file-drag-and-drop": "^0.1.6",
-    "react-scripts": "1.1.1"
-  },
+  "name": "unimmy-odl",
+  "version": "1.0.0",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "client": "cd client && yarn start",
+    "server": "node server.js",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
+  },
+  "dependencies": {
+    "express": "^4.16.2",
+    "mssql": "^4.1.0"
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.0"
   }
 }
