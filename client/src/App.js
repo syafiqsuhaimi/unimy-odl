@@ -1,19 +1,37 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import logo from './logo_unimy.jpg';
-import PersonalInfo from './components/personalInfo/PersonalInfo';
-import KinInfo from './components/kinInfo/KinInfo';
-import Upload from './components/uploadDocument/Upload';
+import PersonalInfo from './components/PersonalInfo';
+import KinInfo from './components/KinInfo';
+import Upload from './components/Upload';
 
 class App extends Component {
   constructor(props) {
       super(props);
       this.moveSectionClick = this.moveSectionClick.bind(this);
       this.state = {componentIndex: 0};
+      this.state.student = {
+        studentid : 5,
+        studentname : 'rizal',
+        studentemail : 'rizal@email'
+      }
   }
 
   moveSectionClick(index) {
-      this.setState({componentIndex: index});
+    this.callApi();
+    this.setState({componentIndex: index});
   }
+
+  callApi = async () => {
+    axios.post('http://localhost:8888/post-student', this.state.student)
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  };
+
 
   render() {
     const componentIndex = this.state.componentIndex;

@@ -1,7 +1,18 @@
 const express = require('express');
+const cors = require('cors')
+const bodyParser = require("body-parser");
+const sql = require("mssql");
+
 const app = express();
 
-const sql = require("mssql");
+const port = process.env.PORT || 8888;
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 // config for your database
 const config = {
@@ -30,7 +41,7 @@ app.get('/get-student', function (req, res) {
         request.query('SELECT * FROM Students', function (err, recordset) {
             
             if (err) {
-                console.log(err)
+                console.log(err);
                 sql.close();
             }
 
@@ -41,8 +52,20 @@ app.get('/get-student', function (req, res) {
     });
 });
 
-app.get('/post-student', function (req, res) {
-    
+app.post('/post-student', function (req, res) {
+        
+    if(req.body != null) console.log(req.body);
+        
+    //get the data from client
+        let id = req.body.studentid;
+        let name = req.body.studentname;
+        let email = req.body.studentemail;
+        // var user_name=req.body.user;
+        // var password=req.body.password;
+        // console.log("User name = "+user_name+", password is "+password);
+
+        
+
         // connect to your database
         sql.connect(config, function (err) {
         
@@ -55,7 +78,7 @@ app.get('/post-student', function (req, res) {
                 //6.
                 var request = new sql.Request(transaction);
                 //7.
-                request.query("Insert into Students (StudentID,StudenttName,StudentEmail) values (3,'Razak','razak@educloud.com')")
+                request.query(`Insert into Students (StudentID,StudentName,StudentEmail) values (${id},'${name}','${email}')`)
             .then(function () {
                     //8.
                     transaction.commit().then(function (recordSet) {
@@ -78,32 +101,7 @@ app.get('/post-student', function (req, res) {
                 dbConn.close();
             });
         });
+        res.end();
 });
 
-const server = app.listen(5000, function () {
-    console.log('Server is running..');
-});
-
-//1.
-function insertRow() {
-    //2.
-    var dbConn = new sql.Connection(config);
-    //3.
-    dbConn.connect().then(function () {
-        
-    }).catch(function (err) {
-        //12.
-        console.log(err);
-    });
-}
-
-// const express = require('express');
-
-// const app = express();
-// const port = process.env.PORT || 5000;
-
-// app.get('/api/hello', (req, res) => {
-//   res.send({ express: 'Hello From Express' });
-// });
-
-// app.listen(port, () => console.log(`Listening on port ${port}`));
+app.listen(port, () => console.log(`Listening on port ${port}`)); 
