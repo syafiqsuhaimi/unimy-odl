@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { formSubmit } from './actions';
 import axios from 'axios';
+
 import logo from './logo_unimy.jpg';
 import PersonalInfo from './components/PersonalInfo';
 import KinInfo from './components/KinInfo';
@@ -9,6 +12,7 @@ class App extends Component {
   constructor(props) {
       super(props);
       this.moveSectionClick = this.moveSectionClick.bind(this);
+      this.handleSubmit = this.handleSubmit.bind(this);
       this.state = {componentIndex: 0};
       this.state.student = {
         studentid : 5,
@@ -22,6 +26,30 @@ class App extends Component {
     this.setState({componentIndex: index});
   }
 
+  handleSubmit(){
+    const {
+      name, ic, nationality, dob, 
+      gender, address, postcode, negeri, 
+      phone, email, tax, epf, occupation,
+      gross, nett, depend, kinname, relation, 
+      kinnat, kinic, kinadd, kinpost, 
+      kinstate, kinphone, kinmail,
+      kintax, kinepf, kinoccu,
+      kingross, kinnett, kindepend, iccopy, payslip
+    } = this.props;
+
+    this.props.formSubmit({ 
+      name, ic, nationality, dob, 
+      gender, address, postcode, negeri, 
+      phone, email, tax, epf, occupation,
+      gross, nett, depend, kinname, relation, 
+      kinnat, kinic, kinadd, kinpost, 
+      kinstate, kinphone, kinmail,
+      kintax, kinepf, kinoccu,
+      kingross, kinnett, kindepend, iccopy, payslip
+    });
+  }
+
   callApi = async () => {
     axios.post('http://localhost:8888/post-student', this.state.student)
     .then(function (response) {
@@ -31,7 +59,6 @@ class App extends Component {
       console.log(error);
     });
   };
-
 
   render() {
     const componentIndex = this.state.componentIndex;
@@ -55,7 +82,7 @@ class App extends Component {
       index = 2
       Form = <Upload />; 
       Footer = <footer className="App-footer">
-                  <button onClick={this.moveSectionClick.bind(this,index+1)} className="btn_primary" style={{ width: 250 }}>Submit your application</button>
+                  <button onClick={this.handleSubmit} className="btn_primary" style={{ width: 250 }}>Submit your application</button>
                </footer>; 
     }
 
@@ -84,4 +111,28 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  const { 
+    name, ic, nationality, dob, 
+    gender, address, postcode, negeri, 
+    phone, email, tax, epf, occupation,
+    gross, nett, depend, kinname, relation, 
+    kinnat, kinic, kinadd, kinpost, 
+    kinstate, kinphone, kinmail,
+    kintax, kinepf, kinoccu,
+    kingross, kinnett, kindepend, iccopy, payslip 
+  } = state.form;
+
+  return {
+    name, ic, nationality, dob, 
+    gender, address, postcode, negeri, 
+    phone, email, tax, epf, occupation,
+    gross, nett, depend, kinname, relation, 
+    kinnat, kinic, kinadd, kinpost, 
+    kinstate, kinphone, kinmail,
+    kintax, kinepf, kinoccu,
+    kingross, kinnett, kindepend, iccopy, payslip 
+  }
+}
+
+export default connect(mapStateToProps, { formSubmit })(App);

@@ -52,7 +52,7 @@ class Working extends Component {
                 <input 
                     className="Form-input" 
                     type="text" 
-                    style={{width: 105}} 
+                    style={{ width: 220 }}
                     value={this.props.gross}
                     onChange={event => this.props.formUpdate({ prop: 'gross', value: event.target.value })} 
                     placeholder="" 
@@ -67,7 +67,7 @@ class Working extends Component {
                 <input 
                     className="Form-input" 
                     type="text" 
-                    style={{width: 105}} 
+                    style={{width: 245 }} 
                     value={this.props.nett}
                     onChange={event => this.props.formUpdate({ prop: 'nett', value: event.target.value })}
                     placeholder="" 
@@ -105,7 +105,7 @@ const mapStateToProps = (state) => {
     return { 
         tax, epf, occupation,
         gross, nett, depend
-    }
+    };
 }
 
 export default connect(mapStateToProps, { formUpdate })(Working);

@@ -52,7 +52,7 @@ class KinWorking extends Component {
                 <input 
                     className="Form-input" 
                     type="text" 
-                    style={{width: 105}} 
+                    style={{ width: 220 }} 
                     value={this.props.kingross}
                     onChange={event => this.props.formUpdate({ prop: 'kingross', value: event.target.value })} 
                     placeholder="" 
@@ -67,7 +67,7 @@ class KinWorking extends Component {
                 <input 
                     className="Form-input" 
                     type="text" 
-                    style={{width: 105}} 
+                    style={{ width: 245 }} 
                     value={this.props.kinnett}
                     onChange={event => this.props.formUpdate({ prop: 'kinnett', value: event.target.value })}
                     placeholder="" 
@@ -99,13 +99,13 @@ class KinWorking extends Component {
 const mapStateToProps = (state) => {
     const { 
         kintax, kinepf, kinoccu,
-        kingross, kinnett, kindepend, kinname, name, tax
+        kingross, kinnett, kindepend
     } = state.form;
-    console.log({ kinname, name, tax, kintax });
+    
     return { 
         kintax, kinepf, kinoccu,
         kingross, kinnett, kindepend
-    }
+    };
 }
 
 export default connect(mapStateToProps, { formUpdate })(KinWorking);
