@@ -18,7 +18,7 @@ class App extends Component {
   }
 
   moveSectionClick(index) {
-    this.callApi();
+    //this.callApi();
     this.setState({componentIndex: index});
   }
 
