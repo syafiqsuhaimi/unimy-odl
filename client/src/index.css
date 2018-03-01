@@ -152,21 +152,20 @@ body {
   margin-left: 6%;
   margin-top: 3%;
 }
-/*
+
 .workingFormStyle {
-  grid-area: job;
-  width: 90%;
+  width: 91%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-areas:  "tax tax"
-                        "epf epf"
-                        "occu occu"
-                        "gross nett"
-                        "depend depend";
-  padding-left: 20px;
+  grid-template-areas: "tax tax"
+                      "epf epf"
+                      "occu occu"
+                      "gross nett"
+                      "depend depend";
+  padding-left: 57px;
   padding-right: 20px;
 }
-*/
+
 .kinFormStyle {
   grid-area: detail;
   width: 90%;
@@ -276,28 +275,28 @@ body {
 }
 
 .tax {
-  grid-area: work;
+  grid-area: tax;
   display: flex;
   flex-direction: column;
   margin-bottom: 5%;
 }
 
 .epf {
-  grid-area: work;
+  grid-area: epf;
   display: flex;
   flex-direction: column;
   margin-bottom: 5%;
 }
 
 .occupation {
-  grid-area: work;
+  grid-area: occu;
   display: flex;
   flex-direction: column;
   margin-bottom: 5%;
 }
 
 .gross {
-  grid-area: work;
+  grid-area: gross;
   display: flex;
   flex-direction: column;
   margin-bottom: 5%;
@@ -305,7 +304,7 @@ body {
 }
 
 .nett {
-  grid-area: work;
+  grid-area: nett;
   display: flex;
   flex-direction: column;
   margin-bottom: 5%;
@@ -313,7 +312,7 @@ body {
 }
 
 .depend {
-  grid-area: work;
+  grid-area: depend;
   display: flex;
   flex-direction: column;
   margin-bottom: 5%;
@@ -436,7 +435,7 @@ body {
 
 .App-progress-bar {
   grid-area: progressbar;
-  height: 100%;
+  height: 155%;
   width: 100%;
  /* float: right;*/
   background-color: #F0BDCC;
@@ -444,7 +443,7 @@ body {
 
 .Section{
   width: 100%;
-  height: 80px;
+  height: 100px;
   display: flex;
   flex-direction: column; 
   justify-content: center;

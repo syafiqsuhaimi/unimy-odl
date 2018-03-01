@@ -224,14 +224,14 @@ const mapStateToProps = (state) => {
     const { 
         kinname, relation, kinnat,
         kinic, kinadd, kinpost, 
-        kinstate, kinphone, kinmail, name, tax
+        kinstate, kinphone, kinmail
     } = state.form;
 
     return {
         kinname, relation, kinnat,
         kinic, kinadd, kinpost, 
         kinstate, kinphone, kinmail
-    }
+    };
 }
 
 export default connect(mapStateToProps, { formUpdate })(KinInfo);

@@ -236,17 +236,14 @@ const mapStateToProps = (state) => {
         name, ic, nationality,
         dob, gender, address,
         postcode, negeri, phone,
-        email, tax, epf, occupation,
-        gross, nett, depend
+        email
     } = state.form;
 
     return { 
         name, ic, nationality,
         dob, gender, address,
-        postcode, negeri, phone, email,
-        tax, epf, occupation, gross,
-        nett, depend
-    }
+        postcode, negeri, phone, email
+    };
 }
 
 export default connect(mapStateToProps, { formUpdate })(PersonalInfo);
