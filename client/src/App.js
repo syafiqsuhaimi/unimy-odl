@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo_unimy.jpg';
-import PersonalInfo from './components/personalInfo/PersonalInfo';
-import KinInfo from './components/kinInfo/KinInfo';
-import Upload from './components/uploadDocument/Upload';
+import PersonalInfo from './components/PersonalInfo';
+import KinInfo from './components/KinInfo';
+import Upload from './components/Upload';
 
 class App extends Component {
   constructor(props) {
