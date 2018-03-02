@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors')
 const bodyParser = require("body-parser");
 const sql = require("mssql");
+const nodemailer = require("nodemailer");
 
 const app = express();
 
@@ -47,6 +48,7 @@ app.get('/get-student', function (req, res) {
 
             // send records as a response
             res.send(recordset);
+            sendEmail();
             sql.close();
         });
     });
@@ -54,7 +56,10 @@ app.get('/get-student', function (req, res) {
 
 app.post('/post-student', function (req, res) {
         
-    if(req.body != null) console.log(req.body);
+    if(req.body != null) {
+        console.log('data',req.body);
+        return;
+    }
         
     //get the data from client
         let id = req.body.studentid;
@@ -103,5 +108,40 @@ app.post('/post-student', function (req, res) {
         });
         res.end();
 });
+
+function sendEmail(){
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'syafiq.suhaimi@gmail.com',
+          pass: 'Syafiq010'
+        }
+      });
+      
+      var mailOptions = {
+        from: 'syafiq.suhaimi@gmail.com',
+        to: 'syain@gmail.com',
+        subject: 'Sending Email using Node.js',
+        text: 'That was easy!',
+        attachments: [
+            {
+                filename: 'text1.txt',
+                content: 'hello world!'
+            },
+            {   // binary buffer as an attachment
+                filename: 'text2.txt',
+                content: new Buffer('hello world!','utf-8')
+            }
+        ]
+      };
+      
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+}
 
 app.listen(port, () => console.log(`Listening on port ${port}`)); 

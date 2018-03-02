@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { formSubmit } from './actions';
-import axios from 'axios';
-
 import logo from './logo_unimy.jpg';
 import PersonalInfo from './components/PersonalInfo';
 import KinInfo from './components/KinInfo';
@@ -14,15 +12,9 @@ class App extends Component {
       this.moveSectionClick = this.moveSectionClick.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
       this.state = {componentIndex: 0};
-      this.state.student = {
-        studentid : 5,
-        studentname : 'rizal',
-        studentemail : 'rizal@email'
-      }
   }
 
   moveSectionClick(index) {
-    //this.callApi();
     this.setState({componentIndex: index});
   }
 
@@ -49,16 +41,6 @@ class App extends Component {
       kingross, kinnett, kindepend, iccopy, payslip
     });
   }
-
-  callApi = async () => {
-    axios.post('http://localhost:8888/post-student', this.state.student)
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  };
 
   render() {
     const componentIndex = this.state.componentIndex;

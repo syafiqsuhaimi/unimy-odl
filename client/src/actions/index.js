@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const FORM_UPDATE = 'form_update';
 export const FORM_SUBMIT = 'form_submit';
 
@@ -19,16 +21,25 @@ export const formSubmit = ({
 }) => {
    /* push to database */
    return (dispatch) => {
-        console.log({
-            name, ic, nationality, dob, 
-            gender, address, postcode, negeri, 
-            phone, email, tax, epf, occupation,
-            gross, nett, depend, kinname, relation, 
-            kinnat, kinic, kinadd, kinpost, 
-            kinstate, kinphone, kinmail,
-            kintax, kinepf, kinoccu,
-            kingross, kinnett, kindepend, iccopy, payslip
+        let applicant = JSON.stringify({
+            name, ic, nationality, dob, gender, address, 
+            postcode, negeri, phone, email, tax, epf, 
+            occupation, gross, nett, depend, kinname, 
+            relation, kinnat, kinic, kinadd, kinpost, 
+            kinstate, kinphone, kinmail, kintax, kinepf, 
+            kinoccu, kingross, kinnett, kindepend, 
+            iccopy, payslip 
         });
+
+        
+        axios.post('http://localhost:8888/post-student', applicant)
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
         dispatch({ type: FORM_SUBMIT });
    }
 };
