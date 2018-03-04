@@ -33,9 +33,9 @@ class KinInfo extends Component {
             <div className="App-body">
                 <form className="kinFormStyle">
                 <div className="name">
-                    <label className="Form-label">Kin Full Name (As per IC)</label>
+                    <label className="form-label">Kin Full Name (As per IC)</label>
                     <input 
-                            className="Form-input" 
+                            className="form-control" 
                             type="text" 
                             value={this.props.kinname}
                             onChange={event => this.props.formUpdate({ prop: 'kinname', value: event.target.value })}
@@ -47,9 +47,9 @@ class KinInfo extends Component {
                 </div>
 
                 <div className="relation">
-                    <label className="Form-label">Relationship with Applicant</label>
+                    <label className="form-label">Relationship with Applicant</label>
                     <input 
-                        className="Form-input" 
+                        className="form-control" 
                         type="text" 
                         value={this.props.relation}
                         onChange={event => this.props.formUpdate({ prop: 'relation', value: event.target.value })}
@@ -61,9 +61,9 @@ class KinInfo extends Component {
                 </div>
 
                 <div className="nationality">
-                    <label className="Form-label">Nationality</label>
+                    <label className="form-label">Nationality</label>
                     <input 
-                        className="Form-input" 
+                        className="form-control" 
                         type="text" 
                         value={this.props.kinnat}
                         onChange={event => this.props.formUpdate({ prop: 'kinnat', value: event.target.value })}
@@ -75,9 +75,9 @@ class KinInfo extends Component {
                 </div>
 
                 <div className="ic">
-                    <label className="Form-label">IC Number</label>
+                    <label className="form-label">IC Number</label>
                     <input 
-                        className="Form-input" 
+                        className="form-control" 
                         type="number" 
                         value={this.props.kinic}
                         onChange={event => this.props.formUpdate({ prop: 'kinic', value: event.target.value })}
@@ -89,9 +89,9 @@ class KinInfo extends Component {
                 </div>
 
                 <div className="address">
-                    <label className="Form-label">Permanent Address</label>
+                    <label className="form-label">Permanent Address</label>
                     <input 
-                        className="Form-input" 
+                        className="form-control" 
                         type="text" 
                         value={this.props.kinadd}
                         onChange={event => this.props.formUpdate({ prop: 'kinadd', value: event.target.value })}
@@ -103,9 +103,9 @@ class KinInfo extends Component {
                 </div>
 
                 <div className="postcode">
-                    <label className="Form-label">Postcode</label>
+                    <label className="form-label">Postcode</label>
                     <input 
-                        className="Form-input" 
+                        className="form-control" 
                         type="number" 
                         value={this.props.kinpost}
                         onChange={event => this.props.formUpdate({ prop: 'kinpost', value: event.target.value })}
@@ -117,9 +117,9 @@ class KinInfo extends Component {
                     </div> */}
                 </div>
                 <div className="state">
-                    <label className="Form-label">State</label>
+                    <label className="form-label">State</label>
                     <select 
-                        className="Form-input" 
+                        className="form-control" 
                         style={{ height: 27 }} 
                         value={this.props.kinstate}
                         onChange={event => this.props.formUpdate({ prop: 'kinstate', value: event.target.value })}
@@ -148,9 +148,9 @@ class KinInfo extends Component {
                     </div> */}
                 </div>
                 <div className="phone">
-                    <label className="Form-label">Phone Number</label>
+                    <label className="form-label">Phone Number</label>
                     <input 
-                        className="Form-input" 
+                        className="form-control" 
                         type="number" 
                         value={this.props.kinphone}
                         onChange={event => this.props.formUpdate({ prop: 'kinphone', value: event.target.value })}
@@ -162,9 +162,9 @@ class KinInfo extends Component {
                 </div>
 
                 <div className="email">
-                    <label className="Form-label">Email Address</label>
+                    <label className="form-label">Email Address</label>
                     <input 
-                        className="Form-input" 
+                        className="form-control" 
                         type="email" 
                         value={this.props.kinmail}
                         onChange={event => this.props.formUpdate({ prop: 'kinmail', value: event.target.value })}
@@ -176,7 +176,7 @@ class KinInfo extends Component {
                 </div>
 
                 <div className="work">
-                    <label className="Form-label">Currently working?</label>
+                    <label className="form-label">Currently working?</label>
                     <div className="Button-row-col">
                         <button onClick={this.handleWorkedClick} className="Form-button">Yes</button>
                         <button className="Form-button">No</button>

@@ -2,13 +2,23 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { formUpdate } from '../actions';
 import Working from './Working';
+import { FormErrors } from './FormErrors';
 
 class PersonalInfo extends Component {
     constructor(props) {
         super(props);
         this.handleWorkedClick = this.handleWorkedClick.bind(this);
         this.handleNotWorkedClick = this.handleNotWorkedClick.bind(this);
-        this.state = {isWorking: false};
+        this.handleChange = this.handleChange.bind(this);
+        this.state = {
+            isWorking: false,
+            formErrors: { 
+                name: '', ic: ''
+            },
+            nameValid: false,
+            icValid: false,
+            formValid: false
+        };
     }
     
     handleWorkedClick() {
@@ -18,7 +28,61 @@ class PersonalInfo extends Component {
     handleNotWorkedClick() {
         this.setState({isWorking: false});
     }
+
+    handleChange(event) {
+        const name = event.target.name;
+        const value = event.target.value;
+        this.props.formUpdate({ prop: name , value });
+
+        this.validateField(name, value);
+    }
     
+    validateField(fieldName, value) {
+        let fieldValidationErrors = this.state.formErrors;
+        let nameValid = this.state.nameValid;
+        let icValid = this.state.icValid;
+        console.log('inside: ' + this.state.formErrors.name);
+
+        switch (fieldName) {
+            case 'name':
+                nameValid = value.length >= 6;
+                fieldValidationErrors.name = nameValid? '' : ' is-invalid';
+                break;
+            case 'ic':
+                icValid = value.match(/([0-9]{6})([-])([0-9]{2})([-])([0-9]{4})/);
+                fieldValidationErrors.ic = icValid? '' : ' is-invalid';
+                break;
+            default: 
+                break;
+        }
+
+        this.setState({ formErrors: fieldValidationErrors,
+                    nameValid: nameValid,
+                    icValid: icValid
+                }, this.validateForm);
+    }
+
+    validateForm() {
+        this.setState({ formValid: this.state.nameValid && this.state.icValid });
+    }
+
+    errorClass(error) {
+        return (error.length === 0? '' : 'has-error');
+    }
+
+    renderErrorText(name, value) {
+        console.log(name, value);
+        console.log(this.state.formErrors[name]);
+        if (this.state.formErrors[name] > 0) {
+            return (
+                <div>
+                    {value}{this.state.formErrors}
+                </div>
+            );
+        }
+        return;
+    }
+
     render() {
         const isWorking = this.state.isWorking;
         
@@ -34,64 +98,74 @@ class PersonalInfo extends Component {
             <form className="personalFormStyle">
 
                 <div className="name">
-                    <label className="Form-label">Full Name (As per IC)</label>
+                    <div className={`form-group ${this.errorClass(this.state.formErrors.name)}`}>
+                    <label className="form-label">Full Name (As per IC)</label>
                     <input 
-                        className="Form-input" 
+                        className={`form-control ${this.state.formErrors.name}`} 
                         type="text" 
                         value={this.props.name} 
+                        name="name"
                         placeholder=""
-                        onChange={event => this.props.formUpdate({ prop: 'name', value: event.target.value })}    
+                        onChange={this.handleChange} 
                     />
+                    {this.renderErrorText('name',this.props.name)}
+                    </div>
                     {/* <div className="Invalid-feedback">
                     Please enter a valid name.
                     </div> */}
                 </div>
 
                 <div className="ic">
-                    <label className="Form-label">IC Number</label>
+                <div className={`form-group ${this.errorClass(this.state.formErrors.ic)}`}>
+                    <label className="form-label">IC Number</label>
                     <input 
-                        className="Form-input" 
+                        className="form-control" 
                         type="number" 
                         value={this.props.ic} 
-                        placeholder=""
-                        onChange={event => this.props.formUpdate({ prop: 'ic', value: event.target.value })}
+                        name="ic"
+                        placeholder="i.e: xxxxxx-xx-xxxx"
+                        onChange={this.handleChange}
                     />
+                </div>
                     {/* <div className="Invalid-feedback">
                     Please enter a valid name.
                     </div> */}
                 </div>
                 <div className="nationality">
-                    <label className="Form-label">Nationality</label>
+                    <label className="form-label">Nationality</label>
                     <input 
-                        className="Form-input" 
+                        className="form-control" 
                         type="text" 
                         value={this.props.nationality} 
+                        name="nationality"
                         placeholder=""
-                        onChange={event => this.props.formUpdate({ prop: 'nationality', value: event.target.value })}
+                        onChange={this.handleChange}
                     />
                     {/* <div className="Invalid-feedback">
                     Please enter a valid name.
                     </div> */}
                 </div>
                 <div className="dob">
-                    <label className="Form-label">Date of Birth</label>
+                    <label className="form-label">Date of Birth</label>
                     <input 
-                        className="Form-input" 
+                        className="form-control" 
                         type="text" 
                         placeholder=""
+                        name="dob"
                         value={this.props.dob}
-                        onChange={event => this.props.formUpdate({ prop: 'dob', value: event.target.value })}   
+                        onChange={this.handleChange}   
                     />
                     {/* <div className="Invalid-feedback">
                         Valid first name is required.
                     </div> */}
                 </div>
                 <div className="gender">
-                    <label className="Form-label">Gender</label>
+                    <label className="form-label">Gender</label>
                     <select 
-                        className="Form-label" 
+                        className="form-control" 
                         style={{ height: 27 }}
-                        onChange={event => this.props.formUpdate({ prop: 'gender', value: event.target.value })} 
+                        name="gender"
+                        onChange={this.handleChange} 
                         required
                     >
                         <option value="">Choose...</option>
@@ -103,24 +177,26 @@ class PersonalInfo extends Component {
                     </div> */}
                 </div>
                 <div className="address">
-                    <label className="Form-label">Permanent Address</label>
+                    <label className="form-label">Permanent Address</label>
                     <input 
-                        className="Form-input" 
+                        className="form-control" 
                         type="text" 
                         value={this.props.address}
-                        onChange={event => this.props.formUpdate({ prop: 'address', value: event.target.value })} 
+                        name="address"
+                        onChange={this.handleChange} 
                         placeholder=""/>
                     {/* <div className="Invalid-feedback">
                     Please enter a valid name.
                     </div> */}
                 </div>
                 <div className="postcode">
-                    <label className="Form-label">Postcode</label>
+                    <label className="form-label">Postcode</label>
                     <input 
-                        className="Form-input" 
+                        className="form-control" 
                         type="number" 
                         value={this.props.postcode}
-                        onChange={event => this.props.formUpdate({ prop: 'postcode', value: event.target.value })} 
+                        name="postcode"
+                        onChange={this.handleChange} 
                         placeholder="" 
                         required/>
                     {/* <div className="Invalid-feedback">
@@ -128,12 +204,13 @@ class PersonalInfo extends Component {
                     </div> */}
                 </div>
                 <div className="state">
-                    <label className="Form-label">State</label>
+                    <label className="form-label">State</label>
                     <select 
-                        className="Form-input" 
+                        className="form-control" 
                         style={{ height: 27 }} 
                         value={this.props.negeri}
-                        onChange={event => this.props.formUpdate({ prop: 'negeri', value: event.target.value })} 
+                        name="state"
+                        onChange={this.handleChange} 
                         required
                     >
                         <option value="">Choose...</option>
@@ -159,12 +236,13 @@ class PersonalInfo extends Component {
                     </div> */}
                 </div>
                 <div className="phone">
-                    <label className="Form-label">Phone Number</label>
+                    <label className="form-label">Phone Number</label>
                     <input 
-                        className="Form-input" 
+                        className="form-control" 
                         type="number" 
                         value={this.props.phone}
-                        onChange={event => this.props.formUpdate({ prop: 'phone', value: event.target.value })} 
+                        name="phone"
+                        onChange={this.handleChange} 
                         placeholder=""
                     />
                     {/* <div className="Invalid-feedback">
@@ -173,12 +251,13 @@ class PersonalInfo extends Component {
                 </div>
 
                 <div className="email">
-                    <label className="Form-label">Email Address</label>
+                    <label className="form-label">Email Address</label>
                     <input 
-                        className="Form-input" 
+                        className="form-control" 
                         type="email" 
                         value={this.props.email}
-                        onChange={event => this.props.formUpdate({ prop: 'email', value: event.target.value })} 
+                        name="email"
+                        onChange={this.handleChange} 
                         placeholder="you@example.com"
                     />
                     {/* <div className="Invalid-feedback">
@@ -187,7 +266,7 @@ class PersonalInfo extends Component {
                 </div>
 
                 <div className="work">
-                    <label className="Form-label">Are you currently working?</label>
+                    <label className="form-label">Are you currently working?</label>
                     <div className="Button-row-col">
                         <button onClick={this.handleWorkedClick} className="Form-button">Yes</button>
                         <button onClick={this.handleNotWorkedClick} className="Form-button">No</button>
