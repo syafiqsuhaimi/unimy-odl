@@ -7,9 +7,9 @@ class KinWorking extends Component {
         return (
         <form className="workingFormStyle">
             <div className="tax">
-                <label className="Form-label">Income Tax Number</label>
+                <label className="form-label">Income Tax Number</label>
                 <input 
-                    className="Form-input" 
+                    className="form-control" 
                     type="number" 
                     value={this.props.kintax} 
                     placeholder=""
@@ -21,9 +21,9 @@ class KinWorking extends Component {
             </div>
 
             <div className="epf">
-                <label className="Form-label">EPF Number</label>
+                <label className="form-label">EPF Number</label>
                 <input 
-                    className="Form-input" 
+                    className="form-control" 
                     type="number" 
                     value={this.props.kinepf} 
                     onChange={event => this.props.formUpdate({ prop: 'kinepf', value: event.target.value })}
@@ -35,9 +35,9 @@ class KinWorking extends Component {
             </div>
 
             <div className="occupation">
-                <label className="Form-label">Occupation</label>
+                <label className="form-label">Occupation</label>
                 <input 
-                    className="Form-input" 
+                    className="form-control" 
                     type="text" 
                     value={this.props.kinoccu}
                     onChange={event => this.props.formUpdate({ prop: 'kinoccu', value: event.target.value })} 
@@ -48,9 +48,9 @@ class KinWorking extends Component {
                 </div> */}
             </div>
             <div className="gross">
-                <label className="Form-label">Gross Salary</label>
+                <label className="form-label">Gross Salary</label>
                 <input 
-                    className="Form-input" 
+                    className="form-control" 
                     type="text" 
                     style={{ width: 220 }} 
                     value={this.props.kingross}
@@ -63,9 +63,9 @@ class KinWorking extends Component {
                 </div> */}
                 </div>
                 <div className="nett">
-                <label className="Form-label">Nett Salary</label>
+                <label className="form-label">Nett Salary</label>
                 <input 
-                    className="Form-input" 
+                    className="form-control" 
                     type="text" 
                     style={{ width: 245 }} 
                     value={this.props.kinnett}
@@ -79,9 +79,9 @@ class KinWorking extends Component {
             </div>
 
             <div className="depend">
-                <label className="Form-label">Number of Family Dependants</label>
+                <label className="form-label">Number of Family Dependants</label>
                 <input 
-                    className="Form-input" 
+                    className="form-control" 
                     type="number" 
                     value={this.props.kindepend}
                     onChange={event => this.props.formUpdate({ prop: 'kindepend', value: event.target.value })}

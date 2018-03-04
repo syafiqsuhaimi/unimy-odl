@@ -374,6 +374,10 @@ body {
   transition-delay: initial, initial;
 }
 
+.errorTextStyle {
+  color: #FF0000;
+}
+
 .Button-row-col{
   height: 20px;
   width: 50%;

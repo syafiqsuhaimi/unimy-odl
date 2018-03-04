@@ -7,9 +7,9 @@ class Working extends Component {
         return (
         <form className="workingFormStyle">
             <div className="tax">
-                <label className="Form-label">Income Tax Number</label>
+                <label className="form-label">Income Tax Number</label>
                 <input 
-                    className="Form-input" 
+                    className="form-control" 
                     type="number" 
                     value={this.props.tax} 
                     placeholder=""
@@ -21,9 +21,9 @@ class Working extends Component {
             </div>
 
             <div className="epf">
-                <label className="Form-label">EPF Number</label>
+                <label className="form-label">EPF Number</label>
                 <input 
-                    className="Form-input" 
+                    className="form-control" 
                     type="number" 
                     value={this.props.epf} 
                     onChange={event => this.props.formUpdate({ prop: 'epf', value: event.target.value })}
@@ -35,9 +35,9 @@ class Working extends Component {
             </div>
 
             <div className="occupation">
-                <label className="Form-label">Occupation</label>
+                <label className="form-label">Occupation</label>
                 <input 
-                    className="Form-input" 
+                    className="form-control" 
                     type="text" 
                     value={this.props.occupation}
                     onChange={event => this.props.formUpdate({ prop: 'occupation', value: event.target.value })} 
@@ -48,9 +48,9 @@ class Working extends Component {
                 </div> */}
             </div>
             <div className="gross">
-                <label className="Form-label">Gross Salary</label>
+                <label className="form-label">Gross Salary</label>
                 <input 
-                    className="Form-input" 
+                    className="form-control" 
                     type="text" 
                     style={{ width: 220 }}
                     value={this.props.gross}
@@ -63,9 +63,9 @@ class Working extends Component {
                 </div> */}
                 </div>
                 <div className="nett">
-                <label className="Form-label">Nett Salary</label>
+                <label className="form-label">Nett Salary</label>
                 <input 
-                    className="Form-input" 
+                    className="form-control" 
                     type="text" 
                     style={{width: 245 }} 
                     value={this.props.nett}
@@ -79,9 +79,9 @@ class Working extends Component {
             </div>
 
             <div className="depend">
-                <label className="Form-label">Number of Family Dependants</label>
+                <label className="form-label">Number of Family Dependants</label>
                 <input 
-                    className="Form-input" 
+                    className="form-control" 
                     type="number" 
                     value={this.props.depend}
                     onChange={event => this.props.formUpdate({ prop: 'depend', value: event.target.value })}
