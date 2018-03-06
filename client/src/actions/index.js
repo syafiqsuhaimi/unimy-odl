@@ -2,6 +2,8 @@ import axios from 'axios';
 
 export const FORM_UPDATE = 'form_update';
 export const FORM_SUBMIT = 'form_submit';
+export const VALIDATION_SUCCESS = 'validation_success';
+export const VALIDATION_FAIL = 'validation_fail';
 
 export const formUpdate = ({ prop, value }) => {
     return {
@@ -43,3 +45,19 @@ export const formSubmit = ({
         dispatch({ type: FORM_SUBMIT });
    }
 };
+
+export const formValidate = (validation) => {
+    if (validation) {
+        return {
+            type: VALIDATION_SUCCESS,
+            payload: null
+        }
+    }
+
+    return {
+        type: VALIDATION_FAIL,
+        payload: null
+    }
+    
+}
+

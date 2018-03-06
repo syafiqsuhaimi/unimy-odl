@@ -1,4 +1,4 @@
-import { FORM_UPDATE, FORM_SUBMIT } from '../actions';
+import { FORM_UPDATE, FORM_SUBMIT, VALIDATION_SUCCESS, VALIDATION_FAIL } from '../actions';
 
 const INITIAL_STATE = {
     name: '', ic: '', nationality: '',
@@ -11,7 +11,8 @@ const INITIAL_STATE = {
     kinpost: '', kinstate: '', kinphone: '',
     kinmail: '', kintax: '', kinepf: '',
     kinoccu: '', kingross: '', kinnett: '',
-    kindepend: '', iccopy: '', payslip: ''
+    kindepend: '', iccopy: '', payslip: '', 
+    buttonDisabled: true
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -20,6 +21,10 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, [action.payload.prop]: action.payload.value };
         case FORM_SUBMIT:
             return INITIAL_STATE;
+        case VALIDATION_SUCCESS: 
+            return { ...state, buttonDisabled: false };
+        case VALIDATION_FAIL:
+            return { ...state, buttonDisabled: true };
         default:
             return state;
     }

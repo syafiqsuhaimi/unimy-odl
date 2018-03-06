@@ -44,21 +44,20 @@ class App extends Component {
 
   render() {
     const componentIndex = this.state.componentIndex;
-    
     let Form, Footer, index = null;
 
     if (componentIndex === 0) {
         index = 0
         Form = <PersonalInfo />; 
         Footer = <footer className="App-footer">
-                    <button onClick={this.moveSectionClick.bind(this,index+1)} className="btn_primary">Continue</button>
+                    <button onClick={this.moveSectionClick.bind(this,index+1)} className="btn_primary" disabled={this.props.buttonDisabled}>Continue</button>
                   </footer>; 
     } else if(componentIndex === 1) {
         index = 1
         Form = <KinInfo />; 
         Footer = <footer className="App-footer">
                     <button onClick={this.moveSectionClick.bind(this,index-1)} className="btn_secondary">Previous</button>
-                    <button onClick={this.moveSectionClick.bind(this,index+1)} className="btn_primary">Continue</button>
+                    <button onClick={this.moveSectionClick.bind(this,index+1)} className="btn_primary" disabled={this.props.buttonDisabled}>Continue</button>
                  </footer>; 
     } else if(componentIndex === 2) {
       index = 2
@@ -102,7 +101,7 @@ const mapStateToProps = (state) => {
     kinnat, kinic, kinadd, kinpost, 
     kinstate, kinphone, kinmail,
     kintax, kinepf, kinoccu,
-    kingross, kinnett, kindepend, iccopy, payslip 
+    kingross, kinnett, kindepend, iccopy, payslip, buttonDisabled
   } = state.form;
 
   return {
@@ -113,7 +112,7 @@ const mapStateToProps = (state) => {
     kinnat, kinic, kinadd, kinpost, 
     kinstate, kinphone, kinmail,
     kintax, kinepf, kinoccu,
-    kingross, kinnett, kindepend, iccopy, payslip 
+    kingross, kinnett, kindepend, iccopy, payslip, buttonDisabled 
   }
 }
 

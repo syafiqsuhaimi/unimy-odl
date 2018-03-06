@@ -5,18 +5,22 @@ body {
 /*Form wrapper*/
 
 .App {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
+  /*width: 100vw;*/
+  /*height: 100vh;*/
+  width: 75%;
+  margin: auto;
+  /*display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center;*/
 }
 
 .Container {
- height: 90%;
- width: 70%;
+ /*height: 90%;*/
+ width: 100%;
  border-radius: 0.2rem;
- overflow: hidden;
+ margin-top: 20pt;
+ margin-bottom: 20pt;
+ /*overflow: hidden;*/
  background-color: #F7E8EC;
  display: grid;
  grid-template-columns: 2fr 1fr;
@@ -28,9 +32,10 @@ body {
 /* Header */
 
 .App-header {
+  width: 100%;
   grid-area: header;
   background-color: #D10E48;
-  height: 44px;
+  /*height: 44px;*/
   display: flex;
   justify-content: space-between;
   padding: 3px;
@@ -65,10 +70,12 @@ body {
 
 .App-footer {
   grid-area: footer;
-  height: 52px;
+  /*height: 52px;*/
+  padding-bottom: 10pt;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 30pt;
 }
 
 .btn_primary {
@@ -120,24 +127,30 @@ body {
   display: grid;
   grid-template-columns: 3fr 1fr;
   grid-template-areas: "detail progressbar";
-  overflow: auto;
-  height: 450px;
+  /*overflow: auto;*/
+  /*height: 450px;*/
 }
 
 .App-content {
   grid-area: detail;
-  width: 60%;
-  height: 400px;
+  /*width: 60%;
+  /*height: 400px;*/
   padding-left: 20px;
   padding-right: 20px;
   /*float: left;*/
 }
 
-.personalFormStyle {
+.test {
   grid-area: detail;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas: "test"
+                        "work";
+}
+
+.personalFormStyle {
+  grid-area: test;
   width: 90%;
-  padding-left: 20px;
-  padding-right: 20px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-areas: "name name"
@@ -147,14 +160,13 @@ body {
                       "address address"
                       "postcode state"
                       "phone phone"
-                      "email email"
-                      "work work";
-  margin-left: 6%;
-  margin-top: 3%;
+                      "email email";
+  margin-left: 30pt;
+  margin-top: 30pt;
 }
 
 .workingFormStyle {
-  width: 91%;
+  width: 90%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-areas: "tax tax"
@@ -162,12 +174,13 @@ body {
                       "occu occu"
                       "gross nett"
                       "depend depend";
-  padding-left: 57px;
-  padding-right: 20px;
+  margin-left: 30pt;
+  margin-top: 20pt;
+  margin-bottom: 30pt;
 }
 
 .kinFormStyle {
-  grid-area: detail;
+  grid-area: test;
   width: 90%;
   padding-left: 20px;
   padding-right: 20px;
@@ -180,8 +193,7 @@ body {
                       "address address"
                       "postcode state"
                       "phone phone"
-                      "email email"
-                      "work work";
+                      "email email";
   margin-left: 6%;
   margin-top: 3%;
 }
@@ -190,132 +202,136 @@ body {
   grid-area: name;
   display: flex;
   flex-direction: column;
-  margin-bottom: 5%;
 }
 
 .ic {
   grid-area: ic;
   display: flex;
   flex-direction: column;
-  margin-bottom: 5%;
+  margin-top: 30pt;
 }
 
 .relation {
   grid-area: relation;
   display: flex;
   flex-direction: column;
-  margin-bottom: 5%;
+  margin-top: 30pt;
 }
 
 .nationality {
   grid-area: nat;
   display: flex;
   flex-direction: column;
-  margin-bottom: 5%;
+  margin-top: 30pt;
 }
 
 .dob {
   grid-area: dob;
   display: flex;
   flex-direction: column;
-  width: 80%;
-  margin-bottom: 5%;
+  /*width: 80%;*/
+  margin-right: 16pt;
+  margin-top: 30pt;
 }
 
 .gender {
   grid-area: gender;
   display: flex;
   flex-direction: column;
-  width: 84%;
-  margin-bottom: 5%;
+  /*width: 84%;*/
+  margin-left: 16pt;
+  margin-top: 30pt;
 }
 
 .address {
   grid-area: address;
   display: flex;
   flex-direction: column;
-  margin-bottom: 5%;
+  margin-top: 30pt;
 }
 
 .postcode {
   grid-area: postcode;
   display: flex;
   flex-direction: column;
-  width: 80%;
-  margin-bottom: 5%;
+  /*width: 80%;*/
+  margin-right: 16pt;
+  margin-top: 30pt;
 }
 
 .state {
   grid-area: state;
   display: flex;
   flex-direction: column;
-  width: 93%;
-  margin-bottom: 5%;
+  /*width: 93%;*/
+  margin-left: 16pt;
+  margin-top: 30pt;
 }
 
 .phone {
   grid-area: phone;
   display: flex;
   flex-direction: column;
-  margin-bottom: 5%;
+  margin-top: 30pt;
 }
 
 .email {
   grid-area: email;
   display: flex;
   flex-direction: column;
-  margin-bottom: 5%;
+  margin-top: 30pt;
 }
 
 .work {
   grid-area: work;
   display: flex;
   flex-direction: column;
-  margin-bottom: 5%;
+  margin-top: 30pt;
+  margin-left: 30pt;
 }
 
 .tax {
   grid-area: tax;
   display: flex;
   flex-direction: column;
-  margin-bottom: 5%;
+  margin-top: 30pt;
 }
 
 .epf {
   grid-area: epf;
   display: flex;
   flex-direction: column;
-  margin-bottom: 5%;
+  margin-top: 30pt;
 }
 
 .occupation {
   grid-area: occu;
   display: flex;
   flex-direction: column;
-  margin-bottom: 5%;
+  margin-top: 30pt;
 }
 
 .gross {
   grid-area: gross;
   display: flex;
   flex-direction: column;
-  margin-bottom: 5%;
-  width: 80%;
+  margin-top: 30pt;
+  margin-right: 16pt;
 }
 
 .nett {
   grid-area: nett;
   display: flex;
   flex-direction: column;
-  margin-bottom: 5%;
-  width: 84%;
+  margin-top: 30pt;
+  margin-left: 16pt;
 }
 
 .depend {
   grid-area: depend;
   display: flex;
   flex-direction: column;
-  margin-bottom: 5%;
+  margin-top: 30pt;
 }
 
 .Form{
@@ -439,7 +455,7 @@ body {
 
 .App-progress-bar {
   grid-area: progressbar;
-  height: 155%;
+  /*height: 100%;*/
   width: 100%;
  /* float: right;*/
   background-color: #F0BDCC;

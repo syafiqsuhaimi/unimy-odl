@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { formUpdate } from '../actions';
+import { formUpdate, formValidate } from '../actions';
 import Working from './Working';
-import { FormErrors } from './FormErrors';
 
 class PersonalInfo extends Component {
     constructor(props) {
@@ -10,10 +9,12 @@ class PersonalInfo extends Component {
         this.handleWorkedClick = this.handleWorkedClick.bind(this);
         this.handleNotWorkedClick = this.handleNotWorkedClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.renderErrorText = this.renderErrorText.bind(this);
         this.state = {
             isWorking: false,
             formErrors: { 
-                name: '', ic: '', dob: '', postcode: '', phone: '', email: ''
+                name: '', ic: '', dob: '', postcode: '', phone: '', email: '',
+                nationality: '', gender: '', address: '', negeri: '', work: ''
             },
             nameValid: false,
             icValid: false,
@@ -21,23 +22,28 @@ class PersonalInfo extends Component {
             postcodeValid: false,
             phoneValid: false,
             emailValid: false,
+            natValid: false,
+            genderValid: false,
+            addressValid: false,
+            negeriValid: false,
+            workValid: false,
             formValid: false
         };
     }
     
     handleWorkedClick() {
-        this.setState({isWorking: true});
+        this.setState({ isWorking: true });
     }
     
     handleNotWorkedClick() {
-        this.setState({isWorking: false});
+        this.setState({isWorking: false, workValid: true });
+        this.validateField('work', 'click');
     }
 
     handleChange(event) {
         const name = event.target.name;
         const value = event.target.value;
         this.props.formUpdate({ prop: name , value });
-
         this.validateField(name, value);
     }
     
@@ -49,31 +55,122 @@ class PersonalInfo extends Component {
         let postcodeValid = this.state.postcodeValid;
         let phoneValid = this.state.phoneValid;
         let emailValid = this.state.emailValid;
+        let natValid = this.state.natValid;
+        let genderValid = this.state.genderValid;
+        let addressValid = this.state.addressValid;
+        let negeriValid = this.state.negeriValid;
+        let workValid = this.state.workValid;
 
         switch (fieldName) {
             case 'name':
                 nameValid = value.length >= 6 && value.match(/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'@-]+$/u);
-                fieldValidationErrors.name = nameValid? '' : ' is-invalid';
+                if  (fieldValidationErrors.name = nameValid) {
+                    fieldValidationErrors.name = '';
+                    nameValid = true;
+                } else {
+                    fieldValidationErrors.name = ' is-invalid';
+                    nameValid = false;
+                }
                 break;
             case 'ic':
                 icValid = value.match(/^\d{6}-\d{2}-\d{4}$/);
-                fieldValidationErrors.ic = icValid? '' : ' is-invalid';
+                if (fieldValidationErrors.ic = icValid) {
+                    fieldValidationErrors.ic = '';
+                    icValid = true;
+                } else {
+                    fieldValidationErrors.ic = ' is-invalid';
+                    icValid = false;
+                }
                 break;
             case 'dob':
                 dobValid = value.match(/(0[1-9]|1[012])[- \/.](0[1-9]|[12][0-9]|3[01])[- \/.](19|20)\d\d/);
-                fieldValidationErrors.dob = dobValid? '' : ' is-invalid';
+                if (fieldValidationErrors.dob = dobValid) {
+                    fieldValidationErrors.dob = '';
+                    dobValid = true;
+                } else {
+                    fieldValidationErrors.dob = ' is-invalid';
+                    dobValid = false;
+                }
                 break;
             case 'postcode':
-                postcodeValid = value.length >= 6;
-                fieldValidationErrors.postcode = postcodeValid? '' : ' is-invalid';
+                postcodeValid = value.length >= 5;
+                if (fieldValidationErrors.postcode = postcodeValid) {
+                    fieldValidationErrors.postcode = '';
+                    postcodeValid = true;
+                } else {
+                    fieldValidationErrors.postcode = ' is-invalid';
+                    postcodeValid = false;
+                }
                 break;
             case 'phone':
                 phoneValid = value.match(/^[01]+\d{1}-\d{7}$/);
-                fieldValidationErrors.phone = phoneValid? '' : ' is-invalid';
+                if (fieldValidationErrors.phone = phoneValid) {
+                    fieldValidationErrors.phone = '';
+                    phoneValid = true;
+                } else {
+                    fieldValidationErrors.phone = ' is-invalid';
+                    phoneValid = false;
+                }
                 break;
             case 'email':
                 emailValid = value.match(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
-                fieldValidationErrors.email = emailValid? '' : ' is-invalid';
+                if (fieldValidationErrors.email = emailValid) {
+                    fieldValidationErrors.email = '';
+                    emailValid = true;
+                } else {
+                    fieldValidationErrors.email = ' is-invalid';
+                    emailValid = false;
+                }
+                break;
+            case 'nationality':
+                natValid = value.length > 0;
+                if (fieldValidationErrors.nationality = natValid) {
+                    fieldValidationErrors.nationality = '';
+                    natValid = true;
+                } else {
+                    fieldValidationErrors.nationality = ' is-invalid';
+                    natValid = false;
+                }
+                break;
+            case 'gender':
+                genderValid = value.length > 0;
+                if (fieldValidationErrors.gender = genderValid) {
+                    fieldValidationErrors.gender = '';
+                    genderValid = true;
+                } else {
+                    fieldValidationErrors.gender = ' is-invalid';
+                    genderValid = false;
+                }
+                break;
+            case 'address':
+                addressValid = value.length > 0;
+                if (fieldValidationErrors.address = addressValid) {
+                    fieldValidationErrors.address = '';
+                    addressValid = true;
+                } else {
+                    fieldValidationErrors.address = ' is-invalid';
+                    addressValid = false;
+                }
+                break;
+            case 'negeri':
+                negeriValid = value.length > 0;
+                if (fieldValidationErrors.negeri = negeriValid) {
+                    fieldValidationErrors.negeri = '';
+                    negeriValid = true;
+                } else {
+                    fieldValidationErrors.negeri = 
+                    negeriValid = false;
+                }
+                break;
+            case 'work':
+                workValid = value.length > 0;
+                if (fieldValidationErrors.work = workValid) {
+                    fieldValidationErrors.work = '';
+                    workValid = true;
+                } else {
+                    fieldValidationErrors.work = 
+                    workValid = false;
+                }
                 break;
             default: 
                 break;
@@ -85,13 +182,30 @@ class PersonalInfo extends Component {
                     dobValid,
                     postcodeValid,
                     phoneValid,
-                    emailValid
+                    emailValid,
+                    natValid,
+                    genderValid,
+                    addressValid,
+                    negeriValid, 
+                    workValid
                 }, this.validateForm);
     }
     // function below is for disabling button
     validateForm() {
+        console.log('inside validateform: ', this.state.workValid);
         this.setState({ 
-            formValid: this.state.nameValid && this.state.icValid && this.state.dobValid 
+            formValid: 
+                this.state.nameValid && 
+                this.state.icValid && 
+                this.state.dobValid &&
+                this.state.postcodeValid &&
+                this.state.phoneValid &&
+                this.state.emailValid &&
+                this.state.natValid &&
+                this.state.genderValid && 
+                this.state.addressValid &&
+                this.state.negeriValid &&
+                this.state.workValid
         });
     }
 
@@ -100,6 +214,7 @@ class PersonalInfo extends Component {
     }
 
     renderErrorText(name, value) {
+        this.props.formValidate(this.state.formValid);
         if (this.state.formErrors[name] === ' is-invalid') {
             return (
                 <div className="alert alert-danger">
@@ -107,12 +222,7 @@ class PersonalInfo extends Component {
                 </div>
             );
         }
-        return;/*
-        return (
-            <div>
-                {value}{this.state.formErrors[name]}
-            </div>
-        );*/
+        return;
     }
 
     render() {
@@ -127,6 +237,7 @@ class PersonalInfo extends Component {
 
         return (
             <div className="App-body">
+            <div className="test">
             <form className="personalFormStyle">
 
                 <div className="name">
@@ -142,9 +253,6 @@ class PersonalInfo extends Component {
                     />
                     {this.renderErrorText('name',this.props.name)}
                     </div>
-                    {/* <div className="Invalid-feedback">
-                    Please enter a valid name.
-                    </div> */}
                 </div>
 
                 <div className="ic">
@@ -160,9 +268,6 @@ class PersonalInfo extends Component {
                     />
                     {this.renderErrorText('ic', this.props.ic)}
                 </div>
-                    {/* <div className="Invalid-feedback">
-                    Please enter a valid name.
-                    </div> */}
                 </div>
                 <div className="nationality">
                     <label className="form-label">Nationality</label>
@@ -371,6 +476,7 @@ class PersonalInfo extends Component {
                     {/* <div className="Invalid-feedback">
                     Please enter a valid name.
                     </div> */}
+                    {this.renderErrorText('nationality', this.props.nationality)}
                 </div>
                 <div className="dob">
                     <div className={`form-group ${this.errorClass(this.state.formErrors.dob)}`}>
@@ -384,9 +490,6 @@ class PersonalInfo extends Component {
                         onChange={this.handleChange}   
                     />
                     {this.renderErrorText('dob', this.props.dob)}
-                    {/* <div className="Invalid-feedback">
-                        Valid first name is required.
-                    </div> */}
                     </div>
                 </div>
                 <div className="gender">
@@ -403,9 +506,9 @@ class PersonalInfo extends Component {
                         <option value="Female">Female</option>
                     </select>
                     {/* <div className="Invalid-feedback">
-                        Gender
-                         is required.
+                    Please enter a valid name.
                     </div> */}
+                    {this.renderErrorText('gender', this.props.gender)}
                 </div>
                 <div className="address">
                     <label className="form-label">Permanent Address</label>
@@ -416,9 +519,7 @@ class PersonalInfo extends Component {
                         name="address"
                         onChange={this.handleChange} 
                         placeholder=""/>
-                    {/* <div className="Invalid-feedback">
-                    Please enter a valid name.
-                    </div> */}
+                    {this.renderErrorText('address', this.props.address)}
                 </div>
                 <div className="postcode">
                     <div className={`form-group ${this.errorClass(this.state.formErrors.postcode)}`}>
@@ -430,12 +531,8 @@ class PersonalInfo extends Component {
                         name="postcode"
                         onChange={this.handleChange} 
                         placeholder="" 
-                        required
                     />
                     {this.renderErrorText('postcode', this.props.postcode)}
-                    {/* <div className="Invalid-feedback">
-                        Valid first name is required.
-                    </div> */}
                     </div>
                 </div>
                 <div className="state">
@@ -444,7 +541,7 @@ class PersonalInfo extends Component {
                         className="form-control" 
                         style={{ height: 27 }} 
                         value={this.props.negeri}
-                        name="state"
+                        name="negeri"
                         onChange={this.handleChange} 
                         required
                     >
@@ -467,8 +564,9 @@ class PersonalInfo extends Component {
                         <option value="Sarawak">Sarawak</option>
                     </select>
                     {/* <div className="Invalid-feedback">
-                        Valid last name is required.
+                    Please enter a valid name.
                     </div> */}
+                    {this.renderErrorText('negeri', this.props.negeri)}
                 </div>
                 <div className="phone">
                     <div className={`form-group ${this.errorClass(this.state.formErrors.phone)}`}>
@@ -482,9 +580,6 @@ class PersonalInfo extends Component {
                         placeholder="i.e: 01x-xxxxxxx"
                     />
                     {this.renderErrorText('phone', this.props.phone)}
-                    {/* <div className="Invalid-feedback">
-                    Please enter a valid name.
-                    </div> */}
                     </div>
                 </div>
 
@@ -500,20 +595,18 @@ class PersonalInfo extends Component {
                         placeholder="you@example.com"
                     />
                     {this.renderErrorText('email', this.props.email)}
-                    {/* <div className="Invalid-feedback">
-                    Please enter a valid name.
-                    </div> */}
                     </div>
                 </div>
-
-                <div className="work">
+            </form>
+            <div className="work">
                     <label className="form-label">Are you currently working?</label>
                     <div className="Button-row-col">
                         <button onClick={this.handleWorkedClick} className="Form-button">Yes</button>
                         <button onClick={this.handleNotWorkedClick} className="Form-button">No</button>
                     </div>
+                    {this.renderErrorText('work', this.state.isWorking)}
                 </div>
-            </form>
+            </div>
             {workingForm}
 
                
@@ -566,4 +659,4 @@ const mapStateToProps = (state) => {
     };
 }
 
-export default connect(mapStateToProps, { formUpdate })(PersonalInfo);
+export default connect(mapStateToProps, { formUpdate, formValidate })(PersonalInfo);

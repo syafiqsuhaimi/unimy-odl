@@ -14,6 +14,7 @@ class Working extends Component {
                     value={this.props.tax} 
                     placeholder=""
                     onChange={event => this.props.formUpdate({ prop: 'tax', value: event.target.value })}
+                    required
                 />
                 {/* <div className="Invalid-feedback">
                 Please enter a valid name.
@@ -52,7 +53,6 @@ class Working extends Component {
                 <input 
                     className="form-control" 
                     type="text" 
-                    style={{ width: 220 }}
                     value={this.props.gross}
                     onChange={event => this.props.formUpdate({ prop: 'gross', value: event.target.value })} 
                     placeholder="" 
@@ -67,7 +67,6 @@ class Working extends Component {
                 <input 
                     className="form-control" 
                     type="text" 
-                    style={{width: 245 }} 
                     value={this.props.nett}
                     onChange={event => this.props.formUpdate({ prop: 'nett', value: event.target.value })}
                     placeholder="" 

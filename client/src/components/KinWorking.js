@@ -51,8 +51,7 @@ class KinWorking extends Component {
                 <label className="form-label">Gross Salary</label>
                 <input 
                     className="form-control" 
-                    type="text" 
-                    style={{ width: 220 }} 
+                    type="text"
                     value={this.props.kingross}
                     onChange={event => this.props.formUpdate({ prop: 'kingross', value: event.target.value })} 
                     placeholder="" 
@@ -67,7 +66,6 @@ class KinWorking extends Component {
                 <input 
                     className="form-control" 
                     type="text" 
-                    style={{ width: 245 }} 
                     value={this.props.kinnett}
                     onChange={event => this.props.formUpdate({ prop: 'kinnett', value: event.target.value })}
                     placeholder="" 
