@@ -25,7 +25,7 @@ body {
  display: grid;
  grid-template-columns: 2fr 1fr;
  grid-template-areas: "header header"
-                      "form form"
+                      "form progressbar"
                       "footer footer"
 }
 
@@ -48,12 +48,12 @@ body {
   padding-left: 5px;
   align-self: center;
 }
-
+/*
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
-
+*/
 .Header-end {
   width: 44px;
 }
@@ -124,9 +124,6 @@ body {
 
 .App-body {
   grid-area: form;
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  grid-template-areas: "detail progressbar";
   /*overflow: auto;*/
   /*height: 450px;*/
 }
@@ -162,6 +159,7 @@ body {
                       "phone phone"
                       "email email";
   margin-left: 30pt;
+  margin-right: 30pt;
   margin-top: 30pt;
 }
 
@@ -182,8 +180,6 @@ body {
 .kinFormStyle {
   grid-area: test;
   width: 90%;
-  padding-left: 20px;
-  padding-right: 20px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-areas: "name name"
@@ -194,8 +190,9 @@ body {
                       "postcode state"
                       "phone phone"
                       "email email";
-  margin-left: 6%;
-  margin-top: 3%;
+  margin-left: 30pt;
+  margin-right: 30pt;
+  margin-top: 30pt;
 }
 
 .name {
@@ -455,7 +452,7 @@ body {
 
 .App-progress-bar {
   grid-area: progressbar;
-  /*height: 100%;*/
+  height: 100%;
   width: 100%;
  /* float: right;*/
   background-color: #F0BDCC;
@@ -491,34 +488,31 @@ body {
  }
 
  @media all and (max-width: 768px) {
+
+  .App {
+    width: 100%;
+  }
+
   .Container {
     height: 100%;
-    width: 100%;
+    /*width: 100%;*/
     border-radius: 0.2rem;
     overflow: hidden;
     background-color: #F7E8EC;
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-template-areas: "header header"
-                         "form form"
-                         "footer footer"
+    grid-template-columns: 1fr;
+    grid-template-areas: "header"
+                         "progressbar"
+                         "form" 
+                         "footer";
    }
 
   .App-body {
     grid-area: form;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-areas: "progressbar"
-                          "detail";
-    overflow: auto;
-    height: 570px;
   }
 
   .personalFormStyle {
-    grid-area: detail;
     width: 90%;
-    padding-left: 20px;
-    padding-right: 20px;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-areas: "name"
@@ -532,15 +526,13 @@ body {
                         "phone"
                         "email"
                         "work";
-    margin-left: 6%;
-    margin-top: 3%;
+    margin-left: 30pt;
+    margin-top: 30pt;
+    padding-right: 30pt;    
   }
 
   .kinFormStyle {
-    grid-area: detail;
     width: 90%;
-    padding-left: 20px;
-    padding-right: 20px;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-areas: "name"
@@ -553,8 +545,25 @@ body {
                         "phone"
                         "email"
                         "work";
-    margin-left: 6%;
-    margin-top: 3%;
+    margin-left: 30pt;
+    margin-top: 30pt;
+    padding-right: 30pt;
+  }
+
+  .workingFormStyle {
+    width: 90%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas: "tax"
+                        "epf"
+                        "occu"
+                        "gross" 
+                        "nett"
+                        "depend";
+    margin-left: 30pt;
+    margin-top: 20pt;
+    margin-bottom: 30pt;
+    padding-right: 30pt;
   }
 
   .dob {
@@ -562,7 +571,8 @@ body {
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin-bottom: 5%;
+    margin-top: 30pt;
+    margin-left: 0pt;
   }
 
   .gender {
@@ -570,7 +580,8 @@ body {
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin-bottom: 5%;
+    margin-top: 30pt;
+    margin-left: 0pt;
   }
 
   .postcode {
@@ -578,7 +589,7 @@ body {
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin-bottom: 5%;
+    margin-top: 30pt;
   }
 
   .state {
@@ -586,7 +597,24 @@ body {
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin-bottom: 5%;
+    margin-top: 30pt;
+    margin-left: 0pt;
+  }
+
+  .gross {
+    grid-area: gross;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-right: 0px;
+  }
+
+  .nett {
+    grid-area: nett;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-left: 0px;
   }
 
  }

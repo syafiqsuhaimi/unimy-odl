@@ -76,6 +76,35 @@ class App extends Component {
            <div className="Header-end"></div>
         </header>
         {Form}
+        <div className="App-progress-bar">
+                <div className="Section">
+                    <h5 className="Section-title">
+                    Personal Information
+                    </h5>
+                    <p className="Section-description">
+                    Tell us your basic information to help us proceed your application.
+                    </p>
+                </div>
+
+                <div className="Section">
+                    <h5 className="Section-title">
+                    Next of Kin Information
+                    </h5>
+                    <p className="Section-description">
+                    If you are a working applicant, you can skip this.
+                    </p>
+                </div>
+
+                <div className="Section">
+                    <h5 className="Section-title">
+                    Documents Upload
+                    </h5>
+                    <p className="Section-description">
+                    Please provide us with the required documents to process your application.
+                    </p>
+                </div>
+
+            </div>
         {Footer}
       </div>
     </div>

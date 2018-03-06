@@ -53,7 +53,6 @@ export const formValidate = (validation) => {
             payload: null
         }
     }
-
     return {
         type: VALIDATION_FAIL,
         payload: null
