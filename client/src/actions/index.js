@@ -78,8 +78,5 @@ export const formValidate = (validation) => {
         payload: null
     }
     
-}
-
-
 };
 

@@ -486,15 +486,6 @@ class PersonalInfo extends Component {
                         type="text" 
                         placeholder="i.e: dd/mm/yyyy"
                         name="dob"
-
-                    <label className="Form-label">Date of Birth</label>
-                    <input 
-                        className="Form-input" 
-                        type="date" 
-                        placeholder=""
-
-                        value={this.props.dob}
-                        onChange={this.handleChange}   
                     />
                     {this.renderErrorText('dob', this.props.dob)}
                     </div>
