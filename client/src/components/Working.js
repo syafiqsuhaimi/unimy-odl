@@ -1,95 +1,228 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { formUpdate } from '../actions';
+import { formUpdate, formValidate } from '../actions';
 
 class Working extends Component {      
+    constructor(props) {
+        super(props);
+
+        this.handleChange = this.handleChange.bind(this);
+        this.renderErrorText = this.renderErrorText.bind(this);
+        this.state = {
+            formErrors: {
+                tax: '', epf: '', occu: '', gross: '',
+                nett: '', depend: ''
+            },
+            taxValid: false,
+            epfValid: false,
+            occuValid: false,
+            grossValid: false,
+            nettValid: false,
+            dependValid: false,
+            formValid: false
+        };
+    }
+
+    handleChange(event) {
+        const name = event.target.name;
+        const value = event.target.value;
+        this.props.formUpdate({ prop: [name], value });
+        this.validateField(name, value);
+    }
+
+    validateField(fieldName, value) {
+        let fieldValidationErrors = this.state.formErrors;
+        let taxValid = this.state.taxValid;
+        let epfValid = this.state.epfValid;
+        let occuValid = this.state.occuValid;
+        let grossValid = this.state.grossValid;
+        let nettValid = this.state.nettValid;
+        let dependValid = this.state.dependValid;
+
+        switch (fieldName) {
+            case 'tax':
+                taxValid = value.length > 8;
+                if (fieldValidationErrors.tax = taxValid) {
+                    fieldValidationErrors.tax = '';
+                    taxValid = true;
+                } else {
+                    fieldValidationErrors.tax = ' is-invalid';
+                    taxValid = false;
+                }
+                break;
+            case 'epf':
+                epfValid = value.length >= 8;
+                if (fieldValidationErrors.epf = epfValid) {
+                    fieldValidationErrors.epf = '';
+                    epfValid = true;
+                } else {
+                    fieldValidationErrors.epf = ' is-invalid';
+                    epfValid = false;
+                }
+                break;
+            case 'occupation':
+                occuValid = value.length >= 2;
+                if (fieldValidationErrors.occu = occuValid) {
+                    fieldValidationErrors.occu = '';
+                    occuValid = true;
+                } else {
+                    fieldValidationErrors.occu = ' is-invalid';
+                    occuValid = false;
+                }
+                break;
+            case 'gross':
+                grossValid = value.length >= 3;
+                if (fieldValidationErrors.gross = grossValid) {
+                    fieldValidationErrors.gross = '';
+                    grossValid = true;
+                } else {
+                    fieldValidationErrors.gross = ' is-invalid';
+                    grossValid = false;
+                }
+                break;
+            case 'nett':
+                nettValid = value.length >= 3;
+                if (fieldValidationErrors.nett = nettValid) {
+                    fieldValidationErrors.nett = '';
+                    nettValid = true;
+                } else {
+                    fieldValidationErrors.nett = ' is-invalid';
+                    nettValid = false;
+                }
+                break;
+            case 'depend':
+                dependValid = value.length >= 1;
+                if (fieldValidationErrors.depend = dependValid) {
+                    fieldValidationErrors.depend = '';
+                    dependValid = true;
+                } else {
+                    fieldValidationErrors.depend = ' is-invalid';
+                    dependValid = false;
+                }
+                break;
+            default:
+                break;
+        }
+        
+        this.setState({ formErrors: fieldValidationErrors,
+                        taxValid, epfValid, occuValid, grossValid, nettValid, dependValid
+                    }, this.validateForm);
+    }
+
+    validateForm() {
+        this.setState({
+            formValid: 
+                this.state.taxValid && this.state.epfValid && this.state.occuValid &&
+                this.state.grossValid && this.state.nettValid && this.state.dependValid
+        });
+        console.log(this.state.taxValid, this.state.epfValid, this.state.occuValid, this.state.grossValid, this.state.nettValid, this.state.dependValid);
+        console.log('inside validateform: ', this.state.formValid);
+    }
+
+    errorClass(error) {
+        return (error.length === 0? '' : 'has-error');
+    }
+
+    renderErrorText(name, value) {
+        this.props.formValidate(this.state.formValid);
+        if (this.state.formErrors[name] === ' is-invalid') {
+            return (
+                <div className ="alert alert-danger">
+                    "{value}"{this.state.formErrors[name]}
+                </div>
+            );
+        }
+    }
+
     render() {
         return (
         <form className="workingFormStyle">
             <div className="tax">
-                <label className="Form-label">Income Tax Number</label>
+                <div className={`form-group ${this.errorClass(this.state.formErrors.tax)}`}>
+                <label className="form-label">Income Tax Number</label>
                 <input 
-                    className="Form-input" 
+                    className={`form-control ${this.state.formErrors.tax}`} 
                     type="number" 
+                    name="tax"
                     value={this.props.tax} 
                     placeholder=""
-                    onChange={event => this.props.formUpdate({ prop: 'tax', value: event.target.value })}
+                    onChange={this.handleChange}
                 />
-                {/* <div className="Invalid-feedback">
-                Please enter a valid name.
-                </div> */}
+                {this.renderErrorText('tax', this.props.tax)}
+                </div>
             </div>
 
             <div className="epf">
-                <label className="Form-label">EPF Number</label>
+                <div className={`form-group ${this.errorClass(this.state.formErrors.epf)}`}>
+                <label className="form-label">EPF Number</label>
                 <input 
-                    className="Form-input" 
+                    className={`form-control ${this.state.formErrors.epf}`} 
                     type="number" 
+                    name="epf"
                     value={this.props.epf} 
-                    onChange={event => this.props.formUpdate({ prop: 'epf', value: event.target.value })}
+                    onChange={this.handleChange}
                     placeholder=""
                 />
-                {/* <div className="Invalid-feedback">
-                Please enter a valid name.
-                </div> */}
+                {this.renderErrorText('epf', this.props.epf)}
+                </div>
             </div>
 
             <div className="occupation">
-                <label className="Form-label">Occupation</label>
+                <div className={`form-group ${this.errorClass(this.state.formErrors.occu)}`}>
+                <label className="form-label">Occupation</label>
                 <input 
-                    className="Form-input" 
+                    className={`form-control ${this.state.formErrors.occu}`} 
                     type="text" 
+                    name="occupation"
                     value={this.props.occupation}
-                    onChange={event => this.props.formUpdate({ prop: 'occupation', value: event.target.value })} 
+                    onChange={this.handleChange} 
                     placeholder=""
                 />
-                {/* <div className="Invalid-feedback">
-                Please enter a valid name.
-                </div> */}
+                {this.renderErrorText('occu', this.props.occupation)}
+                </div>
             </div>
             <div className="gross">
-                <label className="Form-label">Gross Salary</label>
+                <div className={`form-group ${this.errorClass(this.state.formErrors.gross)}`}>
+                <label className="form-label">Gross Salary</label>
                 <input 
-                    className="Form-input" 
+                    className={`form-control ${this.state.formErrors.gross}`} 
                     type="text" 
-                    style={{ width: 220 }}
+                    name="gross"
                     value={this.props.gross}
-                    onChange={event => this.props.formUpdate({ prop: 'gross', value: event.target.value })} 
+                    onChange={this.handleChange} 
                     placeholder="" 
-                    required
                 />
-                {/* <div className="Invalid-feedback">
-                    Valid first name is required.
-                </div> */}
+                {this.renderErrorText('gross', this.props.gross)}
                 </div>
-                <div className="nett">
-                <label className="Form-label">Nett Salary</label>
+                </div>
+            <div className="nett">
+                <div className={`form-group ${this.errorClass(this.state.formErrors.nett)}`}>
+                <label className="form-label">Nett Salary</label>
                 <input 
-                    className="Form-input" 
+                    className={`form-control ${this.state.formErrors.nett}`} 
                     type="text" 
-                    style={{width: 245 }} 
+                    name="nett"
                     value={this.props.nett}
-                    onChange={event => this.props.formUpdate({ prop: 'nett', value: event.target.value })}
+                    onChange={this.handleChange}
                     placeholder="" 
-                    required
                 />
-                {/* <div className="Invalid-feedback">
-                    Valid last name is required.
-                </div> */}
+                {this.renderErrorText('nett', this.props.nett)}
+                </div>
             </div>
 
             <div className="depend">
-                <label className="Form-label">Number of Family Dependants</label>
+                <div className={`form-group ${this.errorClass(this.state.formErrors.depend)}`}>
+                <label className="form-label">Number of Family Dependants</label>
                 <input 
-                    className="Form-input" 
+                    className={`form-control ${this.state.formErrors.depend}`} 
                     type="number" 
+                    name="depend"
                     value={this.props.depend}
-                    onChange={event => this.props.formUpdate({ prop: 'depend', value: event.target.value })}
+                    onChange={this.handleChange}
                     placeholder=""
                 />
-                {/* <div className="Invalid-feedback">
-                Please enter a valid name.
-                </div> */}
+                {this.renderErrorText('depend', this.props.depend)}
+                </div>
             </div>
         </form>
         );
@@ -108,4 +241,4 @@ const mapStateToProps = (state) => {
     };
 }
 
-export default connect(mapStateToProps, { formUpdate })(Working);
+export default connect(mapStateToProps, { formUpdate, formValidate })(Working);

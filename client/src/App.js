@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Steps, { Step } from 'rc-steps';
+import MediaQuery from 'react-responsive';
+
+import { customMedia } from './Variables';
 import { formSubmit } from './actions';
 import logo from './logo_unimy.jpg';
 import PersonalInfo from './components/PersonalInfo';
@@ -44,21 +48,20 @@ class App extends Component {
 
   render() {
     const componentIndex = this.state.componentIndex;
-    
     let Form, Footer, index = null;
 
     if (componentIndex === 0) {
         index = 0
         Form = <PersonalInfo />; 
         Footer = <footer className="App-footer">
-                    <button onClick={this.moveSectionClick.bind(this,index+1)} className="btn_primary">Continue</button>
+                    <button onClick={this.moveSectionClick.bind(this,index+1)} className="btn_primary" disabled={this.props.buttonDisabled}>Continue</button>
                   </footer>; 
     } else if(componentIndex === 1) {
         index = 1
         Form = <KinInfo />; 
         Footer = <footer className="App-footer">
                     <button onClick={this.moveSectionClick.bind(this,index-1)} className="btn_secondary">Previous</button>
-                    <button onClick={this.moveSectionClick.bind(this,index+1)} className="btn_primary">Continue</button>
+                    <button onClick={this.moveSectionClick.bind(this,index+1)} className="btn_primary" disabled={this.props.buttonDisabled}>Continue</button>
                  </footer>; 
     } else if(componentIndex === 2) {
       index = 2
@@ -77,6 +80,51 @@ class App extends Component {
            <div className="Header-end"></div>
         </header>
         {Form}
+        <div className="App-progress-bar">
+        <MediaQuery query={customMedia.desktop}>
+          <Steps direction="vertical" className="progressContainer" current={index}>
+            <Step 
+              icon="user"
+              title="Personal Information" 
+              description="Tell us your basic information to help us proceed in your application" 
+              style={{ marginBottom: 50 }}
+            />
+            <Step 
+              icon="file"
+              title="Next of Kin Information" 
+              description="If you are a working applicant, you can skip this"
+              style={{ marginBottom: 50 }} 
+            />
+            <Step 
+              icon="file-text"
+              title="Documents Upload" 
+              description="Please provide us with the required documents to process your application" 
+            />
+          </Steps>
+        </MediaQuery>
+        <MediaQuery query={customMedia.mobile}>
+          <Steps 
+            direction="horizontal" 
+            labelPlacement="vertical"
+          >
+            <Step 
+              status="finish"
+              icon="user"
+              title="Personal Information" 
+            />
+            <Step 
+              status="process"
+              icon="file"
+              title="Next of Kin Information"
+            />
+            <Step 
+              status="wait"
+              icon="file-text"
+              title="Documents Upload"
+            />
+          </Steps>
+        </MediaQuery>
+        </div>
         {Footer}
       </div>
     </div>
@@ -102,7 +150,7 @@ const mapStateToProps = (state) => {
     kinnat, kinic, kinadd, kinpost, 
     kinstate, kinphone, kinmail,
     kintax, kinepf, kinoccu,
-    kingross, kinnett, kindepend, iccopy, payslip 
+    kingross, kinnett, kindepend, iccopy, payslip, buttonDisabled
   } = state.form;
 
   return {
@@ -113,7 +161,7 @@ const mapStateToProps = (state) => {
     kinnat, kinic, kinadd, kinpost, 
     kinstate, kinphone, kinmail,
     kintax, kinepf, kinoccu,
-    kingross, kinnett, kindepend, iccopy, payslip 
+    kingross, kinnett, kindepend, iccopy, payslip, buttonDisabled 
   }
 }
 
