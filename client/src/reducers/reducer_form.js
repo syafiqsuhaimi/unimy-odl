@@ -1,0 +1,31 @@
+import { FORM_UPDATE, FORM_SUBMIT, VALIDATION_SUCCESS, VALIDATION_FAIL } from '../actions';
+
+const INITIAL_STATE = {
+    name: '', ic: '', nationality: '',
+    dob: '', gender: '', address: '',
+    postcode: '', negeri: '', phone: '',
+    email: '', tax: '', epf: '',
+    occupation: '', gross: '', nett: '',
+    depend: '', kinname: '', relation: '',
+    kinnat: '', kinic: '', kinadd: '',
+    kinpost: '', kinstate: '', kinphone: '',
+    kinmail: '', kintax: '', kinepf: '',
+    kinoccu: '', kingross: '', kinnett: '',
+    kindepend: '', iccopy: '', payslip: '', 
+    buttonDisabled: true
+};
+
+export default (state = INITIAL_STATE, action) => {
+    switch (action.type) {
+        case FORM_UPDATE:
+            return { ...state, [action.payload.prop]: action.payload.value };
+        case FORM_SUBMIT:
+            return INITIAL_STATE;
+        case VALIDATION_SUCCESS: 
+            return { ...state, buttonDisabled: false };
+        case VALIDATION_FAIL:
+            return { ...state, buttonDisabled: true };
+        default:
+            return state;
+    }
+}
