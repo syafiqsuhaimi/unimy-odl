@@ -478,6 +478,7 @@ class PersonalInfo extends Component {
                     {this.renderErrorText('nationality', this.props.nationality)}
                 </div>
                 <div className="dob">
+
                     <div className={`form-group ${this.errorClass(this.state.formErrors.dob)}`}>
                     <label className="form-label">Date of Birth</label>
                     <input
@@ -485,6 +486,13 @@ class PersonalInfo extends Component {
                         type="text" 
                         placeholder="i.e: dd/mm/yyyy"
                         name="dob"
+
+                    <label className="Form-label">Date of Birth</label>
+                    <input 
+                        className="Form-input" 
+                        type="date" 
+                        placeholder=""
+
                         value={this.props.dob}
                         onChange={this.handleChange}   
                     />
