@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Steps, { Step } from 'rc-steps';
+import MediaQuery from 'react-responsive';
+
+import { customMedia } from './Variables';
 import { formSubmit } from './actions';
 import logo from './logo_unimy.jpg';
 import PersonalInfo from './components/PersonalInfo';
@@ -77,34 +81,50 @@ class App extends Component {
         </header>
         {Form}
         <div className="App-progress-bar">
-                <div className="Section">
-                    <h5 className="Section-title">
-                    Personal Information
-                    </h5>
-                    <p className="Section-description">
-                    Tell us your basic information to help us proceed your application.
-                    </p>
-                </div>
-
-                <div className="Section">
-                    <h5 className="Section-title">
-                    Next of Kin Information
-                    </h5>
-                    <p className="Section-description">
-                    If you are a working applicant, you can skip this.
-                    </p>
-                </div>
-
-                <div className="Section">
-                    <h5 className="Section-title">
-                    Documents Upload
-                    </h5>
-                    <p className="Section-description">
-                    Please provide us with the required documents to process your application.
-                    </p>
-                </div>
-
-            </div>
+        <MediaQuery query={customMedia.desktop}>
+          <Steps direction="vertical" className="progressContainer" current={index}>
+            <Step 
+              icon="user"
+              title="Personal Information" 
+              description="Tell us your basic information to help us proceed in your application" 
+              style={{ marginBottom: 50 }}
+            />
+            <Step 
+              icon="file"
+              title="Next of Kin Information" 
+              description="If you are a working applicant, you can skip this"
+              style={{ marginBottom: 50 }} 
+            />
+            <Step 
+              icon="file-text"
+              title="Documents Upload" 
+              description="Please provide us with the required documents to process your application" 
+            />
+          </Steps>
+        </MediaQuery>
+        <MediaQuery query={customMedia.mobile}>
+          <Steps 
+            direction="horizontal" 
+            labelPlacement="vertical"
+          >
+            <Step 
+              status="finish"
+              icon="user"
+              title="Personal Information" 
+            />
+            <Step 
+              status="process"
+              icon="file"
+              title="Next of Kin Information"
+            />
+            <Step 
+              status="wait"
+              icon="file-text"
+              title="Documents Upload"
+            />
+          </Steps>
+        </MediaQuery>
+        </div>
         {Footer}
       </div>
     </div>
