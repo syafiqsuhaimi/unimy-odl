@@ -77,7 +77,7 @@ class PersonalInfo extends Component {
                     <label className="Form-label">Date of Birth</label>
                     <input 
                         className="Form-input" 
-                        type="text" 
+                        type="date" 
                         placeholder=""
                         value={this.props.dob}
                         onChange={event => this.props.formUpdate({ prop: 'dob', value: event.target.value })}   

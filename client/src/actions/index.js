@@ -21,7 +21,9 @@ export const formSubmit = ({
 }) => {
    /* push to database */
    return (dispatch) => {
-        let applicant = JSON.stringify({
+
+       console.log('attachment in state:', iccopy);
+        let applicant = {
             name, ic, nationality, dob, gender, address, 
             postcode, negeri, phone, email, tax, epf, 
             occupation, gross, nett, depend, kinname, 
@@ -29,16 +31,33 @@ export const formSubmit = ({
             kinstate, kinphone, kinmail, kintax, kinepf, 
             kinoccu, kingross, kinnett, kindepend, 
             iccopy, payslip 
-        });
+        };
 
-        
-        axios.post('http://localhost:8888/post-student', applicant)
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        let data =  new FormData();
+        data.append('ic_copy',iccopy);
+        data.append('pay_slip',payslip);
+        let config = {
+            headers: { 'content-type': 'application/pdf' }
+        }
+
+        axios.post('http://localhost:8888/upload_attachment', data, config)
+          .then((result) => {
+              console.log('upload success');
+          });
+
+        // axios.post('http://localhost:8888/post-data', applicant)
+        //     .then(function (response) {
+        //         console.log(response);
+        //         let formData = new FormData();
+        //               const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+        //               axios.post('http://localhost:8888/upload-attachment', iccopy, config)
+        //                 .then((result) => {
+        //                     console.log('upload success');
+        //                 });
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     });
 
         dispatch({ type: FORM_SUBMIT });
    }

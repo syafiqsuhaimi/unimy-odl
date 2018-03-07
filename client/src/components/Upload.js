@@ -8,20 +8,13 @@ class Upload extends Component {
         super(props);
         this.handleDrop = this.handleDrop.bind(this);
         //this.onChange = this.onChange.bind(this);
-        this.state ={
-            file:null
-        }
     }
     
     handleDrop(dataTransfer) {
-        this.state.file = dataTransfer.files;
-        console.log(this.state.file,"successs");
+        this.props.formUpdate({ prop: 'iccopy', value: dataTransfer.files[0]})
+        console.log('attachment out state:',dataTransfer.files[0]);
     }
-    /*
-    onChange(e) {
-        this.setState({file:e.target.files[0]})
-    }
-    */
+ 
     render() {
         return (
             <div className="App-body">
@@ -34,6 +27,7 @@ class Upload extends Component {
                                 <FileDragAndDrop onDrop={this.handleDrop}>
                                     Drop files here...
                                     <input 
+                                        className = "Upload-input"
                                         type="file" 
                                         onChange={event => this.props.formUpdate({ prop: 'iccopy', value: event.target.files[0] })} 
                                     />
