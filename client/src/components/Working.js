@@ -186,7 +186,7 @@ class Working extends Component {
                 <label className="form-label">Gross Salary</label>
                 <input 
                     className={`form-control ${this.state.formErrors.gross}`} 
-                    type="text" 
+                    type="number" 
                     name="gross"
                     value={this.props.gross}
                     onChange={this.handleChange} 
@@ -200,7 +200,7 @@ class Working extends Component {
                 <label className="form-label">Nett Salary</label>
                 <input 
                     className={`form-control ${this.state.formErrors.nett}`} 
-                    type="text" 
+                    type="number" 
                     name="nett"
                     value={this.props.nett}
                     onChange={this.handleChange}

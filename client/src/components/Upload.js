@@ -22,31 +22,35 @@ class Upload extends Component {
                 <form className="Form">
 
                     <div className="Upload-row">
-                            <label className="Upload-label">1. Upload your IC Copy</label>
+                            <label className="form-label">1. Upload your IC Copy</label>
                             <div className="Drag-drop">
                                 <FileDragAndDrop onDrop={this.handleDrop}>
-                                    Drop files here...
-                                    <input 
-                                        className = "Upload-input"
-                                        type="file" 
-                                        onChange={event => this.props.formUpdate({ prop: 'iccopy', value: event.target.files[0] })} 
-                                    />
+                                    <h5>Drop files here...</h5>
+                                    <h5>{this.props.iccopy}</h5>
                                 </FileDragAndDrop>
-                                
                             </div>
+                            <b>OR</b>
+                            <input 
+                                className = "form-control"
+                                type="file" 
+                                onChange={event => this.props.formUpdate({ prop: 'iccopy', value: event.target.files[0] })} 
+                            />
                     </div>
 
-                    <div className="Form-row">
-                        <label className="Form-label">2. Upload your Pay Slip</label>
+                    <div className="Upload-row">
+                        <label className="form-label">2. Upload your Pay Slip</label>
                         <div className="Drag-drop">
                             <FileDragAndDrop onDrop={this.handleDrop}>
-                                Drop files here...
-                                <input 
-                                    type="file"
-                                    onChange={event => this.props.formUpdate({ prop: 'payslip', value: event.target.files[0] })}
-                                />
+                                <h5>Drop files here...</h5>
+                                <h5>{this.props.payslip}</h5>
                             </FileDragAndDrop>
                         </div>
+                        <b>OR</b>
+                        <input 
+                            className="form-control"
+                            type="file"
+                            onChange={event => this.props.formUpdate({ prop: 'payslip', value: event.target.files[0] })}
+                        />
                     </div>
                 </form>
             </div>
@@ -55,4 +59,10 @@ class Upload extends Component {
     }
 }
 
-export default connect(null, { formUpdate })(Upload);
+const mapStateToProps = (state) => {
+    const { iccopy, payslip } = state.form;
+
+    return { iccopy, payslip };
+}
+
+export default connect(mapStateToProps, { formUpdate })(Upload);
