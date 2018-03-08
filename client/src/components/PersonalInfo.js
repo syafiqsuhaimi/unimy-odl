@@ -241,7 +241,6 @@ class PersonalInfo extends Component {
             <div className="App-body">
             <div className="test">
             <form className="personalFormStyle">
-
                 <div className="name">
                     <div className={`form-group ${this.errorClass(this.state.formErrors.name)}`}>
                     <label className="form-label">Full Name (As per IC)</label>

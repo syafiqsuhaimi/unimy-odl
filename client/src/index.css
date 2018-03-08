@@ -448,6 +448,14 @@ body {
           border-radius: .15rem;
 }
 
+.successContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
 /* Progress Section */
 
 .App-progress-bar {

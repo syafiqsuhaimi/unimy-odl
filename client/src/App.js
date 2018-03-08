@@ -9,6 +9,7 @@ import logo from './logo_unimy.jpg';
 import PersonalInfo from './components/PersonalInfo';
 import KinInfo from './components/KinInfo';
 import Upload from './components/Upload';
+import Success from './components/Success';
 
 class App extends Component {
   constructor(props) {
@@ -22,7 +23,7 @@ class App extends Component {
     this.setState({componentIndex: index});
   }
 
-  handleSubmit(){
+  handleSubmit(index){
     const {
       name, ic, nationality, dob, 
       gender, address, postcode, negeri, 
@@ -44,6 +45,7 @@ class App extends Component {
       kintax, kinepf, kinoccu,
       kingross, kinnett, kindepend, iccopy, payslip
     });
+    this.setState({ componentIndex: index });
   }
 
   render() {
@@ -72,7 +74,7 @@ class App extends Component {
       Form = <Upload />; 
       Footer = <footer className="App-footer">
                   <button 
-                    onClick={this.handleSubmit} 
+                    onClick={this.handleSubmit(index+1)} 
                     className="btn_primary" 
                     style={{ width: 250 }}
                     disabled={this.props.buttonDisabled}
@@ -80,6 +82,17 @@ class App extends Component {
                     Submit your application
                   </button>
                </footer>; 
+    } else if(componentIndex === 3) {
+      index = 3
+      Form = <Success />;
+      Footer = <footer className="App-footer">
+                  <button
+                    className="btn_primary"
+                    style={{ width: 250 }}
+                  >
+                    Take me there!
+                  </button>
+                </footer>;
     }
 
     return (
@@ -140,15 +153,6 @@ class App extends Component {
         {Footer}
       </div>
     </div>
-      // <div className="App">
-      //   <header className="App-header">
-      //     <img src={logo} className="App-logo" alt="logo" />
-      //     <h1 className="App-title">Welcome to React</h1>
-      //   </header>
-      //   <p className="App-intro">
-      //     This is my first react app. ahhagja nbfhhad jahdaj ha had aj dhadje jadvjegdjw cjhadna s ahajdas hjashaj
-      //   </p>
-      // </div>
     );
   }
 }
@@ -162,7 +166,8 @@ const mapStateToProps = (state) => {
     kinnat, kinic, kinadd, kinpost, 
     kinstate, kinphone, kinmail,
     kintax, kinepf, kinoccu,
-    kingross, kinnett, kindepend, iccopy, payslip, buttonDisabled, isWorking
+    kingross, kinnett, kindepend, iccopy, 
+    payslip, buttonDisabled, isWorking
   } = state.form;
 
   return {
@@ -173,7 +178,8 @@ const mapStateToProps = (state) => {
     kinnat, kinic, kinadd, kinpost, 
     kinstate, kinphone, kinmail,
     kintax, kinepf, kinoccu,
-    kingross, kinnett, kindepend, iccopy, payslip, buttonDisabled, isWorking
+    kingross, kinnett, kindepend, iccopy, 
+    payslip, buttonDisabled, isWorking
   }
 }
 
