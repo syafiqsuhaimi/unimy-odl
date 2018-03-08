@@ -71,7 +71,14 @@ class App extends Component {
       index = 2
       Form = <Upload />; 
       Footer = <footer className="App-footer">
-                  <button onClick={this.handleSubmit} className="btn_primary" style={{ width: 250 }}>Submit your application</button>
+                  <button 
+                    onClick={this.handleSubmit} 
+                    className="btn_primary" 
+                    style={{ width: 250 }}
+                    disabled={this.props.buttonDisabled}
+                  >
+                    Submit your application
+                  </button>
                </footer>; 
     }
 
