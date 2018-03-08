@@ -15,16 +15,25 @@ class App extends Component {
   constructor(props) {
       super(props);
       this.moveSectionClick = this.moveSectionClick.bind(this);
+      this.renderSpinner = this.renderSpinner.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
-      this.state = {componentIndex: 0}
+      this.state = {
+        componentIndex: 0,
+        loading: false
+      }
   }
 
   moveSectionClick(index) {
     this.setState({componentIndex: index});
-    console.log('insidemovesection: ', index);
   }
 
-  handleSubmit(index){
+  renderSpinner() {
+    this.setState({ loading: true });
+  }
+
+  handleSubmit(){
+    console.log('loading: ', this.state.loading);
+
     const {
       name, ic, nationality, dob, 
       gender, address, postcode, negeri, 
@@ -73,12 +82,16 @@ class App extends Component {
     } else if(componentIndex === 2) {
       index = 2
       Form = <Upload />;
-      if (this.props.submitSuccess === true || this.props.submitSuccess === false) {
-        this.moveSectionClick(index+1);
-      }
-      Footer = <footer className="App-footer">
+      console.log('loading: ', this.state.loading);
+      if (this.state.loading) {
+        Footer = <footer className="App-footer">
+                    <i className="fa fa-circle-o-notch fa-spin" style={{ fontSize: 24 }}></i>
+                </footer>; 
+        this.handleSubmit();
+      } else {
+        Footer = <footer className="App-footer">
                   <button 
-                    onClick={this.handleSubmit} 
+                    onClick={this.renderSpinner} 
                     className="btn_primary" 
                     style={{ width: 250 }}
                     disabled={this.props.buttonDisabled}
@@ -86,6 +99,11 @@ class App extends Component {
                     Submit your application
                   </button>
                </footer>; 
+      }
+      
+      if (this.props.submitSuccess === true || this.props.submitSuccess === false) {
+        this.moveSectionClick(index+1);
+      }
     } else if(componentIndex === 3) {
       index = 3
       Form = <Success />;
@@ -128,7 +146,7 @@ class App extends Component {
             <Step 
               icon="file-text"
               title="Documents Upload" 
-              description="Please provide us with the required documents to process your application" 
+              description="Please provide us with the required documents to process your application"
             />
           </Steps>
         </MediaQuery>
@@ -139,17 +157,14 @@ class App extends Component {
             current={index}
           >
             <Step 
-              status="finish"
               icon="user"
               title="Personal Information" 
             />
             <Step 
-              status="process"
               icon="file"
               title="Next of Kin Information"
             />
             <Step 
-              status="wait"
               icon="file-text"
               title="Documents Upload"
             />
@@ -173,7 +188,7 @@ const mapStateToProps = (state) => {
     kinstate, kinphone, kinmail,
     kintax, kinepf, kinoccu,
     kingross, kinnett, kindepend, iccopy, 
-    payslip, buttonDisabled, isWorking, submitSuccess
+    payslip, buttonDisabled, isWorking, submitSuccess, loading
   } = state.form;
 
   return {
@@ -185,7 +200,7 @@ const mapStateToProps = (state) => {
     kinstate, kinphone, kinmail,
     kintax, kinepf, kinoccu,
     kingross, kinnett, kindepend, iccopy, 
-    payslip, buttonDisabled, isWorking, submitSuccess
+    payslip, buttonDisabled, isWorking, submitSuccess, loading
   }
 }
 

@@ -100,13 +100,13 @@ class Upload extends Component {
     renderDropFiles(name) {
         if (name === 'iccopy') {
             return (
-                <div>{this.state.icDrop}</div>
+                <div><p className="h5">{this.state.icDrop}</p></div>
             );
         }
 
         if (name === 'payslip') {
             return (
-                <div>{this.state.payslipDrop}</div>
+                <div><p className="h5">{this.state.payslipDrop}</p></div>
             );
         }
     }
@@ -121,9 +121,9 @@ class Upload extends Component {
                             <label className="form-label">1. Upload your IC Copy</label>
                             <div className="Drag-drop">
                                 <FileDragAndDrop name='iccopy' onDrop={this.handleICDrop}>
-                                    Drop files here...
+                                    <p className="h5">Drop files here...</p>
                                     <input 
-                                        className = "Upload-input"
+                                        style={{ fontSize: 14 }}
                                         type="file" 
                                         name="iccopy"
                                         onChange={this.handleChange} 
@@ -138,8 +138,9 @@ class Upload extends Component {
                         <label className="form-label">2. Upload your Pay Slip</label>
                         <div className="Drag-drop">
                             <FileDragAndDrop name='payslip' onDrop={this.handlePayDrop}>
-                                Drop files here...
+                                <p className="h5">Drop files here...</p>
                                 <input 
+                                    style={{ fontSize: 14 }}
                                     type="file"
                                     name="payslip"
                                     onChange={this.handleChange}

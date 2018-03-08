@@ -29,10 +29,8 @@ export default (state = INITIAL_STATE, action) => {
         case FORM_UPDATE:
             return { ...state, [action.payload.prop]: action.payload.value };
         case FORM_SUBMIT_SUCCESS:
-            console.log('reducer-submitsuccess');
             return { submitSuccess: true };
         case FORM_SUBMIT_FAIL:
-            console.log('reducer-submitfail');
             return { submitSuccess: false };
         case VALIDATION_SUCCESS: 
             return { ...state, buttonDisabled: false };
