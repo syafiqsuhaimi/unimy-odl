@@ -27,7 +27,7 @@ class Upload extends Component {
                 <form className="Form">
 
                     <div className="Upload-row">
-                            <label className="Upload-label">1. Upload your IC Copy</label>
+                            <label className="form-label">1. Upload your IC Copy</label>
                             <div className="Drag-drop">
                                 <FileDragAndDrop name='iccopy' onDrop={this.handleICDrop}>
                                     Drop files here...
@@ -37,12 +37,11 @@ class Upload extends Component {
                                         onChange={event => this.props.formUpdate({ prop: 'iccopy', value: event.target.files[0] })} 
                                     />
                                 </FileDragAndDrop>
-                                
                             </div>
                     </div>
 
-                    <div className="Form-row">
-                        <label className="Form-label">2. Upload your Pay Slip</label>
+                    <div className="Upload-row">
+                        <label className="form-label">2. Upload your Pay Slip</label>
                         <div className="Drag-drop">
                             <FileDragAndDrop name='payslip' onDrop={this.handlePayDrop}>
                                 Drop files here...
@@ -60,4 +59,10 @@ class Upload extends Component {
     }
 }
 
-export default connect(null, { formUpdate })(Upload);
+const mapStateToProps = (state) => {
+    const { iccopy, payslip } = state.form;
+
+    return { iccopy, payslip };
+}
+
+export default connect(mapStateToProps, { formUpdate })(Upload);

@@ -53,14 +53,14 @@ class KinInfo extends Component {
                 fieldValidationErrors.kinname = kinnameValid? '' : ' is-invalid';
                 break;
             case 'kinic':
-                kinicValid = value.match(/^\d{6}-\d{2}-\d{4}$/);
+                kinicValid = value.length == 12;
                 fieldValidationErrors.kinic = kinicValid? '' : ' is-invalid';
                 break;
             case 'kinpost':
                 kinpostValid = value.length >=5;
                 fieldValidationErrors.kinpost = kinpostValid? '' : ' is-invalid';
             case 'kinphone':
-                kinphoneValid = value.match(/^[01]+\d{1}-\d{7}$/);
+                kinphoneValid = value.length >= 10;
                 fieldValidationErrors.kinphone = kinphoneValid? '' : ' is-invalid';
                 break;
             case 'kinmail':
@@ -374,7 +374,7 @@ class KinInfo extends Component {
                     <label className="form-label">IC Number</label>
                     <input 
                         className="form-control" 
-                        type="text" 
+                        type="number" 
                         value={this.props.kinic}
                         name="kinic"
                         onChange={this.handleChange}
@@ -455,7 +455,7 @@ class KinInfo extends Component {
                     <label className="form-label">Phone Number</label>
                     <input 
                         className="form-control" 
-                        type="text" 
+                        type="number" 
                         name="kinphone"
                         value={this.props.kinphone}
                         onChange={this.handleChange}
