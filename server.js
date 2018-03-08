@@ -45,6 +45,8 @@ const config = {
     }
 };
 
+var ICCopy = '';
+var payslip = '';
 
 app.get('/get-data', function (req, res) {
 
@@ -100,6 +102,10 @@ app.post('/post-data', function (req, res) {
         let nett = '';
         let dependants = '';
 
+        //attachment data
+        ICCopy = req.body.iccopy;
+        payslip = req.body.payslip;
+
         if (req.body.kinname != ''){
 
             let kinname = req.body.kinname;
@@ -121,9 +127,9 @@ app.post('/post-data', function (req, res) {
             
             queryStr = `Insert into Applicants (ApplicantID,ApplicantName,ApplicantIC,
                 ApplicantNationality,DateOfBirth,ApplicantGender,ApplicantAddress,
-                ApplicantPostCode,ApplicantState,ApplicantPhoneNumber,ApplicantEmail) values (
+                ApplicantPostCode,ApplicantState,ApplicantPhoneNumber,ApplicantEmail,IC_url,Payslip_url) values (
                     ${id},'${name}',${ic},'${nationality}','${dob}','${gender}','${address}',
-                    ${postcode},'${negeri}',${phone},'${email}') 
+                    ${postcode},'${negeri}',${phone},'${email}','${ICCopy}','${payslip}') 
                 Insert into Kins (ApplicantID,KinName,Relationship,KinNationality,KinIC,KinAddress,
                 KinPostCode,KinState,KinPhoneNumber,KinEmail) values (${id},'${kinname}','${relationship}',
                 '${kinnationality}',${kinic},'${kinaddress}',${kinpostcode},'${kinnegeri}',${kinphone},'${kinemail}')
@@ -140,15 +146,11 @@ app.post('/post-data', function (req, res) {
 
             queryStr = `Insert into Applicants (ApplicantID,ApplicantName,ApplicantIC,
                 ApplicantNationality,DateOfBirth,ApplicantGender,ApplicantAddress,
-                ApplicantPostCode,ApplicantState,ApplicantPhoneNumber,ApplicantEmail) values 
-                (${id},'${name}',${ic},'${nationality}','${dob}','${gender}','${address}',${postcode},'${negeri}',${phone},'${email}') 
+                ApplicantPostCode,ApplicantState,ApplicantPhoneNumber,ApplicantEmail,IC_url,Payslip_url) values 
+                (${id},'${name}',${ic},'${nationality}','${dob}','${gender}','${address}',${postcode},'${negeri}',${phone},'${email}','${ICCopy}','${payslip}') 
                 Insert into Workings (ApplicantID,TaxNo,EpfNo,Occupation,GrossSalary,NettSalary,NoOfDependant) values 
                 (${id},${tax},${epf},'${occupation}',${gross},${nett},${dependants})`;
         }
-
-        //attachment data
-        let ICCopy = req.body.iccopy;
-        let payslip = req.body.payslip;
 
         // connect to your database
         sql.connect(config, function (err) {
@@ -166,7 +168,7 @@ app.post('/post-data', function (req, res) {
                     .then(function () {
                            
                         transaction.commit().then(function (recordSet) {
-                            console.log(recordSet);
+                            //sendEmail();
                             sql.close();
                         }).catch(function (err) {
                             
@@ -189,19 +191,19 @@ app.post('/post-data', function (req, res) {
         res.end();
 });
 
-app.post('/upload_attachment', upload.single('ic_copy'), (req, res, next) => {
-    console.log('Attachment FILE:',req.file);
-    res.status(200).json(req.file);
+app.post('/upload_attachment', upload.array('pdfs',2), (req, res, next) => {
+    console.log('Attachment FILE:',req.files);
+    res.status(200).json(req.files);
 });
 
 function sendEmail(){
     var transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
         port: 465,
-        secure: true, // true for 465, false for other ports
+        secure: true, 
         auth: {
-            user: '', // generated ethereal user
-            pass: '' // generated ethereal password
+            user: 'syain10@gmail.com', 
+            pass: '' 
         }
       });
       
@@ -212,12 +214,14 @@ function sendEmail(){
         text: 'That was easy!',
         attachments: [
             {
-                filename: 'text1.txt',
-                content: 'hello world!'
+                filename: 'IC_COPY.pdf',
+                path: ICCopy,
+                contentType: 'application/pdf'
             },
             {   // binary buffer as an attachment
-                filename: 'text2.txt',
-                content: new Buffer('hello world!','utf-8')
+                filename: 'PAYSLIP_COPY.pdf',
+                path: payslip,
+                contentType: 'application/pdf'
             }
         ]
       };

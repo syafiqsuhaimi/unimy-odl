@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { formUpdate, formValidate } from '../actions';
+import { formUpdate, formValidate, checkIsWorking } from '../actions';
 import Working from './Working';
 
 class PersonalInfo extends Component {
@@ -32,8 +32,8 @@ class PersonalInfo extends Component {
     }
     
     handleWorkedClick() {
-        //this.setState({ isWorking: true });
-        this.props.formUpdate({ prop: "isWorking", value: true });
+        this.setState({ isWorking: true });
+        this.props.checkIsWorking(true);
     }
     
     handleNotWorkedClick() {
@@ -41,6 +41,7 @@ class PersonalInfo extends Component {
         this.props.formUpdate({ prop: "isWorking", value: false });
         this.setState({ workValid: true });
         this.validateField('work', 'click');
+        this.props.checkIsWorking(false);
     }
 
     handleChange(event) {
@@ -107,6 +108,7 @@ class PersonalInfo extends Component {
                 break;
             case 'phone':
                 phoneValid = value.length >= 10;
+
                 if (fieldValidationErrors.phone = phoneValid) {
                     fieldValidationErrors.phone = '';
                     phoneValid = true;
@@ -496,8 +498,9 @@ class PersonalInfo extends Component {
                     <label className="form-label">Gender</label>
                     <select 
                         className={`form-control ${this.state.formErrors.gender}`} 
-                        style={{ height: 27 }}
                         name="gender"
+                        value={this.props.gender} 
+                        placeholder=""
                         onChange={this.handleChange} 
                         required
                     >
@@ -539,9 +542,9 @@ class PersonalInfo extends Component {
                     <label className="form-label">State</label>
                     <select 
                         className="form-control" 
-                        style={{ height: 27 }} 
                         value={this.props.negeri}
                         name="negeri"
+                        placeholder=""
                         onChange={this.handleChange} 
                         required
                     >
@@ -588,7 +591,7 @@ class PersonalInfo extends Component {
                     <label className="form-label">Email Address</label>
                     <input 
                         className={`form-control ${this.state.formErrors.email}`} 
-                        type="email" 
+                        type="text" 
                         value={this.props.email}
                         name="email"
                         onChange={this.handleChange} 
@@ -628,4 +631,4 @@ const mapStateToProps = (state) => {
     };
 }
 
-export default connect(mapStateToProps, { formUpdate, formValidate })(PersonalInfo);
+export default connect(mapStateToProps, { formUpdate, formValidate, checkIsWorking })(PersonalInfo);

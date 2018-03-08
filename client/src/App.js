@@ -15,7 +15,7 @@ class App extends Component {
       super(props);
       this.moveSectionClick = this.moveSectionClick.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
-      this.state = {componentIndex: 0};
+      this.state = {componentIndex: 0}
   }
 
   moveSectionClick(index) {
@@ -51,11 +51,12 @@ class App extends Component {
     let Form, Footer, index = null;
 
     if (componentIndex === 0) {
-        index = 0
-        Form = <PersonalInfo />;
-        if (this.props.isWorking) {
-          index = 1
-        } 
+       if (this.props.isWorking){
+         index = 1;
+       }else{
+         index = 0;
+       }
+        Form = <PersonalInfo />; 
         Footer = <footer className="App-footer">
                     <button onClick={this.moveSectionClick.bind(this,index+1)} className="btn_primary" disabled={this.props.buttonDisabled}>Continue</button>
                   </footer>; 
@@ -109,6 +110,7 @@ class App extends Component {
           <Steps 
             direction="horizontal" 
             labelPlacement="vertical"
+            current={index}
           >
             <Step 
               status="finish"
@@ -164,7 +166,7 @@ const mapStateToProps = (state) => {
     kinnat, kinic, kinadd, kinpost, 
     kinstate, kinphone, kinmail,
     kintax, kinepf, kinoccu,
-    kingross, kinnett, kindepend, iccopy, payslip, buttonDisabled, isWorking 
+    kingross, kinnett, kindepend, iccopy, payslip, buttonDisabled, isWorking
   }
 }
 

@@ -6,13 +6,17 @@ import FileDragAndDrop from 'react-file-drag-and-drop';
 class Upload extends Component {
     constructor(props) {
         super(props);
-        this.handleDrop = this.handleDrop.bind(this);
-        //this.onChange = this.onChange.bind(this);
+        this.handleICDrop = this.handleICDrop.bind(this);
+        this.handlePayDrop = this.handlePayDrop.bind(this);
     }
     
-    handleDrop(dataTransfer) {
-        console.log('attachment out state:',dataTransfer.files[0]);
+    handleICDrop(dataTransfer) {
         this.props.formUpdate({ prop: 'iccopy', value: dataTransfer.files[0]})
+        console.log('attachment out state:',dataTransfer.files[0]);
+    }
+
+    handlePayDrop(dataTransfer) {
+        this.props.formUpdate({ prop: 'payslip', value: dataTransfer.files[0]})
         console.log('attachment out state:',dataTransfer.files[0]);
     }
  
@@ -25,31 +29,28 @@ class Upload extends Component {
                     <div className="Upload-row">
                             <label className="form-label">1. Upload your IC Copy</label>
                             <div className="Drag-drop">
-                                <FileDragAndDrop onDrop={this.handleDrop}>
+                                <FileDragAndDrop name='iccopy' onDrop={this.handleICDrop}>
                                     Drop files here...
+                                    <input 
+                                        className = "Upload-input"
+                                        type="file" 
+                                        onChange={event => this.props.formUpdate({ prop: 'iccopy', value: event.target.files[0] })} 
+                                    />
                                 </FileDragAndDrop>
                             </div>
-                            <b>OR</b>
-                            <input 
-                                className = "form-control"
-                                type="file" 
-                                onChange={event => this.props.formUpdate({ prop: 'iccopy', value: event.target.files[0] })} 
-                            />
                     </div>
 
                     <div className="Upload-row">
                         <label className="form-label">2. Upload your Pay Slip</label>
                         <div className="Drag-drop">
-                            <FileDragAndDrop onDrop={this.handleDrop}>
-                                <h5>Drop files here...</h5>
+                            <FileDragAndDrop name='payslip' onDrop={this.handlePayDrop}>
+                                Drop files here...
+                                <input 
+                                    type="file"
+                                    onChange={event => this.props.formUpdate({ prop: 'payslip', value: event.target.files[0] })}
+                                />
                             </FileDragAndDrop>
                         </div>
-                        <b>OR</b>
-                        <input 
-                            className="form-control"
-                            type="file"
-                            onChange={event => this.props.formUpdate({ prop: 'payslip', value: event.target.files[0] })}
-                        />
                     </div>
                 </form>
             </div>
