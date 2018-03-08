@@ -37,6 +37,8 @@ export const formSubmit = ({
             iccopy, payslip 
         };
 
+        console.log('applicant:', applicant);
+
         let data =  new FormData();
         data.append('pdfs',iccopy);
         data.append('pdfs',payslip);
