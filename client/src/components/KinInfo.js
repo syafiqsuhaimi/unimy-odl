@@ -423,7 +423,7 @@ class KinInfo extends Component {
                     <label className="form-label">State</label>
                     <select 
                         className="form-control" 
-                        style={{ height: 27 }} 
+                        placeholder=""
                         value={this.props.kinstate}
                         onChange={event => this.props.formUpdate({ prop: 'kinstate', value: event.target.value })}
                         required
