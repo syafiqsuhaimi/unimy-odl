@@ -52,7 +52,10 @@ class App extends Component {
 
     if (componentIndex === 0) {
         index = 0
-        Form = <PersonalInfo />; 
+        Form = <PersonalInfo />;
+        if (this.props.isWorking) {
+          index = 1
+        } 
         Footer = <footer className="App-footer">
                     <button onClick={this.moveSectionClick.bind(this,index+1)} className="btn_primary" disabled={this.props.buttonDisabled}>Continue</button>
                   </footer>; 
@@ -150,7 +153,7 @@ const mapStateToProps = (state) => {
     kinnat, kinic, kinadd, kinpost, 
     kinstate, kinphone, kinmail,
     kintax, kinepf, kinoccu,
-    kingross, kinnett, kindepend, iccopy, payslip, buttonDisabled
+    kingross, kinnett, kindepend, iccopy, payslip, buttonDisabled, isWorking
   } = state.form;
 
   return {
@@ -161,7 +164,7 @@ const mapStateToProps = (state) => {
     kinnat, kinic, kinadd, kinpost, 
     kinstate, kinphone, kinmail,
     kintax, kinepf, kinoccu,
-    kingross, kinnett, kindepend, iccopy, payslip, buttonDisabled 
+    kingross, kinnett, kindepend, iccopy, payslip, buttonDisabled, isWorking 
   }
 }
 

@@ -12,7 +12,7 @@ const INITIAL_STATE = {
     kinmail: '', kintax: '', kinepf: '',
     kinoccu: '', kingross: '', kinnett: '',
     kindepend: '', iccopy: '', payslip: '', 
-    buttonDisabled: true
+    buttonDisabled: true, isWorking: false
 };
 
 export default (state = INITIAL_STATE, action) => {

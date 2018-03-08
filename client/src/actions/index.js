@@ -6,6 +6,7 @@ export const VALIDATION_SUCCESS = 'validation_success';
 export const VALIDATION_FAIL = 'validation_fail';
 
 export const formUpdate = ({ prop, value }) => {
+    //console.log({ prop, value });
     return {
         type: FORM_UPDATE,
         payload: { prop, value }

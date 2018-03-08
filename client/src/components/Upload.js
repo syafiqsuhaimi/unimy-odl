@@ -11,6 +11,7 @@ class Upload extends Component {
     }
     
     handleDrop(dataTransfer) {
+        console.log('attachment out state:',dataTransfer.files[0]);
         this.props.formUpdate({ prop: 'iccopy', value: dataTransfer.files[0]})
         console.log('attachment out state:',dataTransfer.files[0]);
     }
@@ -25,8 +26,7 @@ class Upload extends Component {
                             <label className="form-label">1. Upload your IC Copy</label>
                             <div className="Drag-drop">
                                 <FileDragAndDrop onDrop={this.handleDrop}>
-                                    <h5>Drop files here...</h5>
-                                    <h5>{this.props.iccopy}</h5>
+                                    Drop files here...
                                 </FileDragAndDrop>
                             </div>
                             <b>OR</b>
@@ -42,7 +42,6 @@ class Upload extends Component {
                         <div className="Drag-drop">
                             <FileDragAndDrop onDrop={this.handleDrop}>
                                 <h5>Drop files here...</h5>
-                                <h5>{this.props.payslip}</h5>
                             </FileDragAndDrop>
                         </div>
                         <b>OR</b>
@@ -59,10 +58,4 @@ class Upload extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    const { iccopy, payslip } = state.form;
-
-    return { iccopy, payslip };
-}
-
-export default connect(mapStateToProps, { formUpdate })(Upload);
+export default connect(null, { formUpdate })(Upload);
