@@ -21,6 +21,7 @@ class App extends Component {
 
   moveSectionClick(index) {
     this.setState({componentIndex: index});
+    console.log('insidemovesection: ', index);
   }
 
   handleSubmit(index){
@@ -34,24 +35,22 @@ class App extends Component {
       kintax, kinepf, kinoccu,
       kingross, kinnett, kindepend, iccopy, payslip
     } = this.props;
-
     this.props.formSubmit({ 
       name, ic, nationality, dob, 
       gender, address, postcode, negeri, 
       phone, email, tax, epf, occupation,
-      gross, nett, depend, kinname, relation, 
+      gross, nett, depend, kinname, relation,
       kinnat, kinic, kinadd, kinpost, 
       kinstate, kinphone, kinmail,
       kintax, kinepf, kinoccu,
       kingross, kinnett, kindepend, iccopy, payslip
     });
-    this.setState({ componentIndex: index });
+
   }
 
   render() {
     const componentIndex = this.state.componentIndex;
     let Form, Footer, index = null;
-
     if (componentIndex === 0) {
        if (this.props.isWorking){
          index = 1;
@@ -59,22 +58,27 @@ class App extends Component {
          index = 0;
        }
         Form = <PersonalInfo />; 
+        console.log(index);
         Footer = <footer className="App-footer">
                     <button onClick={this.moveSectionClick.bind(this,index+1)} className="btn_primary" disabled={this.props.buttonDisabled}>Continue</button>
                   </footer>; 
     } else if(componentIndex === 1) {
         index = 1
         Form = <KinInfo />; 
+        console.log(index);
         Footer = <footer className="App-footer">
                     <button onClick={this.moveSectionClick.bind(this,index-1)} className="btn_secondary">Previous</button>
                     <button onClick={this.moveSectionClick.bind(this,index+1)} className="btn_primary" disabled={this.props.buttonDisabled}>Continue</button>
                  </footer>; 
     } else if(componentIndex === 2) {
       index = 2
-      Form = <Upload />; 
+      Form = <Upload />;
+      if (this.props.submitSuccess === true || this.props.submitSuccess === false) {
+        this.moveSectionClick(index+1);
+      }
       Footer = <footer className="App-footer">
                   <button 
-                    onClick={this.handleSubmit(index+1)} 
+                    onClick={this.handleSubmit} 
                     className="btn_primary" 
                     style={{ width: 250 }}
                     disabled={this.props.buttonDisabled}
@@ -85,8 +89,10 @@ class App extends Component {
     } else if(componentIndex === 3) {
       index = 3
       Form = <Success />;
+      console.log(index);
       Footer = <footer className="App-footer">
                   <button
+                    onClick={() => console.log('take me there')}
                     className="btn_primary"
                     style={{ width: 250 }}
                   >
@@ -167,7 +173,7 @@ const mapStateToProps = (state) => {
     kinstate, kinphone, kinmail,
     kintax, kinepf, kinoccu,
     kingross, kinnett, kindepend, iccopy, 
-    payslip, buttonDisabled, isWorking
+    payslip, buttonDisabled, isWorking, submitSuccess
   } = state.form;
 
   return {
@@ -179,7 +185,7 @@ const mapStateToProps = (state) => {
     kinstate, kinphone, kinmail,
     kintax, kinepf, kinoccu,
     kingross, kinnett, kindepend, iccopy, 
-    payslip, buttonDisabled, isWorking
+    payslip, buttonDisabled, isWorking, submitSuccess
   }
 }
 
