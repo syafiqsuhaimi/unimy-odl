@@ -110,11 +110,18 @@ class KinWorking extends Component {
     }
 
     validateForm() {
+        const { 
+            kintaxValid, kinepfValid, kinoccuValid, kingrossValid,
+            kinnettValid, kindependValid, formValid
+        } = this.state;
+
         this.setState({
             formValid: 
-                this.state.kintaxValid && this.state.kinepfValid && this.state.kinoccuValid &&
-                this.state.kingrossValid && this.state.kinnettValid && this.state.kindependValid
+                kintaxValid && kinepfValid && kinoccuValid &&
+                kingrossValid && kinnettValid && kindependValid
         });
+        console.log(kintaxValid, kinepfValid, kinoccuValid, kingrossValid, kinnettValid, kindependValid);
+        console.log(formValid);
     }
 
     errorClass(error) {
@@ -171,8 +178,8 @@ class KinWorking extends Component {
                 <input 
                     className={`form-control ${this.state.formErrors.kinoccu}`} 
                     type="text" 
-                    name="kinoccupation"
-                    value={this.props.kinoccupation}
+                    name="kinoccu"
+                    value={this.props.kinoccu}
                     onChange={this.handleChange} 
                     placeholder=""
                 />
@@ -184,7 +191,7 @@ class KinWorking extends Component {
                 <label className="form-label">Gross Salary</label>
                 <input 
                     className={`form-control ${this.state.formErrors.kingross}`} 
-                    type="text" 
+                    type="number" 
                     name="kingross"
                     value={this.props.kingross}
                     onChange={this.handleChange} 
@@ -198,7 +205,7 @@ class KinWorking extends Component {
                 <label className="form-label">Nett Salary</label>
                 <input 
                     className={`form-control ${this.state.formErrors.kinnett}`} 
-                    type="text" 
+                    type="number" 
                     name="kinnett"
                     value={this.props.kinnett}
                     onChange={this.handleChange}

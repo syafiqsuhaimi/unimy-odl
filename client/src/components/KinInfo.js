@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { formUpdate } from '../actions';
+import { formUpdate, formValidate } from '../actions';
 import KinWorking from './KinWorking';
 
 class KinInfo extends Component {
@@ -8,29 +8,31 @@ class KinInfo extends Component {
         super(props);
         this.handleWorkedClick = this.handleWorkedClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        //this.handleNotWorkedClick = this.handleNotWorkedClick.bind(this);
+        this.handleNotWorkedClick = this.handleNotWorkedClick.bind(this);
         this.state = {
             isWorking: false,
             formErrors: {
-                kinname: '', kinic: '', kinpost: '', kinphone: '', kinmail: ''
+                kinname: '', kinic: '', kinpost: '', kinphone: '', kinmail: '', kinwork: ''
             },
             kinnameValid: false,
             kinicValid: false,
             kinpostValid: false,
             kinphoneValid: false,
             kinmailValid: false,
+            kinworkValid: false,
             formValid: false
         };
     }
     
     handleWorkedClick() {
-        this.setState({isWorking: true});
+        this.setState({ isWorking: true });
     }
-    /*
+    
     handleNotWorkedClick() {
-        this.setState({isWorking: false});
+        this.setState({isWorking: false, kinworkValid: true });
+        this.validateField('kinwork', 'click');
     }
-    */
+
    handleChange(event) {
     const name = event.target.name;
     const value = event.target.value;
@@ -46,26 +48,67 @@ class KinInfo extends Component {
         let kinpostValid = this.state.kinpostValid;
         let kinphoneValid = this.state.kinphoneValid;
         let kinmailValid = this.state.kinmailValid;
+        let kinworkValid = this.state.kinworkValid;
 
         switch (fieldName) {
             case 'kinname':
                 kinnameValid = value.length >= 6 && value.match(/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'@-]+$/u);
-                fieldValidationErrors.kinname = kinnameValid? '' : ' is-invalid';
+                if (fieldValidationErrors.kinname = kinnameValid) {
+                    fieldValidationErrors.kinname = '';
+                    kinnameValid = true;
+                } else {
+                    fieldValidationErrors.kinname = ' is-invalid';
+                    kinnameValid = false;
+                }
                 break;
             case 'kinic':
-                kinicValid = value.match(/^\d{6}-\d{2}-\d{4}$/);
-                fieldValidationErrors.kinic = kinicValid? '' : ' is-invalid';
+                kinicValid = value.length == 12;
+                if (fieldValidationErrors.kinic = kinicValid) {
+                    fieldValidationErrors.kinic = '';
+                    kinicValid = true;
+                } else {
+                    fieldValidationErrors.kinic = ' is-invalid';
+                    kinicValid = false;
+                }
                 break;
             case 'kinpost':
                 kinpostValid = value.length >=5;
-                fieldValidationErrors.kinpost = kinpostValid? '' : ' is-invalid';
+                if (fieldValidationErrors.kinpost = kinpostValid) {
+                    fieldValidationErrors.kinpost = '';
+                    kinpostValid = true;
+                } else {
+                    fieldValidationErrors.kinpost = ' is-invalid';
+                    kinpostValid = false;
+                }
             case 'kinphone':
-                kinphoneValid = value.match(/^[01]+\d{1}-\d{7}$/);
-                fieldValidationErrors.kinphone = kinphoneValid? '' : ' is-invalid';
+                kinphoneValid = value.length >= 10;
+                if (fieldValidationErrors.kinphone = kinphoneValid) {
+                    fieldValidationErrors.kinphone = '';
+                    kinphoneValid = true;
+                } else {
+                    fieldValidationErrors.kinphone = ' is-invalid';
+                    kinphoneValid = false;
+                }
                 break;
             case 'kinmail':
                 kinmailValid = value.match(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
-                fieldValidationErrors.kinmail = kinmailValid? '' : ' is-invalid';
+                if (fieldValidationErrors.kinmail = kinmailValid) {
+                    fieldValidationErrors.kinmail = '';
+                    kinmailValid = true;
+                } else {
+                    fieldValidationErrors.kinmail = ' is-invalid';
+                    kinmailValid = false;
+                }
+                break;
+            case 'kinwork':
+                kinworkValid = value.length > 0;
+                if (fieldValidationErrors.kinwork = kinworkValid) {
+                    fieldValidationErrors.kinwork = '';
+                    kinworkValid = true;
+                } else {
+                    fieldValidationErrors.kinwork = 
+                    kinworkValid = false;
+                }
                 break;
             default:
                 break;
@@ -76,14 +119,23 @@ class KinInfo extends Component {
                                     kinicValid,
                                     kinpostValid,
                                     kinphoneValid,
-                                    kinmailValid
+                                    kinmailValid, 
+                                    kinworkValid
                     }, this.validateForm);
     }
 
     validateForm() {
+        const { 
+            kinnameValid, kinicValid, kinpostValid,
+            kinphoneValid, kinmailValid, formValid, kinworkValid
+        } = this.state;
+
         this.setState({
-            formValid: this.state.kinnameValid
+            formValid: kinnameValid && kinicValid && kinpostValid &&
+            kinphoneValid && kinmailValid && kinworkValid
         })
+        console.log(kinnameValid, kinicValid, kinpostValid, kinphoneValid, kinmailValid, kinworkValid);
+        console.log(formValid);
     }
 
     errorClass(error) {
@@ -91,6 +143,7 @@ class KinInfo extends Component {
     }
 
     renderErrorText(name, value) {
+        this.props.formValidate(this.state.formValid);
         if (this.state.formErrors[name] === ' is-invalid') {
             return (
                 <div className="alert alert-danger">
@@ -374,11 +427,11 @@ class KinInfo extends Component {
                     <label className="form-label">IC Number</label>
                     <input 
                         className="form-control" 
-                        type="text" 
+                        type="number" 
                         value={this.props.kinic}
                         name="kinic"
                         onChange={this.handleChange}
-                        placeholder="i.e: xxxxxx-xx-xxxx"
+                        placeholder=""
                     />
                     {this.renderErrorText('kinic', this.props.kinic)}
                     {/* <div className="Invalid-feedback">
@@ -423,7 +476,7 @@ class KinInfo extends Component {
                     <label className="form-label">State</label>
                     <select 
                         className="form-control" 
-                        style={{ height: 27 }} 
+                        placeholder=""
                         value={this.props.kinstate}
                         onChange={event => this.props.formUpdate({ prop: 'kinstate', value: event.target.value })}
                         required
@@ -455,11 +508,11 @@ class KinInfo extends Component {
                     <label className="form-label">Phone Number</label>
                     <input 
                         className="form-control" 
-                        type="text" 
+                        type="number" 
                         name="kinphone"
                         value={this.props.kinphone}
                         onChange={this.handleChange}
-                        placeholder="i.e: 01x-xxxxxxx"
+                        placeholder=""
                     />
                     {this.renderErrorText('kinphone', this.props.kinphone)}
                     {/* <div className="Invalid-feedback">
@@ -490,7 +543,7 @@ class KinInfo extends Component {
                     <label className="form-label">Currently working?</label>
                     <div className="Button-row-col">
                         <button onClick={this.handleWorkedClick} className="Form-button">Yes</button>
-                        <button className="Form-button">No</button>
+                        <button onClick={this.handleNotWorkedClick} className="Form-button">No</button>
                     </div>
                 </div>
                 </div>
@@ -514,4 +567,4 @@ const mapStateToProps = (state) => {
     };
 }
 
-export default connect(mapStateToProps, { formUpdate })(KinInfo);
+export default connect(mapStateToProps, { formUpdate, formValidate })(KinInfo);

@@ -115,8 +115,6 @@ class Working extends Component {
                 this.state.taxValid && this.state.epfValid && this.state.occuValid &&
                 this.state.grossValid && this.state.nettValid && this.state.dependValid
         });
-        console.log(this.state.taxValid, this.state.epfValid, this.state.occuValid, this.state.grossValid, this.state.nettValid, this.state.dependValid);
-        console.log('inside validateform: ', this.state.formValid);
     }
 
     errorClass(error) {
@@ -186,7 +184,7 @@ class Working extends Component {
                 <label className="form-label">Gross Salary</label>
                 <input 
                     className={`form-control ${this.state.formErrors.gross}`} 
-                    type="text" 
+                    type="number" 
                     name="gross"
                     value={this.props.gross}
                     onChange={this.handleChange} 
@@ -200,7 +198,7 @@ class Working extends Component {
                 <label className="form-label">Nett Salary</label>
                 <input 
                     className={`form-control ${this.state.formErrors.nett}`} 
-                    type="text" 
+                    type="number" 
                     name="nett"
                     value={this.props.nett}
                     onChange={this.handleChange}

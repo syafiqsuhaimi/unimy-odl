@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { formUpdate, formValidate } from '../actions';
+import { formUpdate, formValidate, checkIsWorking } from '../actions';
 import Working from './Working';
 
 class PersonalInfo extends Component {
@@ -33,11 +33,15 @@ class PersonalInfo extends Component {
     
     handleWorkedClick() {
         this.setState({ isWorking: true });
+        this.props.checkIsWorking(true);
     }
     
     handleNotWorkedClick() {
-        this.setState({isWorking: false, workValid: true });
+        //this.setState({isWorking: false, workValid: true });
+        this.props.formUpdate({ prop: "isWorking", value: false });
+        this.setState({ workValid: true });
         this.validateField('work', 'click');
+        this.props.checkIsWorking(false);
     }
 
     handleChange(event) {
@@ -73,7 +77,7 @@ class PersonalInfo extends Component {
                 }
                 break;
             case 'ic':
-                icValid = value.match(/^\d{6}-\d{2}-\d{4}$/);
+                icValid = value.length == 12;
                 if (fieldValidationErrors.ic = icValid) {
                     fieldValidationErrors.ic = '';
                     icValid = true;
@@ -83,7 +87,7 @@ class PersonalInfo extends Component {
                 }
                 break;
             case 'dob':
-                dobValid = value.match(/(0[1-9]|1[012])[- \/.](0[1-9]|[12][0-9]|3[01])[- \/.](19|20)\d\d/);
+                dobValid = value.length > 0;
                 if (fieldValidationErrors.dob = dobValid) {
                     fieldValidationErrors.dob = '';
                     dobValid = true;
@@ -103,7 +107,8 @@ class PersonalInfo extends Component {
                 }
                 break;
             case 'phone':
-                phoneValid = value.match(/^[01]+\d{1}-\d{7}$/);
+                phoneValid = value.length >= 10;
+
                 if (fieldValidationErrors.phone = phoneValid) {
                     fieldValidationErrors.phone = '';
                     phoneValid = true;
@@ -192,19 +197,17 @@ class PersonalInfo extends Component {
     }
     // function below is for disabling button
     validateForm() {
+        const { 
+            nameValid, icValid, dobValid, postcodeValid,
+            phoneValid, emailValid, natValid, genderValid,
+            addressValid, negeriValid, workValid, formValid
+        } = this.state;
+
         this.setState({ 
             formValid: 
-                this.state.nameValid && 
-                this.state.icValid && 
-                this.state.dobValid &&
-                this.state.postcodeValid &&
-                this.state.phoneValid &&
-                this.state.emailValid &&
-                this.state.natValid &&
-                this.state.genderValid && 
-                this.state.addressValid &&
-                this.state.negeriValid &&
-                this.state.workValid
+                nameValid && icValid && dobValid && postcodeValid &&
+                phoneValid && emailValid && natValid && genderValid && 
+                addressValid && negeriValid && workValid
         });
     }
 
@@ -225,8 +228,8 @@ class PersonalInfo extends Component {
     }
 
     render() {
-        const isWorking = this.state.isWorking;
-        
+        //const isWorking = this.state.isWorking;
+        const isWorking = this.props.isWorking;
         let workingForm = null;
         if (isWorking) {
             workingForm = <Working />;  
@@ -238,7 +241,6 @@ class PersonalInfo extends Component {
             <div className="App-body">
             <div className="test">
             <form className="personalFormStyle">
-
                 <div className="name">
                     <div className={`form-group ${this.errorClass(this.state.formErrors.name)}`}>
                     <label className="form-label">Full Name (As per IC)</label>
@@ -258,11 +260,11 @@ class PersonalInfo extends Component {
                 <div className={`form-group ${this.errorClass(this.state.formErrors.ic)}`}>
                     <label className="form-label">IC Number</label>
                     <input 
-                        className="form-control" 
-                        type="text" 
+                        className={`form-control ${this.state.formErrors.ic}`} 
+                        type="number" 
                         value={this.props.ic} 
                         name="ic"
-                        placeholder="i.e: xxxxxx-xx-xxxx"
+                        placeholder=""
                         onChange={this.handleChange}
                     />
                     {this.renderErrorText('ic', this.props.ic)}
@@ -478,24 +480,23 @@ class PersonalInfo extends Component {
                     {this.renderErrorText('nationality', this.props.nationality)}
                 </div>
                 <div className="dob">
-
-                    <div className={`form-group ${this.errorClass(this.state.formErrors.dob)}`}>
                     <label className="form-label">Date of Birth</label>
                     <input
-                        className="form-control" 
-                        type="text" 
-                        placeholder="i.e: dd/mm/yyyy"
+                        className={`form-control ${this.state.formErrors.dob}`}  
+                        type="date" 
+                        placeholder=""
                         name="dob"
+                        value={this.props.dob}
+                        onChange={this.handleChange}
                     />
-                    {this.renderErrorText('dob', this.props.dob)}
-                    </div>
                 </div>
                 <div className="gender">
                     <label className="form-label">Gender</label>
                     <select 
-                        className="form-control" 
-                        style={{ height: 27 }}
+                        className={`form-control ${this.state.formErrors.gender}`} 
                         name="gender"
+                        value={this.props.gender} 
+                        placeholder=""
                         onChange={this.handleChange} 
                         required
                     >
@@ -511,7 +512,7 @@ class PersonalInfo extends Component {
                 <div className="address">
                     <label className="form-label">Permanent Address</label>
                     <input 
-                        className="form-control" 
+                        className={`form-control ${this.state.formErrors.address}`} 
                         type="text" 
                         value={this.props.address}
                         name="address"
@@ -523,7 +524,7 @@ class PersonalInfo extends Component {
                     <div className={`form-group ${this.errorClass(this.state.formErrors.postcode)}`}>
                     <label className="form-label">Postcode</label>
                     <input 
-                        className="form-control" 
+                        className={`form-control ${this.state.formErrors.postcode}`} 
                         type="number" 
                         value={this.props.postcode}
                         name="postcode"
@@ -537,9 +538,9 @@ class PersonalInfo extends Component {
                     <label className="form-label">State</label>
                     <select 
                         className="form-control" 
-                        style={{ height: 27 }} 
                         value={this.props.negeri}
                         name="negeri"
+                        placeholder=""
                         onChange={this.handleChange} 
                         required
                     >
@@ -570,12 +571,12 @@ class PersonalInfo extends Component {
                     <div className={`form-group ${this.errorClass(this.state.formErrors.phone)}`}>
                     <label className="form-label">Phone Number</label>
                     <input 
-                        className="form-control" 
-                        type="text" 
+                        className={`form-control ${this.state.formErrors.phone}`}  
+                        type="number" 
                         value={this.props.phone}
                         name="phone"
                         onChange={this.handleChange} 
-                        placeholder="i.e: 01x-xxxxxxx"
+                        placeholder=""
                     />
                     {this.renderErrorText('phone', this.props.phone)}
                     </div>
@@ -585,8 +586,8 @@ class PersonalInfo extends Component {
                     <div className={`form-group ${this.errorClass(this.state.formErrors.email)}`}>                                  
                     <label className="form-label">Email Address</label>
                     <input 
-                        className="form-control" 
-                        type="email" 
+                        className={`form-control ${this.state.formErrors.email}`} 
+                        type="text" 
                         value={this.props.email}
                         name="email"
                         onChange={this.handleChange} 
@@ -616,14 +617,14 @@ const mapStateToProps = (state) => {
         name, ic, nationality,
         dob, gender, address,
         postcode, negeri, phone,
-        email
+        email, isWorking
     } = state.form;
 
     return { 
         name, ic, nationality,
         dob, gender, address,
-        postcode, negeri, phone, email
+        postcode, negeri, phone, email, isWorking
     };
 }
 
-export default connect(mapStateToProps, { formUpdate, formValidate })(PersonalInfo);
+export default connect(mapStateToProps, { formUpdate, formValidate, checkIsWorking })(PersonalInfo);

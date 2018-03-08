@@ -9,20 +9,22 @@ import logo from './logo_unimy.jpg';
 import PersonalInfo from './components/PersonalInfo';
 import KinInfo from './components/KinInfo';
 import Upload from './components/Upload';
+import Success from './components/Success';
 
 class App extends Component {
   constructor(props) {
       super(props);
       this.moveSectionClick = this.moveSectionClick.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
-      this.state = {componentIndex: 0};
+      this.state = {componentIndex: 0}
   }
 
   moveSectionClick(index) {
     this.setState({componentIndex: index});
+    console.log('insidemovesection: ', index);
   }
 
-  handleSubmit(){
+  handleSubmit(index){
     const {
       name, ic, nationality, dob, 
       gender, address, postcode, negeri, 
@@ -33,42 +35,70 @@ class App extends Component {
       kintax, kinepf, kinoccu,
       kingross, kinnett, kindepend, iccopy, payslip
     } = this.props;
-
     this.props.formSubmit({ 
       name, ic, nationality, dob, 
       gender, address, postcode, negeri, 
       phone, email, tax, epf, occupation,
-      gross, nett, depend, kinname, relation, 
+      gross, nett, depend, kinname, relation,
       kinnat, kinic, kinadd, kinpost, 
       kinstate, kinphone, kinmail,
       kintax, kinepf, kinoccu,
       kingross, kinnett, kindepend, iccopy, payslip
     });
+
   }
 
   render() {
     const componentIndex = this.state.componentIndex;
     let Form, Footer, index = null;
-
     if (componentIndex === 0) {
-        index = 0
+       if (this.props.isWorking){
+         index = 1;
+       }else{
+         index = 0;
+       }
         Form = <PersonalInfo />; 
+        console.log(index);
         Footer = <footer className="App-footer">
                     <button onClick={this.moveSectionClick.bind(this,index+1)} className="btn_primary" disabled={this.props.buttonDisabled}>Continue</button>
                   </footer>; 
     } else if(componentIndex === 1) {
         index = 1
         Form = <KinInfo />; 
+        console.log(index);
         Footer = <footer className="App-footer">
                     <button onClick={this.moveSectionClick.bind(this,index-1)} className="btn_secondary">Previous</button>
                     <button onClick={this.moveSectionClick.bind(this,index+1)} className="btn_primary" disabled={this.props.buttonDisabled}>Continue</button>
                  </footer>; 
     } else if(componentIndex === 2) {
       index = 2
-      Form = <Upload />; 
+      Form = <Upload />;
+      if (this.props.submitSuccess === true || this.props.submitSuccess === false) {
+        this.moveSectionClick(index+1);
+      }
       Footer = <footer className="App-footer">
-                  <button onClick={this.handleSubmit} className="btn_primary" style={{ width: 250 }}>Submit your application</button>
+                  <button 
+                    onClick={this.handleSubmit} 
+                    className="btn_primary" 
+                    style={{ width: 250 }}
+                    disabled={this.props.buttonDisabled}
+                  >
+                    Submit your application
+                  </button>
                </footer>; 
+    } else if(componentIndex === 3) {
+      index = 3
+      Form = <Success />;
+      console.log(index);
+      Footer = <footer className="App-footer">
+                  <button
+                    onClick={() => console.log('take me there')}
+                    className="btn_primary"
+                    style={{ width: 250 }}
+                  >
+                    Take me there!
+                  </button>
+                </footer>;
     }
 
     return (
@@ -106,6 +136,7 @@ class App extends Component {
           <Steps 
             direction="horizontal" 
             labelPlacement="vertical"
+            current={index}
           >
             <Step 
               status="finish"
@@ -128,15 +159,6 @@ class App extends Component {
         {Footer}
       </div>
     </div>
-      // <div className="App">
-      //   <header className="App-header">
-      //     <img src={logo} className="App-logo" alt="logo" />
-      //     <h1 className="App-title">Welcome to React</h1>
-      //   </header>
-      //   <p className="App-intro">
-      //     This is my first react app. ahhagja nbfhhad jahdaj ha had aj dhadje jadvjegdjw cjhadna s ahajdas hjashaj
-      //   </p>
-      // </div>
     );
   }
 }
@@ -150,7 +172,8 @@ const mapStateToProps = (state) => {
     kinnat, kinic, kinadd, kinpost, 
     kinstate, kinphone, kinmail,
     kintax, kinepf, kinoccu,
-    kingross, kinnett, kindepend, iccopy, payslip, buttonDisabled
+    kingross, kinnett, kindepend, iccopy, 
+    payslip, buttonDisabled, isWorking, submitSuccess
   } = state.form;
 
   return {
@@ -161,7 +184,8 @@ const mapStateToProps = (state) => {
     kinnat, kinic, kinadd, kinpost, 
     kinstate, kinphone, kinmail,
     kintax, kinepf, kinoccu,
-    kingross, kinnett, kindepend, iccopy, payslip, buttonDisabled 
+    kingross, kinnett, kindepend, iccopy, 
+    payslip, buttonDisabled, isWorking, submitSuccess
   }
 }
 
