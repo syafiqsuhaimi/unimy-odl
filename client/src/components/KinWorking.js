@@ -184,7 +184,7 @@ class KinWorking extends Component {
                 <label className="form-label">Gross Salary</label>
                 <input 
                     className={`form-control ${this.state.formErrors.kingross}`} 
-                    type="text" 
+                    type="number" 
                     name="kingross"
                     value={this.props.kingross}
                     onChange={this.handleChange} 
@@ -198,7 +198,7 @@ class KinWorking extends Component {
                 <label className="form-label">Nett Salary</label>
                 <input 
                     className={`form-control ${this.state.formErrors.kinnett}`} 
-                    type="text" 
+                    type="number" 
                     name="kinnett"
                     value={this.props.kinnett}
                     onChange={this.handleChange}
