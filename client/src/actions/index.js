@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 export const FORM_UPDATE = 'form_update';
-export const FORM_SUBMIT = 'form_submit';
+export const FORM_SUBMIT_SUCCESS = 'form_submit_success';
+export const FORM_SUBMIT_FAIL = 'form_submit_fail';
 export const VALIDATION_SUCCESS = 'validation_success';
 export const VALIDATION_FAIL = 'validation_fail';
 export const WORKING = 'working';
@@ -56,16 +57,14 @@ export const formSubmit = ({
               axios.post('http://localhost:8888/post-data', applicant)
               .then(function (response) {
                   console.log(response);
+                  dispatch({ type: FORM_SUBMIT_SUCCESS });
               })
               .catch(function (error) {
                   console.log(error);
+                  dispatch({ type: FORM_SUBMIT_FAIL });
               });
           });
-
-
-        dispatch({ type: FORM_SUBMIT });
    }
-
 };
 
 export const formValidate = (validation) => {
