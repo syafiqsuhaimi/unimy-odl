@@ -63,7 +63,13 @@ export const formSubmit = ({
                   console.log(error);
                   dispatch({ type: FORM_SUBMIT_FAIL });
               });
+          })
+          .catch((error) => {
+            console.log(error);
+            dispatch({ type: FORM_SUBMIT_FAIL });
+            
           });
+
    }
 };
 
