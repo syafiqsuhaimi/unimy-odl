@@ -481,18 +481,15 @@ class PersonalInfo extends Component {
                     {this.renderErrorText('nationality', this.props.nationality)}
                 </div>
                 <div className="dob">
-
-                    <div className={`form-group ${this.errorClass(this.state.formErrors.dob)}`}>
                     <label className="form-label">Date of Birth</label>
                     <input
                         className={`form-control ${this.state.formErrors.dob}`}  
                         type="date" 
                         placeholder=""
                         name="dob"
+                        value={this.props.dob}
                         onChange={this.handleChange}
                     />
-                    {this.renderErrorText('dob', this.props.dob)}
-                    </div>
                 </div>
                 <div className="gender">
                     <label className="form-label">Gender</label>
