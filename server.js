@@ -45,9 +45,6 @@ const config = {
     }
 };
 
-var ICCopy = '';
-var payslip = '';
-
 app.get('/get-data', function (req, res) {
 
     // connect to your database
