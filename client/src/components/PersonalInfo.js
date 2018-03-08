@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { formUpdate, formValidate } from '../actions';
+import { formUpdate, formValidate, checkIsWorking } from '../actions';
 import Working from './Working';
 
 class PersonalInfo extends Component {
@@ -33,11 +33,13 @@ class PersonalInfo extends Component {
     
     handleWorkedClick() {
         this.setState({ isWorking: true });
+        this.props.checkIsWorking(true);
     }
     
     handleNotWorkedClick() {
         this.setState({isWorking: false, workValid: true });
         this.validateField('work', 'click');
+        this.props.checkIsWorking(false);
     }
 
     handleChange(event) {
@@ -73,7 +75,7 @@ class PersonalInfo extends Component {
                 }
                 break;
             case 'ic':
-                icValid = value.match(/^\d{6}-\d{2}-\d{4}$/);
+                icValid = value.length == 12;
                 if (fieldValidationErrors.ic = icValid) {
                     fieldValidationErrors.ic = '';
                     icValid = true;
@@ -103,7 +105,7 @@ class PersonalInfo extends Component {
                 }
                 break;
             case 'phone':
-                phoneValid = value.match(/^[01]+\d{1}-\d{7}$/);
+                phoneValid = value.length == 10;
                 if (fieldValidationErrors.phone = phoneValid) {
                     fieldValidationErrors.phone = '';
                     phoneValid = true;
@@ -259,7 +261,7 @@ class PersonalInfo extends Component {
                     <label className="form-label">IC Number</label>
                     <input 
                         className="form-control" 
-                        type="text" 
+                        type="number" 
                         value={this.props.ic} 
                         name="ic"
                         placeholder="i.e: xxxxxx-xx-xxxx"
@@ -483,7 +485,7 @@ class PersonalInfo extends Component {
                     <label className="form-label">Date of Birth</label>
                     <input
                         className="form-control" 
-                        type="text" 
+                        type="date" 
                         placeholder="i.e: dd/mm/yyyy"
                         name="dob"
                     />
@@ -494,8 +496,9 @@ class PersonalInfo extends Component {
                     <label className="form-label">Gender</label>
                     <select 
                         className="form-control" 
-                        style={{ height: 27 }}
                         name="gender"
+                        value={this.props.gender} 
+                        placeholder=""
                         onChange={this.handleChange} 
                         required
                     >
@@ -537,9 +540,9 @@ class PersonalInfo extends Component {
                     <label className="form-label">State</label>
                     <select 
                         className="form-control" 
-                        style={{ height: 27 }} 
                         value={this.props.negeri}
                         name="negeri"
+                        placeholder=""
                         onChange={this.handleChange} 
                         required
                     >
@@ -571,7 +574,7 @@ class PersonalInfo extends Component {
                     <label className="form-label">Phone Number</label>
                     <input 
                         className="form-control" 
-                        type="text" 
+                        type="number" 
                         value={this.props.phone}
                         name="phone"
                         onChange={this.handleChange} 
@@ -586,7 +589,7 @@ class PersonalInfo extends Component {
                     <label className="form-label">Email Address</label>
                     <input 
                         className="form-control" 
-                        type="email" 
+                        type="text" 
                         value={this.props.email}
                         name="email"
                         onChange={this.handleChange} 
@@ -626,4 +629,4 @@ const mapStateToProps = (state) => {
     };
 }
 
-export default connect(mapStateToProps, { formUpdate, formValidate })(PersonalInfo);
+export default connect(mapStateToProps, { formUpdate, formValidate, checkIsWorking })(PersonalInfo);
