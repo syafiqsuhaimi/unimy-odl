@@ -8,6 +8,7 @@ export const WORKING = 'working';
 export const NOT_WORKING = 'not_working';
 
 export const formUpdate = ({ prop, value }) => {
+    //console.log({ prop, value });
     return {
         type: FORM_UPDATE,
         payload: { prop, value }

@@ -59,10 +59,4 @@ class Upload extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    const { iccopy, payslip } = state.form;
-
-    return { iccopy, payslip };
-}
-
-export default connect(mapStateToProps, { formUpdate })(Upload);
+export default connect(null, { formUpdate })(Upload);

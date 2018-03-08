@@ -37,7 +37,9 @@ class PersonalInfo extends Component {
     }
     
     handleNotWorkedClick() {
-        this.setState({isWorking: false, workValid: true });
+        //this.setState({isWorking: false, workValid: true });
+        this.props.formUpdate({ prop: "isWorking", value: false });
+        this.setState({ workValid: true });
         this.validateField('work', 'click');
         this.props.checkIsWorking(false);
     }
@@ -195,19 +197,17 @@ class PersonalInfo extends Component {
     }
     // function below is for disabling button
     validateForm() {
+        const { 
+            nameValid, icValid, dobValid, postcodeValid,
+            phoneValid, emailValid, natValid, genderValid,
+            addressValid, negeriValid, workValid, formValid
+        } = this.state;
+
         this.setState({ 
             formValid: 
-                this.state.nameValid && 
-                this.state.icValid && 
-                this.state.dobValid &&
-                this.state.postcodeValid &&
-                this.state.phoneValid &&
-                this.state.emailValid &&
-                this.state.natValid &&
-                this.state.genderValid && 
-                this.state.addressValid &&
-                this.state.negeriValid &&
-                this.state.workValid
+                nameValid && icValid && dobValid && postcodeValid &&
+                phoneValid && emailValid && natValid && genderValid && 
+                addressValid && negeriValid && workValid
         });
     }
 
@@ -228,8 +228,8 @@ class PersonalInfo extends Component {
     }
 
     render() {
-        const isWorking = this.state.isWorking;
-        
+        //const isWorking = this.state.isWorking;
+        const isWorking = this.props.isWorking;
         let workingForm = null;
         if (isWorking) {
             workingForm = <Working />;  
@@ -487,7 +487,7 @@ class PersonalInfo extends Component {
                         type="date" 
                         placeholder=""
                         name="dob"
-                        value={this.props.dob} 
+                        value={this.props.dob}
                         onChange={this.handleChange}
                     />
                 </div>
@@ -618,13 +618,13 @@ const mapStateToProps = (state) => {
         name, ic, nationality,
         dob, gender, address,
         postcode, negeri, phone,
-        email
+        email, isWorking
     } = state.form;
 
     return { 
         name, ic, nationality,
         dob, gender, address,
-        postcode, negeri, phone, email
+        postcode, negeri, phone, email, isWorking
     };
 }
 

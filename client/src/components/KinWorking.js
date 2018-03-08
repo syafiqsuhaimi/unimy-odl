@@ -110,11 +110,18 @@ class KinWorking extends Component {
     }
 
     validateForm() {
+        const { 
+            kintaxValid, kinepfValid, kinoccuValid, kingrossValid,
+            kinnettValid, kindependValid, formValid
+        } = this.state;
+
         this.setState({
             formValid: 
-                this.state.kintaxValid && this.state.kinepfValid && this.state.kinoccuValid &&
-                this.state.kingrossValid && this.state.kinnettValid && this.state.kindependValid
+                kintaxValid && kinepfValid && kinoccuValid &&
+                kingrossValid && kinnettValid && kindependValid
         });
+        console.log(kintaxValid, kinepfValid, kinoccuValid, kingrossValid, kinnettValid, kindependValid);
+        console.log(formValid);
     }
 
     errorClass(error) {
@@ -171,8 +178,8 @@ class KinWorking extends Component {
                 <input 
                     className={`form-control ${this.state.formErrors.kinoccu}`} 
                     type="text" 
-                    name="kinoccupation"
-                    value={this.props.kinoccupation}
+                    name="kinoccu"
+                    value={this.props.kinoccu}
                     onChange={this.handleChange} 
                     placeholder=""
                 />

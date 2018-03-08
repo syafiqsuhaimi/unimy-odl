@@ -115,8 +115,6 @@ class Working extends Component {
                 this.state.taxValid && this.state.epfValid && this.state.occuValid &&
                 this.state.grossValid && this.state.nettValid && this.state.dependValid
         });
-        console.log(this.state.taxValid, this.state.epfValid, this.state.occuValid, this.state.grossValid, this.state.nettValid, this.state.dependValid);
-        console.log('inside validateform: ', this.state.formValid);
     }
 
     errorClass(error) {
