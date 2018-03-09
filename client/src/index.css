@@ -94,7 +94,7 @@ body {
   display: inline-block;
   font-weight: 400;
   text-align: center;
-  border: 1px solid #D10E48;;
+  border: 1px solid #D10E48;
 }
 
 .btn_secondary {
@@ -430,9 +430,37 @@ body {
   text-align: left;
 }
 
+.Upload-input{
+  grid-area: browse;
+  padding-left: 125px;
+  padding-right: 50px;
+  font-size: 1.0rem;
+}
+
+.drop-zone{
+  height: 120px;
+  display: grid;
+  grid-template-columns: 100px 1fr 100px;
+  grid-template-areas: ". . ."
+                        ". title ."
+                        ". subtitle ."
+                        ". browse ."
+                        ". . .";
+}
+
+.Title{
+  grid-area: title;
+  text-align: center;
+}
+
+.Subtitle{
+  grid-area: subtitle;
+  text-align: center;
+}
+
 .Drag-drop{
           width: 100%;
-          height: 100px;
+          height: 120px;
           margin-block-end: 10px;
           padding: .05rem .1rem;
           padding-top: 0.05rem;
@@ -448,6 +476,43 @@ body {
           border-radius: .15rem;
 }
 
+.after-drop{
+  width: 100%;
+  height: 100px;
+  margin-block-end: 10px;
+  padding: .05rem .1rem;
+  padding-top: 0.05rem;
+  padding-right: 0.25rem;
+  padding-bottom: 0.05rem;
+  padding-left: 0.25rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .15rem;
+  display: grid;
+  grid-template-columns: 100px 1fr 80px 100px;
+  grid-template-areas: ". . . ."
+                      ". attachment cancel ."
+                      ". . . .";
+}
+
+.attachment{
+  height: 25px;
+  grid-area: attachment;
+  font-size: 1.5rem;
+  color: black; 
+  align-self: center;
+}
+
+.cancel-button{
+  grid-area: cancel;
+  width : 80px;
+  margin: 0px;
+  align-self: center;
+}
 .successContainer {
   display: flex;
   flex-direction: column;
