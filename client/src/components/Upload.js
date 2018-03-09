@@ -11,6 +11,8 @@ class Upload extends Component {
         this.renderDropFiles = this.renderDropFiles.bind(this);
         this.handleICDrop = this.handleICDrop.bind(this);
         this.handlePayDrop = this.handlePayDrop.bind(this);
+        this.cancelIC = this.cancelIC.bind(this);
+        this.cancelPayslip = this.cancelPayslip.bind(this);
         this.state = {
             icDrop: '',
             payslipDrop: '',
@@ -20,7 +22,9 @@ class Upload extends Component {
             },
             iccopyValid: false,
             payslipValid: false,
-            formValid: false
+            formValid: false, 
+            ICDropped : false,
+            payslipDropped : false
         }
     }
 
@@ -29,20 +33,49 @@ class Upload extends Component {
         const value = event.target.files[0];
         this.props.formUpdate({ prop: [name], value });
         this.validateField(name, value);
+        if(name==="iccopy"){
+            this.setState({ 
+                icDrop: value.name,
+                ICDropped : true
+             });
+        }else if(name==="payslip"){
+            this.setState({ 
+                payslipDrop: value.name,
+                payslipDropped : true
+             });
+        }
     }
 
     handleICDrop(dataTransfer) {
         this.props.formUpdate({ prop: 'iccopy', value: dataTransfer.files[0] })
         console.log('attachment out state:',dataTransfer.files[0]);
         this.validateField('iccopy', dataTransfer.files[0]);
-        this.setState({ icDrop: dataTransfer.files[0].name });
+        this.setState({ 
+            icDrop: dataTransfer.files[0].name,
+            ICDropped : true
+         });
     }
 
     handlePayDrop(dataTransfer) {
         this.props.formUpdate({ prop: 'payslip', value: dataTransfer.files[0]})
         console.log('attachment out state:',dataTransfer.files[0]);
         this.validateField('payslip', dataTransfer.files[0]);
-        this.setState({ payslipDrop: dataTransfer.files[0].name });
+        this.setState({
+             payslipDrop: dataTransfer.files[0].name,
+             payslipDropped : true
+        });
+    }
+
+    cancelIC(){
+        this.props.formUpdate({ prop: 'iccopy', value: '' })
+        this.setState({ICDropped : false});
+        this.props.formValidate(false);
+    }
+
+    cancelPayslip(){
+        this.props.formUpdate({ prop: 'payslip', value: '' })
+        this.setState({payslipDropped : false});
+        this.props.formValidate(false);
     }
 
     validateField(fieldName, value) {
@@ -100,18 +133,69 @@ class Upload extends Component {
     renderDropFiles(name) {
         if (name === 'iccopy') {
             return (
-                <div><p className="h5">{this.state.icDrop}</p></div>
+                <div className="attachment">{this.state.icDrop}</div>
             );
         }
 
         if (name === 'payslip') {
             return (
-                <div><p className="h5">{this.state.payslipDrop}</p></div>
+                <div className="attachment">{this.state.payslipDrop}</div>
             );
         }
     }
 
     render() {
+
+        let UploadIC,UploadPayslip = null;
+
+        if (!this.state.ICDropped){
+            UploadIC = <div className="Drag-drop">
+                                <FileDragAndDrop name='iccopy' onDrop={this.handleICDrop}>
+                                    <div className="drop-zone">
+                                        <h5 className="Title" >Drag and drop file here...</h5>
+                                        <h6 className="Subtitle" >or</h6>
+                                        <input className="Upload-input"
+                                        //style={{display: 'none'}}
+                                        //ref={(ref) => this.uploadIC = ref}
+                                        type="file" 
+                                        name="iccopy"
+                                        onChange={this.handleChange} 
+                                        />
+                                        {/* <button onClick={this.browseFile} name="iccopy" className="btn_primary Upload-input">Select File</button> */}
+                                    </div>
+                                </FileDragAndDrop>
+                      </div>; 
+        }else{
+            UploadIC = <div className="after-drop">   
+                            {this.renderDropFiles('iccopy')}  
+                            <button onClick={this.cancelIC} className="btn_primary cancel-button">Cancel</button>                            
+                    </div>; 
+        }
+
+        if (!this.state.payslipDropped){
+            UploadPayslip = <div className="Drag-drop">
+                                <FileDragAndDrop name='payslip' onDrop={this.handlePayDrop}>
+                                    <div className="drop-zone">
+                                        <h5 className="Title" >Drag and drop file here...</h5>
+                                        <h6 className="Subtitle" >or</h6>
+                                        <input className="Upload-input"
+                                        //style={{display: 'none'}}
+                                        //ref={(ref) => this.uploadIC = ref}
+                                        type="file" 
+                                        name="payslip"
+                                        onChange={this.handleChange} 
+                                        />
+                                        {/* <button onClick={this.browseFile} name="iccopy" className="btn_primary Upload-input">Select File</button> */}
+                                    </div>
+                                </FileDragAndDrop>
+                      </div>; 
+        }else{
+            UploadPayslip = <div className="after-drop">   
+                            {this.renderDropFiles('payslip')}  
+                            <button onClick={this.cancelPayslip} className="btn_primary cancel-button">Cancel</button>                            
+                    </div>; 
+        }
+
         return (
             <div className="App-body">
             <div className="App-content">
@@ -119,35 +203,13 @@ class Upload extends Component {
 
                     <div className="Upload-row">
                             <label className="form-label">1. Upload your IC Copy</label>
-                            <div className="Drag-drop">
-                                <FileDragAndDrop name='iccopy' onDrop={this.handleICDrop}>
-                                    <p className="h5">Drop files here...</p>
-                                    <input 
-                                        style={{ fontSize: 14 }}
-                                        type="file" 
-                                        name="iccopy"
-                                        onChange={this.handleChange} 
-                                    />
-                                    {this.renderDropFiles('iccopy')}
-                                </FileDragAndDrop>
-                            </div>
+                            {UploadIC}
                             {this.renderErrorText('iccopy')}
                     </div>
 
                     <div className="Upload-row">
                         <label className="form-label">2. Upload your Pay Slip</label>
-                        <div className="Drag-drop">
-                            <FileDragAndDrop name='payslip' onDrop={this.handlePayDrop}>
-                                <p className="h5">Drop files here...</p>
-                                <input 
-                                    style={{ fontSize: 14 }}
-                                    type="file"
-                                    name="payslip"
-                                    onChange={this.handleChange}
-                                />
-                                {this.renderDropFiles('payslip')}
-                            </FileDragAndDrop>
-                        </div>
+                        {UploadPayslip}
                         {this.renderErrorText('payslip')}
                     </div>
                 </form>

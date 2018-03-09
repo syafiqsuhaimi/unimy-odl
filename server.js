@@ -166,6 +166,7 @@ app.post('/post-data', function (req, res) {
                            
                         transaction.commit().then(function (recordSet) {
                             //sendEmail();
+                            console.log("STORE DATABASE SUCCESS");
                             sql.close();
                         }).catch(function (err) {
                             

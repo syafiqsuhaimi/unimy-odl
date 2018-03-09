@@ -228,7 +228,6 @@ class PersonalInfo extends Component {
     }
 
     render() {
-        //const isWorking = this.state.isWorking;
         const isWorking = this.props.isWorking;
         let workingForm = null;
         if (isWorking) {
