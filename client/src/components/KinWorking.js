@@ -41,7 +41,7 @@ class KinWorking extends Component {
 
         switch (fieldName) {
             case 'kintax':
-                kintaxValid = value.length > 8;
+                kintaxValid = value.length === 8;
                 if (fieldValidationErrors.kintax = kintaxValid) {
                     fieldValidationErrors.kintax = '';
                     kintaxValid = true;
@@ -51,7 +51,7 @@ class KinWorking extends Component {
                 }
                 break;
             case 'kinepf':
-                kinepfValid = value.length >= 8;
+                kinepfValid = value.length === 8;
                 if (fieldValidationErrors.kinepf = kinepfValid) {
                     fieldValidationErrors.kinepf = '';
                     kinepfValid = true;
@@ -182,6 +182,7 @@ class KinWorking extends Component {
                     value={this.props.kinoccu}
                     onChange={this.handleChange} 
                     placeholder=""
+                    maxLength="50"
                 />
                 {this.renderErrorText('kinoccu', this.props.kinoccupation)}
                 </div>

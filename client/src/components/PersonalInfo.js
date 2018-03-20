@@ -67,7 +67,7 @@ class PersonalInfo extends Component {
 
         switch (fieldName) {
             case 'name':
-                nameValid = value.length >= 6 && value.match(/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'@-]+$/u);
+                nameValid = value.length >= 3 && value.match(/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'@-]+$/u);
                 if  (fieldValidationErrors.name = nameValid) {
                     fieldValidationErrors.name = '';
                     nameValid = true;
@@ -77,7 +77,7 @@ class PersonalInfo extends Component {
                 }
                 break;
             case 'ic':
-                icValid = value.length == 12;
+                icValid = value.length === 12;
                 if (fieldValidationErrors.ic = icValid) {
                     fieldValidationErrors.ic = '';
                     icValid = true;
@@ -97,7 +97,7 @@ class PersonalInfo extends Component {
                 }
                 break;
             case 'postcode':
-                postcodeValid = value.length >= 5;
+                postcodeValid = value.length === 5;
                 if (fieldValidationErrors.postcode = postcodeValid) {
                     fieldValidationErrors.postcode = '';
                     postcodeValid = true;
@@ -249,6 +249,7 @@ class PersonalInfo extends Component {
                         value={this.props.name} 
                         name="name"
                         placeholder=""
+                        maxLength="50"
                         onChange={this.handleChange} 
                     />
                     {this.renderErrorText('name',this.props.name)}
@@ -515,6 +516,7 @@ class PersonalInfo extends Component {
                         type="text" 
                         value={this.props.address}
                         name="address"
+                        maxLength="200"
                         onChange={this.handleChange} 
                         placeholder=""/>
                     {this.renderErrorText('address', this.props.address)}
@@ -527,6 +529,7 @@ class PersonalInfo extends Component {
                         type="number" 
                         value={this.props.postcode}
                         name="postcode"
+                        maxLength="5"
                         onChange={this.handleChange} 
                         placeholder="" 
                     />
@@ -574,6 +577,7 @@ class PersonalInfo extends Component {
                         type="number" 
                         value={this.props.phone}
                         name="phone"
+                        maxLength="15"
                         onChange={this.handleChange} 
                         placeholder=""
                     />
@@ -586,11 +590,12 @@ class PersonalInfo extends Component {
                     <label className="form-label">Email Address</label>
                     <input 
                         className={`form-control ${this.state.formErrors.email}`} 
-                        type="text" 
+                        type="email" 
                         value={this.props.email}
                         name="email"
                         onChange={this.handleChange} 
                         placeholder="you@example.com"
+                        maxLength="100"
                     />
                     {this.renderErrorText('email', this.props.email)}
                     </div>

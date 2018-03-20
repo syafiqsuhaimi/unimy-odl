@@ -52,7 +52,7 @@ class KinInfo extends Component {
 
         switch (fieldName) {
             case 'kinname':
-                kinnameValid = value.length >= 6 && value.match(/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'@-]+$/u);
+                kinnameValid = value.length >= 3 && value.match(/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'@-]+$/u);
                 if (fieldValidationErrors.kinname = kinnameValid) {
                     fieldValidationErrors.kinname = '';
                     kinnameValid = true;
@@ -62,7 +62,7 @@ class KinInfo extends Component {
                 }
                 break;
             case 'kinic':
-                kinicValid = value.length == 12;
+                kinicValid = value.length === 12;
                 if (fieldValidationErrors.kinic = kinicValid) {
                     fieldValidationErrors.kinic = '';
                     kinicValid = true;
@@ -72,7 +72,7 @@ class KinInfo extends Component {
                 }
                 break;
             case 'kinpost':
-                kinpostValid = value.length >=5;
+                kinpostValid = value.length === 5;
                 if (fieldValidationErrors.kinpost = kinpostValid) {
                     fieldValidationErrors.kinpost = '';
                     kinpostValid = true;
@@ -80,6 +80,7 @@ class KinInfo extends Component {
                     fieldValidationErrors.kinpost = ' is-invalid';
                     kinpostValid = false;
                 }
+                break;
             case 'kinphone':
                 kinphoneValid = value.length >= 10;
                 if (fieldValidationErrors.kinphone = kinphoneValid) {
@@ -134,8 +135,6 @@ class KinInfo extends Component {
             formValid: kinnameValid && kinicValid && kinpostValid &&
             kinphoneValid && kinmailValid && kinworkValid
         })
-        console.log(kinnameValid, kinicValid, kinpostValid, kinphoneValid, kinmailValid, kinworkValid);
-        console.log(formValid);
     }
 
     errorClass(error) {
@@ -172,12 +171,13 @@ class KinInfo extends Component {
                     <div className={`form-group ${this.errorClass(this.state.formErrors.kinname)}`}>
                     <label className="form-label">Kin Full Name (As per IC)</label>
                     <input 
-                            className="form-control" 
+                            className={`form-control ${this.state.formErrors.kinname}`}
                             type="text" 
                             value={this.props.kinname}
                             name="kinname"
                             onChange={this.handleChange}
                             placeholder=""
+                            maxLength="50"
                     />
                     {/* <div className="Invalid-feedback">
                     Please enter a valid name.
@@ -194,6 +194,7 @@ class KinInfo extends Component {
                         name="relation"
                         onChange={this.handleChange}
                         placeholder=""
+                        maxLength="15"
                         required
                     >
                         <option value="">-- select one --</option>
@@ -423,10 +424,10 @@ class KinInfo extends Component {
                 </div>
 
                 <div className="ic">
-                    <div className={`form-group ${this.errorClass(this.state.formErrors.kinname)}`}>
+                    <div className={`form-group ${this.errorClass(this.state.formErrors.kinic)}`}>
                     <label className="form-label">IC Number</label>
                     <input 
-                        className="form-control" 
+                        className={`form-control ${this.state.formErrors.kinic}`}
                         type="number" 
                         value={this.props.kinic}
                         name="kinic"
@@ -448,6 +449,7 @@ class KinInfo extends Component {
                         value={this.props.kinadd}
                         onChange={event => this.props.formUpdate({ prop: 'kinadd', value: event.target.value })}
                         placeholder=""
+                        maxLength="200"
                     />
                     {/* <div className="Invalid-feedback">
                     Please enter a valid name.
@@ -458,7 +460,7 @@ class KinInfo extends Component {
                     <div className={`form-group ${this.errorClass(this.state.formErrors.kinpost)}`}>
                     <label className="form-label">Postcode</label>
                     <input 
-                        className="form-control" 
+                        className={`form-control ${this.state.formErrors.kinpost}`}
                         type="number"
                         name="kinpost" 
                         value={this.props.kinpost}
@@ -507,7 +509,7 @@ class KinInfo extends Component {
                     <div className={`form-group ${this.errorClass(this.state.formErrors.kinphone)}`}>
                     <label className="form-label">Phone Number</label>
                     <input 
-                        className="form-control" 
+                        className={`form-control ${this.state.formErrors.kinphone}`} 
                         type="number" 
                         name="kinphone"
                         value={this.props.kinphone}
@@ -525,12 +527,13 @@ class KinInfo extends Component {
                     <div className={`form-group ${this.errorClass(this.state.formErrors.kinmail)}`}>
                     <label className="form-label">Email Address</label>
                     <input 
-                        className="form-control" 
+                        className={`form-control ${this.state.formErrors.kinmail}`}
                         type="email" 
                         name="kinmail"
                         value={this.props.kinmail}
                         onChange={this.handleChange}
                         placeholder="you@example.com"
+                        maxLength="100"
                     />
                     {/* <div className="Invalid-feedback">
                     Please enter a valid name.

@@ -79,7 +79,6 @@ app.post('/post-data', function (req, res) {
         //id = uuidv4();
         var generator = new IDGenerator();
         let id = generator.generate();
-        console.log('Generated id: ',id);
         let name = req.body.name;
         let ic = req.body.ic;
         let nationality = req.body.nationality;
@@ -98,22 +97,32 @@ app.post('/post-data', function (req, res) {
         let gross = '';
         let nett = '';
         let dependants = '';
+        
+        let kinname = '';
+        let relationship = '';
+        let kinnationality = '';
+        let kinic = '';
+        let kinaddress = '';
+        let kinpostcode = '';
+        let kinnegeri = '';
+        let kinphone = '';
+        let kinemail = '';
 
         //attachment data
-        ICCopy = req.body.iccopy;
-        payslip = req.body.payslip;
+        let ICCopy = req.body.iccopy;
+        let payslip = req.body.payslip;
 
         if (req.body.kinname != ''){
 
-            let kinname = req.body.kinname;
-            let relationship = req.body.relation;
-            let kinnationality = req.body.kinnat;
-            let kinic = req.body.kinic;
-            let kinaddress = req.body.kinadd;
-            let kinpostcode = req.body.kinpost;
-            let kinnegeri = req.body.kinstate;
-            let kinphone = req.body.kinphone;
-            let kinemail = req.body.kinmail;
+             kinname = req.body.kinname;
+             relationship = req.body.relation;
+             kinnationality = req.body.kinnat;
+             kinic = req.body.kinic;
+             kinaddress = req.body.kinadd;
+             kinpostcode = req.body.kinpost;
+             kinnegeri = req.body.kinstate;
+             kinphone = req.body.kinphone;
+             kinemail = req.body.kinmail;
 
             tax = req.body.kintax;
             epf = req.body.kinepf;
@@ -149,6 +158,37 @@ app.post('/post-data', function (req, res) {
                 (${id},${tax},${epf},'${occupation}',${gross},${nett},${dependants})`;
         }
 
+        let app_data = {
+          "id" : id,
+          "name" : name,
+          "ic" : ic,
+          "nationality" : nationality,
+          "dob" : dob,
+          "gender" : gender,
+          "address" : address,
+          "postcode" : postcode,
+          "negeri" : negeri,
+          "phone" : phone,
+          "email" : email,
+          "epf" : epf,
+          "tax" : tax,
+          "occupation" : occupation,
+          "gross" : gross,
+          "nett" : nett,
+          "dependants" : dependants,
+          "kinname" :kinname,
+          "relationship" : relationship,
+          "kinnationality" : kinnationality,
+          "kinic" : kinic,
+          "kinaddress" : kinaddress,
+          "kinpostcode" : kinpostcode,
+          "kinnegeri" : kinnegeri,
+          "kinphone" : kinphone,
+          "kinemail" : kinemail,
+          "ICCopy" : ICCopy,
+          "payslip" : payslip,
+        };
+
         // connect to your database
         sql.connect(config, function (err) {
         
@@ -165,7 +205,7 @@ app.post('/post-data', function (req, res) {
                     .then(function () {
                            
                         transaction.commit().then(function (recordSet) {
-                            //sendEmail();
+                            sendEmail(app_data);
                             console.log("STORE DATABASE SUCCESS");
                             sql.close();
                         }).catch(function (err) {
@@ -194,31 +234,40 @@ app.post('/upload_attachment', upload.array('pdfs',2), (req, res, next) => {
     res.status(200).json(req.files);
 });
 
-function sendEmail(){
+function sendEmail(app_data){
+    let content ='';
+    if(app_data.kinname != ''){
+       content = `<h2>Applicant ID: ${app_data.id}</h2><h3>Personal Information</h3><p>Name: ${app_data.name}</p><p>IC No: ${app_data.ic}</p><p>Nationality: ${app_data.nationality}</p><p>Date of birth: ${app_data.dob}</p><p>Gender: ${app_data.gender}</p><p>Address: ${app_data.address}</p><p>Postcode: ${app_data.postcode}</p><p>State: ${app_data.negeri}</p><p>Phone No: ${app_data.phone}</p><p>Email: ${app_data.email}</p><p>Working status: Not Working</p><hr/><h3>Kin Information</h3><p>Name: ${app_data.kinname}</p><p>Relationship: ${app_data.relationship}</p><p>Nationality: ${app_data.kinnationality}</p><p>IC No: ${app_data.kinic}</p><p>Address: ${app_data.kinaddress}</p><p>Postcode: ${app_data.kinpostcode}</p><p>State: ${app_data.kinnegeri}</p><p>Phone No: ${app_data.kinphone}</p><p>Email: ${app_data.kinemail}</p><hr/><h3>Working Information</h3><p>Tax No: ${app_data.tax}</p><p>EPF No: ${app_data.epf}</p><p>Occupation: ${app_data.occupation}</p><p>Gross Salary: ${app_data.gross}</p><p>Nett Salary: ${app_data.nett}</p><p>No. of Dependants: ${app_data.dependants}<hr/>`;
+    }else{
+       content = `<h2>Applicant ID: ${app_data.id}</h2><h3>Personal Information</h3><p>Name: ${app_data.name}</p><p>IC No: ${app_data.ic}</p><p>Nationality: ${app_data.nationality}</p><p>Date of birth: ${app_data.dob}</p><p>Gender: ${app_data.gender}</p><p>Address: ${app_data.address}</p><p>Postcode: ${app_data.postcode}</p><p>State: ${app_data.negeri}</p><p>Phone No: ${app_data.phone}</p><p>Email: ${app_data.email}</p><p>Working status: Working</p><hr/><h3>Working Information</h3><p>Tax No: ${app_data.tax}</p><p>EPF No: ${app_data.epf}</p><p>Occupation: ${app_data.occupation}</p><p>Gross Salary: ${app_data.gross}</p><p>Nett Salary: ${app_data.nett}</p><p>No. of Dependants: ${app_data.dependants}<hr/>`;
+    }
     var transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true, 
+        host: 'smtp.office365.com',
+        port: 587,
+        secure: false, 
         auth: {
-            user: 'syain10@gmail.com', 
-            pass: '' 
+            user: 'support@educloud.my', 
+            pass: '3ducl0ud2018!' 
+        },
+        tls: {
+            ciphers: 'SSLv3'
         }
       });
       
       var mailOptions = {
-        from: 'syain10@gmail.com',
+        from: 'support@educloud.my',
         to: 'syafiq.suhaimi@prestariang.com',
-        subject: 'Sending Email using Node.js',
-        text: 'That was easy!',
+        subject: 'New Applicant Registration',
+        html: content,
         attachments: [
             {
                 filename: 'IC_COPY.pdf',
-                path: ICCopy,
+                path: app_data.ICCopy,
                 contentType: 'application/pdf'
             },
             {   // binary buffer as an attachment
                 filename: 'PAYSLIP_COPY.pdf',
-                path: payslip,
+                path: app_data.payslip,
                 contentType: 'application/pdf'
             }
         ]

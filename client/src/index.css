@@ -511,6 +511,7 @@ body {
   grid-area: cancel;
   width : 80px;
   margin: 0px;
+  font-size: 1.2rem;
   align-self: center;
 }
 .successContainer {
@@ -698,3 +699,32 @@ body {
   }
 
  }
+ 
+ .rc-steps {
+  padding: 10px 0;
+ }
+
+ .rcicon-user:before{
+  color: #D10E48;
+ }
+
+ .rc-steps-item-process .rcicon-file:before {
+  color: #D10E48;
+ }
+
+ .rc-steps-item-finish .rcicon-file:before {
+  color: #D10E48;
+ }
+
+
+ .rc-steps-item-process .rcicon-file-text:before {
+  color: #D10E48;
+ }
+
+ .rc-steps-item-finish .rcicon-file-text:before {
+  color: #D10E48;
+ }
+
+ .rc-steps-item-finish .rc-steps-item-tail:after {
+  background-color: #D10E48;
+}
