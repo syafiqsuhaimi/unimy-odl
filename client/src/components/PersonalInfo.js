@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { formUpdate, formValidate, checkIsWorking } from '../actions';
+import { 
+    formUpdate, 
+    formValidate, 
+    checkIsWorking,
+    enabledButton
+} from '../actions';
 import Working from './Working';
 
 class PersonalInfo extends Component {
@@ -31,13 +36,14 @@ class PersonalInfo extends Component {
         };
     }
     
+    // when user click work
     handleWorkedClick() {
         this.setState({ isWorking: true });
         this.props.checkIsWorking(true);
     }
     
+    // when user click not work
     handleNotWorkedClick() {
-        //this.setState({isWorking: false, workValid: true });
         this.props.formUpdate({ prop: "isWorking", value: false });
         this.setState({ workValid: true });
         this.validateField('work', 'click');
@@ -51,6 +57,7 @@ class PersonalInfo extends Component {
         this.validateField(name, value);
     }
     
+    // validate the input field
     validateField(fieldName, value) {
         let fieldValidationErrors = this.state.formErrors;
         let nameValid = this.state.nameValid;
@@ -195,7 +202,8 @@ class PersonalInfo extends Component {
                     workValid
                 }, this.validateForm);
     }
-    // function below is for disabling button
+
+    // combine all the validation field
     validateForm() {
         const { 
             nameValid, icValid, dobValid, postcodeValid,
@@ -211,12 +219,16 @@ class PersonalInfo extends Component {
         });
     }
 
+    // render css for error field
     errorClass(error) {
         return (error.length === 0? '' : 'has-error');
     }
 
     renderErrorText(name, value) {
-        this.props.formValidate(this.state.formValid);
+        if (this.state.formValid) {
+            this.props.enabledButton();
+        }
+        this.props.formValidate(this.props.validForm);
         if (this.state.formErrors[name] === ' is-invalid') {
             return (
                 <div className="alert alert-danger">
@@ -621,14 +633,17 @@ const mapStateToProps = (state) => {
         name, ic, nationality,
         dob, gender, address,
         postcode, negeri, phone,
-        email, isWorking
+        email, isWorking, validForm
     } = state.form;
 
     return { 
         name, ic, nationality,
         dob, gender, address,
-        postcode, negeri, phone, email, isWorking
+        postcode, negeri, phone, 
+        email, isWorking, validForm
     };
 }
 
-export default connect(mapStateToProps, { formUpdate, formValidate, checkIsWorking })(PersonalInfo);
+export default connect(mapStateToProps, { 
+    formUpdate, formValidate, checkIsWorking, enabledButton 
+})(PersonalInfo);
