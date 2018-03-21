@@ -5,7 +5,8 @@ import {
     VALIDATION_SUCCESS, 
     VALIDATION_FAIL, 
     WORKING, 
-    NOT_WORKING 
+    NOT_WORKING,
+    ENABLE_BUTTON 
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -21,7 +22,7 @@ const INITIAL_STATE = {
     kinoccu: '', kingross: '', kinnett: '',
     kindepend: '', iccopy: '', payslip: '', 
     buttonDisabled: true, isWorking: false, 
-    submitSucess: null
+    submitSucess: null, validForm: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -40,6 +41,8 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, isWorking: true };
         case NOT_WORKING:
             return { ...state, isWorking: false };
+        case ENABLE_BUTTON:
+            return { ...state, validForm: true };
         default:
             return state;
     }

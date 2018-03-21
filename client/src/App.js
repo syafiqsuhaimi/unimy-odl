@@ -3,13 +3,18 @@ import { connect } from 'react-redux';
 import Steps, { Step } from 'rc-steps';
 import MediaQuery from 'react-responsive';
 
-import { customMedia } from './Variables';
 import { formSubmit } from './actions';
 import logo from './logo_unimy.jpg';
 import PersonalInfo from './components/PersonalInfo';
 import KinInfo from './components/KinInfo';
 import Upload from './components/Upload';
 import Success from './components/Success';
+
+// specify different medias for rendering
+const customMedia = {
+  desktop: '(min-width: 768px)',
+  mobile: '(max-width: 767px)'
+}
 
 class App extends Component {
   constructor(props) {
@@ -18,23 +23,24 @@ class App extends Component {
       this.renderSpinner = this.renderSpinner.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
       this.state = {
-        componentIndex: 0,
-        loading: false
+        componentIndex: 0, // indicator for current section
+        loading: false  // indicator to render spinner
       }
   }
 
+  // changing section
   moveSectionClick(index) {
     this.setState({componentIndex: index});
   }
 
+  // showing spinner
   renderSpinner() {
     this.setState({ loading: true });
     this.handleSubmit();
   }
 
+  // transfer all props data to actions
   handleSubmit(){
-    console.log('loading: ', this.state.loading);
-
     const {
       name, ic, nationality, dob, 
       gender, address, postcode, negeri, 
@@ -61,29 +67,26 @@ class App extends Component {
   render() {
     const componentIndex = this.state.componentIndex;
     let Form, Footer, index = null;
-    if (componentIndex === 0) {
+    if (componentIndex === 0) {         // render first section
        if (this.props.isWorking){
          index = 1;
        }else{
          index = 0;
        }
         Form = <PersonalInfo />; 
-        console.log(index);
         Footer = <footer className="App-footer">
                     <button onClick={this.moveSectionClick.bind(this,index+1)} className="btn_primary" disabled={this.props.buttonDisabled}>Continue</button>
                   </footer>; 
-    } else if(componentIndex === 1) {
+    } else if(componentIndex === 1) {   // render second section
         index = 1
         Form = <KinInfo />; 
-        console.log(index);
         Footer = <footer className="App-footer">
                     <button onClick={this.moveSectionClick.bind(this,index-1)} className="btn_secondary">Previous</button>
                     <button onClick={this.moveSectionClick.bind(this,index+1)} className="btn_primary" disabled={this.props.buttonDisabled}>Continue</button>
                  </footer>; 
-    } else if(componentIndex === 2) {
+    } else if(componentIndex === 2) {   // render third section
       index = 2
       Form = <Upload />;
-      console.log('loading: ', this.state.loading);
       if (this.state.loading) {
         Footer = <footer className="App-footer">
                     <i className="fa fa-circle-o-notch fa-spin" style={{ fontSize: 24 }}></i>
@@ -104,10 +107,9 @@ class App extends Component {
       if (this.props.submitSuccess === true || this.props.submitSuccess === false) {
         this.moveSectionClick(index+1);
       }
-    } else if(componentIndex === 3) {
+    } else if(componentIndex === 3) {   // render last section
       index = 3
-      Form = <Success />;
-      console.log(index);
+      Form = <Success />
       Footer = <footer className="App-footer">
                   <button
                     onClick={() => console.log('take me there')}

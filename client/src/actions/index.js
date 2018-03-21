@@ -7,6 +7,7 @@ export const VALIDATION_SUCCESS = 'validation_success';
 export const VALIDATION_FAIL = 'validation_fail';
 export const WORKING = 'working';
 export const NOT_WORKING = 'not_working';
+export const ENABLE_BUTTON = 'enable_button';
 
 export const formUpdate = ({ prop, value }) => {
     //console.log({ prop, value });
@@ -100,3 +101,9 @@ export const checkIsWorking = (isWorking) => {
     
 };
 
+export const enabledButton = () => {
+    return {
+        type: ENABLE_BUTTON,
+        payload: null
+    }
+}
