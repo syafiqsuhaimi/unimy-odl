@@ -41,7 +41,7 @@ class Working extends Component {
 
         switch (fieldName) {
             case 'tax':
-                taxValid = value.length > 8;
+                taxValid = value.length === 8;
                 if (fieldValidationErrors.tax = taxValid) {
                     fieldValidationErrors.tax = '';
                     taxValid = true;
@@ -51,7 +51,7 @@ class Working extends Component {
                 }
                 break;
             case 'epf':
-                epfValid = value.length >= 8;
+                epfValid = value.length === 8;
                 if (fieldValidationErrors.epf = epfValid) {
                     fieldValidationErrors.epf = '';
                     epfValid = true;
@@ -175,6 +175,7 @@ class Working extends Component {
                     value={this.props.occupation}
                     onChange={this.handleChange} 
                     placeholder=""
+                    maxLength="50"
                 />
                 {this.renderErrorText('occu', this.props.occupation)}
                 </div>

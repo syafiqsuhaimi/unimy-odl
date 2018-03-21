@@ -27,8 +27,6 @@ export const formSubmit = ({
 }) => {
    /* push to database */
    return (dispatch) => {
-
-       console.log('attachment in state:', iccopy);
         let applicant = {
             name, ic, nationality, dob, gender, address, 
             postcode, negeri, phone, email, tax, epf, 

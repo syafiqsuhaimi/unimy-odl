@@ -29,6 +29,7 @@ class App extends Component {
 
   renderSpinner() {
     this.setState({ loading: true });
+    this.handleSubmit();
   }
 
   handleSubmit(){
@@ -87,7 +88,6 @@ class App extends Component {
         Footer = <footer className="App-footer">
                     <i className="fa fa-circle-o-notch fa-spin" style={{ fontSize: 24 }}></i>
                 </footer>; 
-        this.handleSubmit();
       } else {
         Footer = <footer className="App-footer">
                   <button 
