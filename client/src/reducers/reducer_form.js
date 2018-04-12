@@ -2,6 +2,7 @@ import {
     FORM_UPDATE, 
     FORM_SUBMIT_SUCCESS, 
     FORM_SUBMIT_FAIL,
+    FIELD_VALIDATE,
     VALIDATION_SUCCESS, 
     VALIDATION_FAIL, 
     WORKING, 
@@ -19,7 +20,18 @@ const INITIAL_STATE = {
     kinpost: '', kinstate: '', kinphone: '',
     kinmail: '', kintax: '', kinepf: '',
     kinoccu: '', kingross: '', kinnett: '',
-    kindepend: '', iccopy: '', payslip: '', 
+    kindepend: '', iccopy: '', payslip: '',nameValid: false,
+    icValid: false,
+    dobValid: false,
+    postcodeValid: false,
+    phoneValid: false,
+    emailValid: false,
+    natValid: false,
+    genderValid: false,
+    addressValid: false,
+    negeriValid: false,
+    workValid: false,
+    formValid: false, 
     buttonDisabled: true, isWorking: false, 
     submitSucess: null
 };
@@ -32,6 +44,8 @@ export default (state = INITIAL_STATE, action) => {
             return { submitSuccess: true };
         case FORM_SUBMIT_FAIL:
             return { submitSuccess: false };
+        case FIELD_VALIDATE:
+            return { ...state, [action.payload.prop]: action.payload.value };
         case VALIDATION_SUCCESS: 
             return { ...state, buttonDisabled: false };
         case VALIDATION_FAIL:

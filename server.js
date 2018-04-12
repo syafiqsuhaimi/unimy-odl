@@ -1,5 +1,4 @@
 const express = require('express');
-const cors = require('cors')
 const bodyParser = require("body-parser");
 const sql = require("mssql");
 const multer = require('multer')
@@ -13,9 +12,9 @@ const app = express();
 const port = process.env.PORT || 8888;
 
 const azureStorage = new MulterAzureStorage({
-    connectionString: 'DefaultEndpointsProtocol=https;AccountName=syafiq;AccountKey=7aB73YrNVmF67Pq4ypy4gq2GGqB7bAP8i4FkZ2Er1CV8Vb6ZVTcja3n3FFC2RJ+fQZ8cFAfscfOo6HHgQpjK/w==;EndpointSuffix=core.windows.net',
-    accessKey: '7aB73YrNVmF67Pq4ypy4gq2GGqB7bAP8i4FkZ2Er1CV8Vb6ZVTcja3n3FFC2RJ+fQZ8cFAfscfOo6HHgQpjK/w==',
-    accountName: 'syafiq',
+    connectionString: 'DefaultEndpointsProtocol=https;AccountName=educloudstoragestaging;AccountKey=1Yj5L043/qvPL809jALXcYD5rNyUMZQdSGbIRd5Q6CA4PN6cOUimZ2JXnRe5nxrEFoxyQaVmOWWy8UK8Vmz5Gg==;EndpointSuffix=core.windows.net',
+    accessKey: '1Yj5L043/qvPL809jALXcYD5rNyUMZQdSGbIRd5Q6CA4PN6cOUimZ2JXnRe5nxrEFoxyQaVmOWWy8UK8Vmz5Gg==',
+    accountName: 'educloudstoragestaging',
     containerName: 'unimy-odl',
     containerAccessLevel: 'blob',
     urlExpirationTime: 60
@@ -237,9 +236,9 @@ app.post('/upload_attachment', upload.array('pdfs',2), (req, res, next) => {
 function sendEmail(app_data){
     let content ='';
     if(app_data.kinname != ''){
-       content = `<h2>Applicant ID: ${app_data.id}</h2><h3>Personal Information</h3><p>Name: ${app_data.name}</p><p>IC No: ${app_data.ic}</p><p>Nationality: ${app_data.nationality}</p><p>Date of birth: ${app_data.dob}</p><p>Gender: ${app_data.gender}</p><p>Address: ${app_data.address}</p><p>Postcode: ${app_data.postcode}</p><p>State: ${app_data.negeri}</p><p>Phone No: ${app_data.phone}</p><p>Email: ${app_data.email}</p><p>Working status: Not Working</p><hr/><h3>Kin Information</h3><p>Name: ${app_data.kinname}</p><p>Relationship: ${app_data.relationship}</p><p>Nationality: ${app_data.kinnationality}</p><p>IC No: ${app_data.kinic}</p><p>Address: ${app_data.kinaddress}</p><p>Postcode: ${app_data.kinpostcode}</p><p>State: ${app_data.kinnegeri}</p><p>Phone No: ${app_data.kinphone}</p><p>Email: ${app_data.kinemail}</p><hr/><h3>Working Information</h3><p>Tax No: ${app_data.tax}</p><p>EPF No: ${app_data.epf}</p><p>Occupation: ${app_data.occupation}</p><p>Gross Salary: ${app_data.gross}</p><p>Nett Salary: ${app_data.nett}</p><p>No. of Dependants: ${app_data.dependants}<hr/>`;
+       content = `<h2>Applicant ID: ${app_data.id}</h2><h3>Personal Information</h3><p>Name: ${app_data.name}</p><p>IC No: ${app_data.ic}</p><p>Nationality: ${app_data.nationality}</p><p>Date of birth: ${app_data.dob}</p><p>Gender: ${app_data.gender}</p><p>Address: ${app_data.address}</p><p>Postcode: ${app_data.postcode}</p><p>State: ${app_data.negeri}</p><p>Phone No: ${app_data.phone}</p><p>Email: ${app_data.email}</p><p>Working status: Not Working</p><hr/><h3>Kin Information</h3><p>Name: ${app_data.kinname}</p><p>Relationship: ${app_data.relationship}</p><p>Nationality: ${app_data.kinnationality}</p><p>IC No: ${app_data.kinic}</p><p>Address: ${app_data.kinaddress}</p><p>Postcode: ${app_data.kinpostcode}</p><p>State: ${app_data.kinnegeri}</p><p>Phone No: ${app_data.kinphone}</p><p>Email: ${app_data.kinemail}</p><hr/><h3>Working Information</h3><p>Tax No: ${app_data.tax}</p><p>EPF No: ${app_data.epf}</p><p>Occupation: ${app_data.occupation}</p><p>Gross Salary: RM ${app_data.gross}</p><p>Nett Salary: RM ${app_data.nett}</p><p>No. of Dependants: ${app_data.dependants}<hr/>`;
     }else{
-       content = `<h2>Applicant ID: ${app_data.id}</h2><h3>Personal Information</h3><p>Name: ${app_data.name}</p><p>IC No: ${app_data.ic}</p><p>Nationality: ${app_data.nationality}</p><p>Date of birth: ${app_data.dob}</p><p>Gender: ${app_data.gender}</p><p>Address: ${app_data.address}</p><p>Postcode: ${app_data.postcode}</p><p>State: ${app_data.negeri}</p><p>Phone No: ${app_data.phone}</p><p>Email: ${app_data.email}</p><p>Working status: Working</p><hr/><h3>Working Information</h3><p>Tax No: ${app_data.tax}</p><p>EPF No: ${app_data.epf}</p><p>Occupation: ${app_data.occupation}</p><p>Gross Salary: ${app_data.gross}</p><p>Nett Salary: ${app_data.nett}</p><p>No. of Dependants: ${app_data.dependants}<hr/>`;
+       content = `<h2>Applicant ID: ${app_data.id}</h2><h3>Personal Information</h3><p>Name: ${app_data.name}</p><p>IC No: ${app_data.ic}</p><p>Nationality: ${app_data.nationality}</p><p>Date of birth: ${app_data.dob}</p><p>Gender: ${app_data.gender}</p><p>Address: ${app_data.address}</p><p>Postcode: ${app_data.postcode}</p><p>State: ${app_data.negeri}</p><p>Phone No: ${app_data.phone}</p><p>Email: ${app_data.email}</p><p>Working status: Working</p><hr/><h3>Working Information</h3><p>Tax No: ${app_data.tax}</p><p>EPF No: ${app_data.epf}</p><p>Occupation: RM ${app_data.occupation}</p><p>Gross Salary: RM ${app_data.gross}</p><p>Nett Salary: ${app_data.nett}</p><p>No. of Dependants: ${app_data.dependants}<hr/>`;
     }
     var transporter = nodemailer.createTransport({
         host: 'smtp.office365.com',
@@ -247,7 +246,7 @@ function sendEmail(app_data){
         secure: false, 
         auth: {
             user: 'support@educloud.my', 
-            pass: '3ducl0ud2018!' 
+            pass: ' ' 
         },
         tls: {
             ciphers: 'SSLv3'

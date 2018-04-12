@@ -3,6 +3,7 @@ import axios from 'axios';
 export const FORM_UPDATE = 'form_update';
 export const FORM_SUBMIT_SUCCESS = 'form_submit_success';
 export const FORM_SUBMIT_FAIL = 'form_submit_fail';
+export const FIELD_VALIDATE = 'field_validate';
 export const VALIDATION_SUCCESS = 'validation_success';
 export const VALIDATION_FAIL = 'validation_fail';
 export const WORKING = 'working';
@@ -69,6 +70,14 @@ export const formSubmit = ({
           });
 
    }
+};
+
+export const fieldValidate = ({ prop, value }) => {
+    console.log("fieldvalidate");
+    return {
+        type: FIELD_VALIDATE,
+        payload: { prop, value }
+    }; 
 };
 
 export const formValidate = (validation) => {
